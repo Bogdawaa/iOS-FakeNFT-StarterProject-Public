@@ -13,11 +13,14 @@ final class TabBarController: UITabBarController {
 
         super.init(nibName: nil, bundle: nil)
 
+        let statisticsPresenter = StatisticsPresenter()
+        let statisticsController = StatisticsViewController(presenter: statisticsPresenter)
+        
         viewControllers = [
             UIViewController(),
             self.catalogViewController,
             UIViewController(),
-            UIViewController()
+            statisticsController
         ]
 
         let items = [
