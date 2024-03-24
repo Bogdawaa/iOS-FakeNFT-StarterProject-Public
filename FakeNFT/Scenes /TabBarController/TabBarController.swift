@@ -14,11 +14,14 @@ final class TabBarController: UITabBarController {
         self.profileViewController = profileViewController
         super.init(nibName: nil, bundle: nil)
 
+        let statisticsPresenter = StatisticsPresenter()
+        let statisticsController = StatisticsViewController(presenter: statisticsPresenter)
+        
         viewControllers = [
             self.profileViewController,
             self.catalogViewController,
             UIViewController(),
-            UIViewController()
+            statisticsController
         ]
 
         let items = [
