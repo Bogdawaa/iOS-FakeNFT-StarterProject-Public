@@ -32,6 +32,8 @@ final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
         return table
     }()
 
+    private var users: [User] = []
+
     // MARK: - init
     init(presenter: StatisticsPresenterProtocol) {
         self.presenter = presenter
@@ -49,8 +51,15 @@ final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
         statisticsTableView.delegate = self
         statisticsTableView.dataSource = self
 
-        presenter.view = self
         setupUI()
+        presenter.view = self
+        presenter.viewDidLoad()
+
+    }
+
+    func displayUserCells(_ users: [User]) {
+        self.users = users
+        statisticsTableView.reloadData()
     }
 
     // MARK: - private methods
@@ -78,14 +87,24 @@ final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
     }
 
     @objc private func sortButtonTapped() {
-        // TODO:
+        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "По имени", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            presenter.setUsersSortingParametr(SortParametr.byName)
+        }))
+        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            presenter.setUsersSortingParametr(SortParametr.byRating)
+        }))
+        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
+            self.present(alert, animated: true)
     }
 }
 
 // MARK: - tableView extensions
 extension StatisticsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.numberOfRowsInSection()
+        users.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,7 +113,11 @@ extension StatisticsViewController: UITableViewDataSource {
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
 
-        cell.setupCell(rank: indexPath.row, name: presenter.users[indexPath.row], score: "1")
+        cell.setupCell(
+            rating: users[indexPath.row].rating,
+            name: users[indexPath.row].name,
+            nfts: users[indexPath.row].nfts
+        )
         return cell
     }
 }

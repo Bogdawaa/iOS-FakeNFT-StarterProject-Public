@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
         self.profileViewController = profileViewController
         super.init(nibName: nil, bundle: nil)
 
-        let statisticsPresenter = StatisticsPresenter()
+        let statisticsPresenter = StatisticsPresenter(service: userServiceAssembly.usersService)
         let statisticsController = StatisticsViewController(presenter: statisticsPresenter)
         
         viewControllers = [

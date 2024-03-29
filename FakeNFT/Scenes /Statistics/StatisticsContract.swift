@@ -9,11 +9,11 @@ import Foundation
 
 protocol StatisticsViewProtocol: AnyObject {
     var presenter: StatisticsPresenterProtocol { get set }
+    func displayUserCells(_ users: [User])
 }
 
 protocol StatisticsPresenterProtocol {
     var view: StatisticsViewProtocol? { get set }
-    var users: [String] { get }
-
-    func numberOfRowsInSection() -> Int
+    func viewDidLoad()
+    func setUsersSortingParametr(_ parametr: SortParametr)
 }
