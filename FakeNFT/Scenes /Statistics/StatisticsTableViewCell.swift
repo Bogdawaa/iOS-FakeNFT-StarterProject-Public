@@ -30,7 +30,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         return lbl
     }()
 
-    private lazy var userScore: UILabel = {
+    private lazy var userNFTs: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor.label
         lbl.font = .systemFont(ofSize: 22, weight: .bold)
@@ -38,7 +38,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         return lbl
     }()
 
-    private lazy var userRank: UILabel = {
+    private lazy var userRating: UILabel = {
         let lbl = UILabel()
         lbl.textColor = UIColor.label
         lbl.font = .systemFont(ofSize: 15, weight: .regular)
@@ -66,24 +66,24 @@ final class StatisticsTableViewCell: UITableViewCell {
     }
 
     // MARK: - public methods
-    func setupCell(rank: Int, name: String, score: String) {
-        userRank.text = String(rank)
+    func setupCell(rating: String, name: String, nfts: [String]) {
+        userRating.text = rating
         userName.text = name
-        userScore.text = score
+        userNFTs.text = String(nfts.count)
     }
 
     // MARK: - private methods
     private func setupCellUI() {
 
         // contentview
-        contentView.addSubview(userRank)
+        contentView.addSubview(userRating)
         contentView.addSubview(cardStackView)
         backgroundColor = .systemBackground
 
         // cardStackView
         cardStackView.addSubview(userImage)
         cardStackView.addSubview(userName)
-        cardStackView.addSubview(userScore)
+        cardStackView.addSubview(userNFTs)
         cardStackView.backgroundColor = .segmentInactive
 
         // round userImage corners
@@ -94,13 +94,13 @@ final class StatisticsTableViewCell: UITableViewCell {
 
     private func applyConstraints() {
         let userRankConstraints = [
-            userRank.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            userRank.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            userRank.heightAnchor.constraint(equalToConstant: 20),
-            userRank.widthAnchor.constraint(equalToConstant: 30)
+            userRating.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            userRating.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            userRating.heightAnchor.constraint(equalToConstant: 20),
+            userRating.widthAnchor.constraint(equalToConstant: 30)
         ]
         let cardStackViewConstraints = [
-            cardStackView.leadingAnchor.constraint(equalTo: userRank.trailingAnchor, constant: 8),
+            cardStackView.leadingAnchor.constraint(equalTo: userRating.trailingAnchor, constant: 8),
             cardStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             cardStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
             cardStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
@@ -114,19 +114,19 @@ final class StatisticsTableViewCell: UITableViewCell {
         let userNameConstraints = [
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 8),
             userName.centerYAnchor.constraint(equalTo: userImage.centerYAnchor),
-            userName.trailingAnchor.constraint(equalTo: userScore.leadingAnchor, constant: -16),
+            userName.trailingAnchor.constraint(equalTo: userNFTs.leadingAnchor, constant: -16),
             userName.heightAnchor.constraint(equalToConstant: 28)
         ]
-        let userScoreConstraints = [
-            userScore.centerYAnchor.constraint(equalTo: userImage.centerYAnchor),
-            userScore.widthAnchor.constraint(equalToConstant: 38),
-            userScore.trailingAnchor.constraint(equalTo: cardStackView.trailingAnchor, constant: -16),
-            userScore.heightAnchor.constraint(equalToConstant: 28)
+        let userNFTsConstraints = [
+            userNFTs.centerYAnchor.constraint(equalTo: userImage.centerYAnchor),
+            userNFTs.widthAnchor.constraint(equalToConstant: 38),
+            userNFTs.trailingAnchor.constraint(equalTo: cardStackView.trailingAnchor, constant: -16),
+            userNFTs.heightAnchor.constraint(equalToConstant: 28)
         ]
         NSLayoutConstraint.activate(userRankConstraints)
         NSLayoutConstraint.activate(cardStackViewConstraints)
         NSLayoutConstraint.activate(userImageConstraints)
         NSLayoutConstraint.activate(userNameConstraints)
-        NSLayoutConstraint.activate(userScoreConstraints)
+        NSLayoutConstraint.activate(userNFTsConstraints)
     }
 }
