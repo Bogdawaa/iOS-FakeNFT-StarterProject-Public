@@ -177,7 +177,7 @@ extension StatisticsViewController: UITableViewDataSource {
             withIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier,
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
-        
+
         cell.setupCell(with: users[indexPath.row])
         return cell
     }

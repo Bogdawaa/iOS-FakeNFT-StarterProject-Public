@@ -21,7 +21,7 @@ final class TabBarController: UITabBarController {
 
         viewControllers = [
             self.profileViewController,
-            self.catalogViewController,
+            UINavigationController(rootViewController: self.catalogViewController),
             UIViewController(),
             UINavigationController(rootViewController: statisticsController)
         ]

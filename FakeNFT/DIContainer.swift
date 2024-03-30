@@ -59,10 +59,17 @@ final class DIContainer {
     }
 
     private func registerCatalog() {
+        container.register(CatalogPresenter.self) { _ in
+            CatalogPresenterImpl(
+            )
+        }
+
         container.register(CatalogViewController.self) { diResolver in
-            TestCatalogViewController(
-                servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
-                statLog: diResolver.resolve(StatLog.self)!
+            CatalogViewController(
+                contentView: CatalogView(),
+                presenter: diResolver.resolve(CatalogPresenter.self)!,
+                depsFactory: self,
+                statlog: diResolver.resolve(StatLog.self)!
             )
         }
     }
@@ -204,5 +211,11 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
+    }
+}
+
+extension DIContainer: CatalogViewControllerDepsFactory {
+    func nftCollectionViewController() -> UIViewController? {
+        UIViewController()
     }
 }
