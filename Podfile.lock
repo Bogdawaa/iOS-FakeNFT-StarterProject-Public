@@ -61,73 +61,12 @@ PODS:
     - AppMetricaCore (~> 5.1)
     - AppMetricaCoreUtils (~> 5.1)
     - AppMetricaLog (~> 5.1)
-  - KSCrash (1.16.1):
-    - KSCrash/Installations (= 1.16.1)
-  - KSCrash/Installations (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting
   - KSCrash/Recording (1.16.1):
     - KSCrash/Recording/Tools (= 1.16.1)
   - KSCrash/Recording/Tools (1.16.1)
-  - KSCrash/Reporting (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters (= 1.16.1)
-    - KSCrash/Reporting/MessageUI (= 1.16.1)
-    - KSCrash/Reporting/Sinks (= 1.16.1)
-    - KSCrash/Reporting/Tools (= 1.16.1)
-  - KSCrash/Reporting/Filters (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Alert (= 1.16.1)
-    - KSCrash/Reporting/Filters/AppleFmt (= 1.16.1)
-    - KSCrash/Reporting/Filters/Base (= 1.16.1)
-    - KSCrash/Reporting/Filters/Basic (= 1.16.1)
-    - KSCrash/Reporting/Filters/GZip (= 1.16.1)
-    - KSCrash/Reporting/Filters/JSON (= 1.16.1)
-    - KSCrash/Reporting/Filters/Sets (= 1.16.1)
-    - KSCrash/Reporting/Filters/Stringify (= 1.16.1)
-    - KSCrash/Reporting/Filters/Tools (= 1.16.1)
-  - KSCrash/Reporting/Filters/Alert (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/AppleFmt (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/Base (1.16.1):
-    - KSCrash/Recording
-  - KSCrash/Reporting/Filters/Basic (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/GZip (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/JSON (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/Sets (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/AppleFmt
-    - KSCrash/Reporting/Filters/Base
-    - KSCrash/Reporting/Filters/Basic
-    - KSCrash/Reporting/Filters/GZip
-    - KSCrash/Reporting/Filters/JSON
-    - KSCrash/Reporting/Filters/Stringify
-  - KSCrash/Reporting/Filters/Stringify (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters/Base
-  - KSCrash/Reporting/Filters/Tools (1.16.1):
-    - KSCrash/Recording
-  - KSCrash/Reporting/MessageUI (1.16.1):
-    - KSCrash/Recording
-  - KSCrash/Reporting/Sinks (1.16.1):
-    - KSCrash/Recording
-    - KSCrash/Reporting/Filters
-    - KSCrash/Reporting/Tools
-  - KSCrash/Reporting/Tools (1.16.1):
-    - KSCrash/Recording
 
 DEPENDENCIES:
   - AppMetricaAnalytics (~> 5.0.0)
-  - KSCrash
 
 SPEC REPOS:
   trunk:
@@ -168,6 +107,6 @@ SPEC CHECKSUMS:
   AppMetricaWebKit: 46ab34c8a0973786ed0df7a80ea702a4aeba49fa
   KSCrash: fa10d2b42aa3e38f5697ef1124504c3fab6c6e6b
 
-PODFILE CHECKSUM: bb36d901ea9ed233924e16cf5e3349c487b360f3
+PODFILE CHECKSUM: a635b15ba1da7f98687d3e12e5d75433943a3315
 
 COCOAPODS: 1.15.2
