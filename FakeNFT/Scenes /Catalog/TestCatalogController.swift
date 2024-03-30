@@ -1,8 +1,8 @@
 import UIKit
 
-protocol CatalogViewController: UIViewController {}
+protocol CatalogViewController2: UIViewController {}
 
-final class TestCatalogViewController: StatLoggedUIViewController, CatalogViewController {
+final class TestCatalogViewController: StatLoggedUIViewController, CatalogViewController2 {
 
     let servicesAssembly: ServicesAssembly
     let testNftButton = UIButton()
