@@ -14,7 +14,7 @@ final class TabBarController: UITabBarController {
         super.init(nibName: nil, bundle: nil)
 
         viewControllers = [
-            UIViewController(),
+            ProfileViewController(),
             self.catalogViewController,
             UIViewController(),
             UIViewController()
