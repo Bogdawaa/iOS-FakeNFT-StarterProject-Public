@@ -1,0 +1,66 @@
+included:
+  - FakeNFT
+
+excluded:
+  - Pods
+
+opt_in_rules:
+  - weak_delegate
+  - vertical_parameter_alignment_on_call
+  - unneeded_parentheses_in_closure_argument
+  - type_contents_order
+  - switch_case_on_newline
+  - sorted_first_last
+  - shorthand_optional_binding
+  - self_binding
+  - return_value_from_void_function
+  - redundant_type_annotation
+  - reduce_into
+  - prohibited_super_call
+  - prefer_self_type_over_type_of_self
+  - prefer_self_in_static_references
+  - pattern_matching_keywords
+  - overridden_super_call
+  - optional_enum_case_matching
+  - operator_usage_whitespace
+  - object_literal
+  - number_separator
+  - nslocalizedstring_key
+  - multiline_parameters_brackets
+  - multiline_parameters
+  - multiline_literal_brackets
+  - multiline_function_chains
+  - multiline_arguments_brackets
+  - multiline_arguments
+  - modifier_order
+  - lower_acl_than_parent
+  - literal_expression_end_indentation
+  - legacy_objc_type
+  - last_where
+  - joined_default_parameter
+  - identical_operands
+  - function_default_parameter_at_end
+  - flatmap_over_map_reduce
+  - first_where
+  - file_name_no_space
+  - fatal_error_message
+  - explicit_init
+  - enum_case_associated_values_count
+  - empty_string
+  - empty_count
+  - empty_collection_literal
+  - discouraged_object_literal
+  - discouraged_none_name
+  - discouraged_assert
+  - discarded_notification_center_observer
+  - contains_over_range_nil_comparison
+  - contains_over_first_not_nil
+  - contains_over_filter_is_empty
+  - contains_over_filter_count
+  - comma_inheritance
+  - collection_alignment
+  - closure_spacing
+  - closure_end_indentation
+  - attributes
+  - array_init
+ 

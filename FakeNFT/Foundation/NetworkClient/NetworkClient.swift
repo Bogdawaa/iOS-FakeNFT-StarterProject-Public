@@ -9,29 +9,37 @@ enum NetworkClientError: Error {
 
 protocol NetworkClient {
     @discardableResult
-    func send(request: NetworkRequest,
-              completionQueue: DispatchQueue,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask?
+    func send(
+        request: NetworkRequest,
+        completionQueue: DispatchQueue,
+        onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask?
 
     @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            completionQueue: DispatchQueue,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask?
+    func send<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        completionQueue: DispatchQueue,
+        onResponse: @escaping (Result<T, Error>) -> Void
+    ) -> NetworkTask?
 }
 
 extension NetworkClient {
 
     @discardableResult
-    func send(request: NetworkRequest,
-              onResponse: @escaping (Result<Data, Error>) -> Void) -> NetworkTask? {
+    func send(
+        request: NetworkRequest,
+        onResponse: @escaping (Result<Data, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, completionQueue: .main, onResponse: onResponse)
     }
 
     @discardableResult
-    func send<T: Decodable>(request: NetworkRequest,
-                            type: T.Type,
-                            onResponse: @escaping (Result<T, Error>) -> Void) -> NetworkTask? {
+    func send<T: Decodable>(
+        request: NetworkRequest,
+        type: T.Type,
+        onResponse: @escaping (Result<T, Error>) -> Void
+    ) -> NetworkTask? {
         send(request: request, type: type, completionQueue: .main, onResponse: onResponse)
     }
 }
@@ -41,9 +49,11 @@ struct DefaultNetworkClient: NetworkClient {
     private let decoder: JSONDecoder
     private let encoder: JSONEncoder
 
-    init(session: URLSession = URLSession.shared,
-         decoder: JSONDecoder = JSONDecoder(),
-         encoder: JSONEncoder = JSONEncoder()) {
+    init(
+        session: URLSession = URLSession.shared,
+        decoder: JSONDecoder = JSONDecoder(),
+        encoder: JSONEncoder = JSONEncoder()
+    ) {
         self.session = session
         self.decoder = decoder
         self.encoder = encoder
@@ -73,10 +83,10 @@ struct DefaultNetworkClient: NetworkClient {
                 return
             }
 
-            if let data = data {
+            if let data {
                 onResponse(.success(data))
                 return
-            } else if let error = error {
+            } else if let error {
                 onResponse(.failure(NetworkClientError.urlRequestError(error)))
                 return
             } else {

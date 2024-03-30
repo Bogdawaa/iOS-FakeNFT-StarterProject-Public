@@ -23,22 +23,22 @@ final class TabBarController: UITabBarController {
         let items = [
             UITabBarItem(
                 title: "Tab.profile"~,
-                image: UIImage.profileTab,
+                image: UIImage.ypProfileTab,
                 selectedImage: nil
             ),
             UITabBarItem(
                 title: "Tab.catalog"~,
-                image: UIImage.catalogTab,
+                image: UIImage.ypCatalogTab,
                 selectedImage: nil
             ),
             UITabBarItem(
                 title: "Tab.basket"~,
-                image: UIImage.basketTab,
+                image: UIImage.ypBasketTab,
                 selectedImage: nil
             ),
             UITabBarItem(
                 title: "Tab.statistics"~,
-                image: UIImage.statisticsTab,
+                image: UIImage.ypStatisticsTab,
                 selectedImage: nil
             )
         ]
