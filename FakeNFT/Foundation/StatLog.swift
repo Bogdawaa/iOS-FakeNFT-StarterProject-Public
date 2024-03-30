@@ -45,6 +45,8 @@ enum LogEvent {
     }
 }
 
+
+// Наследуемся от этого класса, что бы контроллер автоматом писал в метрику.
 class StatLoggedUIViewController: UIViewController {
     let statLog: StatLog
 
