@@ -1,13 +1,15 @@
 import UIKit
 
-final class TestCatalogViewController: UIViewController {
+protocol CatalogViewController: UIViewController {}
+
+final class TestCatalogViewController: StatLoggedUIViewController, CatalogViewController {
 
     let servicesAssembly: ServicesAssembly
     let testNftButton = UIButton()
 
-    init(servicesAssembly: ServicesAssembly) {
+    init(servicesAssembly: ServicesAssembly, statLog: StatLog) {
         self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
+        super.init(statLog: statLog)
     }
 
     required init?(coder: NSCoder) {
