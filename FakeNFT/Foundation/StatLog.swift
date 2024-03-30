@@ -1,4 +1,4 @@
-// import AppMetricaCore
+import AppMetricaCore
 import UIKit
 
 protocol StatLog {
@@ -21,18 +21,28 @@ struct StatLogImpl: StatLog {
             params["Item"] = item
         }
 
-//        AppMetrica.reportEvent(
-//            name: event.name,
-//            parameters: params,
-//            onFailure: { error in
-//                print("Error when sending analytics \(error.localizedDescription)")
-//            }
-//        )
+        AppMetrica.reportEvent(
+            name: event.name,
+            parameters: params,
+            onFailure: { error in
+                print("Error when sending analytics \(error.localizedDescription)")
+            }
+        )
     }
 }
 
 enum LogEvent {
     case open, close, click(item: String)
+    var name: String {
+        switch self {
+        case .open:
+            "Open"
+        case .close:
+            "Close"
+        case .click:
+            "Click"
+        }
+    }
 }
 
 class StatLoggedUIViewController: UIViewController {
