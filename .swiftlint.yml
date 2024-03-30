@@ -63,4 +63,3 @@ opt_in_rules:
   - closure_end_indentation
   - attributes
   - array_init
- 
