@@ -375,9 +375,9 @@
 		3FC8C38F29D245250081F015 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				79143C762BB9479E007E2AAB /* BaseNftRequest.swift */,
 				0C79EE602A76DCD600EE90EA /* NftByIdRequest.swift */,
 				0C79EE622A76DD1900EE90EA /* RequestConstants.swift */,
+				79143C762BB9479E007E2AAB /* BaseNftRequest.swift */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
