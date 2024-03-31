@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
+final class StatisticsViewController: StatLoggedUIViewController, StatisticsViewProtocol {
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
@@ -35,9 +35,9 @@ final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
     private var users: [User] = []
 
     // MARK: - init
-    init(presenter: StatisticsPresenterProtocol) {
+    init(presenter: StatisticsPresenterProtocol, statlog: StatLog) {
         self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
+        super.init(statLog: statlog)
     }
 
     required init?(coder: NSCoder) {
@@ -89,11 +89,11 @@ final class StatisticsViewController: UIViewController, StatisticsViewProtocol {
     @objc private func sortButtonTapped() {
         let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "По имени", style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             presenter.setUsersSortingParametr(SortParametr.byName)
         }))
         alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             presenter.setUsersSortingParametr(SortParametr.byRating)
         }))
         alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))

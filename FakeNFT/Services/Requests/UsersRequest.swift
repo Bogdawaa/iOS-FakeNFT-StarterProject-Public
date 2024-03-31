@@ -11,7 +11,7 @@ enum SortParametr {
     case byName, byRating
 }
 
-struct UsersRequest: NetworkRequest {
+struct UsersRequest: BaseNftRequest {
 
     private var lastLoadedPage: Int?
 

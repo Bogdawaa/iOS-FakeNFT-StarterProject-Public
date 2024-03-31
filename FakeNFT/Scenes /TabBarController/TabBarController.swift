@@ -3,19 +3,19 @@ import UIKit
 final class TabBarController: UITabBarController {
     private let catalogViewController: CatalogViewController
     private let servicesAssembly: ServicesAssembly
+    private let statisticsController: StatisticsViewController
 
     init(
         servicesAssembly: ServicesAssembly,
-        catalogViewController: CatalogViewController
+        catalogViewController: CatalogViewController,
+        statisticsController: StatisticsViewController
     ) {
         self.servicesAssembly = servicesAssembly
         self.catalogViewController = catalogViewController
+        self.statisticsController = statisticsController
 
         super.init(nibName: nil, bundle: nil)
 
-        let statisticsPresenter = StatisticsPresenter(service: userServiceAssembly.usersService)
-        let statisticsController = StatisticsViewController(presenter: statisticsPresenter)
-        
         viewControllers = [
             UIViewController(),
             self.catalogViewController,
