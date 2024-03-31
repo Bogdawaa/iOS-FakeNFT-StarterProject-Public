@@ -8,6 +8,7 @@ target 'FakeNFT' do
 
   # Pods for FakeNFT
   pod 'AppMetricaAnalytics', '~> 5.0.0'
+  pod 'Swinject'
   
   target 'FakeNFTTests' do
     inherit! :search_paths
