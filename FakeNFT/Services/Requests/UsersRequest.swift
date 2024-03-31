@@ -13,11 +13,19 @@ enum SortParametr {
 
 struct UsersRequest: NetworkRequest {
 
-    private var parametr = SortParametr.byName
-    private var parametrURL: String = ""
+    private var lastLoadedPage: Int?
+
+    private var parametr = SortParametr.byRating
+    private var parametrSortBy: String = ""
 
     var endpoint: URL? {
-        URL(string: "\(RequestConstants.baseURL)/api/v1/users\(parametrURL)")
+        // TODO: доделать загрузку данных по страницам
+        let nextPage = lastLoadedPage == nil ? 1 : lastLoadedPage! + 1
+        //        if lastLoadedPage == nil {
+//            lastLoadedPage = 1
+//        }
+        let parametrUsersOnPage: String = "&page=\(nextPage)&size=\(15)"
+        return URL(string: "\(RequestConstants.baseURL)/api/v1/users\(parametrSortBy)\(parametrUsersOnPage)")
     }
 
     init() {
@@ -27,9 +35,9 @@ struct UsersRequest: NetworkRequest {
     mutating func sortUsers(by parametr: SortParametr) {
         switch parametr {
         case .byName:
-            parametrURL = "?sortBy=name&order=asc"
+            parametrSortBy = "?sortBy=name&order=asc"
         case .byRating:
-            parametrURL = "?sortBy=rating&order=desc"
+            parametrSortBy = "?sortBy=rating&order=desc"
         }
     }
 }

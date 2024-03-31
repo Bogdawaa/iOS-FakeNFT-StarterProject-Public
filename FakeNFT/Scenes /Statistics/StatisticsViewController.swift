@@ -113,11 +113,7 @@ extension StatisticsViewController: UITableViewDataSource {
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
 
-        cell.setupCell(
-            rating: users[indexPath.row].rating,
-            name: users[indexPath.row].name,
-            nfts: users[indexPath.row].nfts
-        )
+        cell.setupCell(with: users[indexPath.row])
         return cell
     }
 }
