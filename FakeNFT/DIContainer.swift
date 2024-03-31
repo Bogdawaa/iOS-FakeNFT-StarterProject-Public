@@ -8,6 +8,7 @@ final class DIContainer {
         registerFoundation()
         registerProfile()
         registerCatalog()
+        registerStatistics()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
@@ -15,7 +16,8 @@ final class DIContainer {
                 catalogViewController: diResolver.resolve(CatalogViewController.self)!,
                 profileViewController: UINavigationController(
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
-                )
+                ),
+                statisticsController: diResolver.resolve(StatisticsViewController.self)!
             )
         }
     }
@@ -142,5 +144,22 @@ final class DIContainer {
             StatLogImpl()
         }
         .inObjectScope(.container)
+    }
+
+    private func registerStatistics() {
+        container.register(StatisticsPresenter.self) { diResolver in
+            StatisticsPresenter(
+                service: UsersServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: UsersStorageImpl()
+                )
+            )
+        }
+        container.register(StatisticsViewController.self) { diResolver in
+            StatisticsViewController(
+                presenter: diResolver.resolve(StatisticsPresenter.self)!,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
     }
 }

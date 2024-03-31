@@ -96,7 +96,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         cardStackView.addSubview(userImage)
         cardStackView.addSubview(userName)
         cardStackView.addSubview(userNFTs)
-        cardStackView.backgroundColor = .segmentInactive
+        cardStackView.backgroundColor = .ypLightGray // TODO: посмотреть цвет
 
         applyConstraints()
     }
