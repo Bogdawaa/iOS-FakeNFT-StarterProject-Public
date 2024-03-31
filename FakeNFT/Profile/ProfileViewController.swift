@@ -124,9 +124,20 @@ final class ProfileViewController: UIViewController{
     }
     
 }
+func createProfileViewController() -> UINavigationController {
+    let myNFTViewController = MyNFTViewController()
+    return UINavigationController(rootViewController: myNFTViewController)
+    
+}
+
 //MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let view = createProfileViewController()
+        view.modalPresentationStyle = .fullScreen
+        
+        present(view, animated: true)
+    }
 }
 
 //MARK: - UITableViewDataSource
