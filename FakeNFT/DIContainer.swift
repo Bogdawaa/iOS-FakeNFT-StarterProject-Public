@@ -5,12 +5,14 @@ final class DIContainer {
 
     init() {
         registerFoundation()
+        registerProfile()
         registerCatalog()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
-                catalogViewController: diResolver.resolve(CatalogViewController.self)!
+                catalogViewController: diResolver.resolve(CatalogViewController.self)!,
+                profileViewController: diResolver.resolve(ProfileViewController.self)!
             )
         }
     }
@@ -23,6 +25,14 @@ final class DIContainer {
         container.register(CatalogViewController.self) { diResolver in
             TestCatalogViewController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
+                statLog: diResolver.resolve(StatLog.self)!
+            )
+        }
+    }
+
+    private func registerProfile() {
+        container.register(ProfileViewController.self) { diResolver in
+            ProfileViewController(
                 statLog: diResolver.resolve(StatLog.self)!
             )
         }

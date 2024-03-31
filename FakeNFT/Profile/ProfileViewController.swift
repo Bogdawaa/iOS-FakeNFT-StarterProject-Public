@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-final class ProfileViewController: UIViewController{
-    //MARK: - UI
-    private lazy var profileEditButton: UIButton  = {
+final class ProfileViewController: StatLoggedUIViewController {
+    // MARK: - UI
+    private lazy var profileEditButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +20,7 @@ final class ProfileViewController: UIViewController{
     }()
     private lazy var profileImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "pepe")
+        imageView.image = .ypProfileImage
         imageView.layer.cornerRadius = 70 / 2
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleToFill
@@ -66,8 +66,8 @@ final class ProfileViewController: UIViewController{
         self.view.addSubview(tableView)
         return tableView
     }()
-    
-    //MARK: - lifecycle
+
+    // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         constraitsProfileEditButton()
@@ -77,7 +77,7 @@ final class ProfileViewController: UIViewController{
         constraitsProfileHyperlink()
         constraitsProfileTableView()
     }
-    //MARK: - constraits
+    // MARK: - constraits
     private func constraitsProfileEditButton() {
         NSLayoutConstraint.activate([
             profileEditButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
@@ -122,48 +122,50 @@ final class ProfileViewController: UIViewController{
             profileTableView.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
-    
+
 }
 func createProfileViewController() -> UINavigationController {
     let myNFTViewController = MyNFTViewController()
     return UINavigationController(rootViewController: myNFTViewController)
-    
+
 }
 
-//MARK: - UITableViewDelegate
+// MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let view = createProfileViewController()
         view.modalPresentationStyle = .fullScreen
-        
+
         present(view, animated: true)
     }
 }
 
-//MARK: - UITableViewDataSource
+// MARK: - UITableViewDataSource
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProfileTableCell.Identifier, for: indexPath) as? ProfileTableCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: ProfileTableCell.Identifier,
+            for: indexPath
+        ) as? ProfileTableCell else {
             assertionFailure("")
             return UITableViewCell()
         }
         switch indexPath.row {
-        case 0 :
+        case 0:
             cell.textLabel?.text = "Мои NFT (122)"
-        case 1 :
+        case 1:
             cell.textLabel?.text = "Избранные NFT (11)"
-        case 2 :
+        case 2:
             cell.textLabel?.text = "О разработчике"
-        default: ""
+        default:
+            break
         }
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
-    
 
-    
 }

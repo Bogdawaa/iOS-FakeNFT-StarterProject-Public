@@ -8,26 +8,27 @@ import UIKit
 import Foundation
 
 final class MyNFTViewController: UIViewController {
-    //MARK: - UI
+    // MARK: - UI
 
-    
-    //MARK: - LIFECYCLE
+    // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navBarSetup()
         setupGestureRecognizers()
     }
-    //MARK: - TAB BAR SETTING
+    // MARK: - TAB BAR SETTING
     private func setupGestureRecognizers() {
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeAction(swipe:)))
         rightSwipe.direction = UISwipeGestureRecognizer.Direction.right
         view.addGestureRecognizer(rightSwipe)
     }
-    
-    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+
+    @objc
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
         self.dismiss(animated: true)
     }
+
     private func navBarSetup() {
         if let navBar = navigationController?.navigationBar {
 
@@ -35,20 +36,22 @@ final class MyNFTViewController: UIViewController {
                 image: UIImage(systemName: "chevron.left"),
                 style: .plain,
                 target: self,
-                action: nil)
+                action: nil
+            )
             leftButton.tintColor = .black
             navigationItem.leftBarButtonItem = leftButton
-            
+
             let test = UILabel()
             test.text = "Мои NFT"
             test.font = .bodyBold
             navBar.topItem?.titleView = test
-            
+
             let rightButton = UIBarButtonItem(
-                image: UIImage(named: "sortButton"),
+                image: .ypSortButton,
                 style: .plain,
                 target: self,
-                action: nil)
+                action: nil
+            )
             rightButton.tintColor = .black
             navigationItem.rightBarButtonItem = rightButton
         }

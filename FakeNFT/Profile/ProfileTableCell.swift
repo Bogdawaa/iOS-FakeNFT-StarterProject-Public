@@ -9,9 +9,9 @@ import Foundation
 import UIKit
 
 final class ProfileTableCell: UITableViewCell {
-    //MARK: - Identifier
+    // MARK: - Identifier
     static let Identifier = "ProfileCell"
-    //MARK: - UI
+    // MARK: - UI
     private lazy var chevronImage: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "chevron.right")
@@ -22,17 +22,17 @@ final class ProfileTableCell: UITableViewCell {
         contentView.addSubview(imageView)
         return imageView
     }()
-    //MARK: - Initializers
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.textLabel?.font = .bodyBold
         constraitsChevronImage()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    //MARK: - CONSTRAITS
+    // MARK: - CONSTRAITS
     private func constraitsChevronImage() {
         NSLayoutConstraint.activate([
             chevronImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

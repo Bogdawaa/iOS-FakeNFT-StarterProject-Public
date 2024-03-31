@@ -399,6 +399,8 @@
 				794363282BB7FB3D00F3F527 /* String+Extension.swift */,
 			);
 			path = Helpers;
+            sourceTree = "<group>";
+        };
 		91995DD92BB1556E007F51C7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
