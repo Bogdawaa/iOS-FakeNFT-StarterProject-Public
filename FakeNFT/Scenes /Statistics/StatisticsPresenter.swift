@@ -33,9 +33,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
          service.loadUsers(with: parametr) { [weak self] result in
              switch result {
              case .success(let user):
-                 DispatchQueue.main.async {
-                     self?.view?.displayUserCells(user)
-                 }
+                 self?.view?.displayUserCells(user)
              case .failure(let error):
                  print("error: \(error.localizedDescription)")
              }

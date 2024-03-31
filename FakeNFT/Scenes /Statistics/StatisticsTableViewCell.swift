@@ -6,16 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
 
     // MARK: - properties
     static let reuseIdentifier = "cell"
 
-    private lazy var userImage: UIImageView = {
+    lazy var userImage: UIImageView = {
         let imgView = UIImageView()
-        let img = UIImage(named: "sortButton")
-        imgView.image = img
         imgView.clipsToBounds = true
         imgView.contentMode = .scaleAspectFill
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,10 +65,23 @@ final class StatisticsTableViewCell: UITableViewCell {
     }
 
     // MARK: - public methods
-    func setupCell(rating: String, name: String, nfts: [String]) {
-        userRating.text = rating
-        userName.text = name
-        userNFTs.text = String(nfts.count)
+    func setupCell(with model: User) {
+        userRating.text = model.rating
+        userName.text = model.name
+        userNFTs.text = String(model.nfts.count)
+
+//        userImage.layer.cornerRadius = userImage.frame.size.width / 2
+        updateUserAvatar(with: model.avatar)
+    }
+
+    func updateUserAvatar(with userAvatar: String) {
+        let url = URL(string: userAvatar)
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        userImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholder"),
+            options: [.processor(processor)]
+        )
     }
 
     // MARK: - private methods
@@ -85,9 +97,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         cardStackView.addSubview(userName)
         cardStackView.addSubview(userNFTs)
         cardStackView.backgroundColor = .segmentInactive
-
-        // round userImage corners
-        userImage.layer.cornerRadius = self.userImage.frame.size.width / 2
 
         applyConstraints()
     }
