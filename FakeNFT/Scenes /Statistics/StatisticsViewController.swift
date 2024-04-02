@@ -6,15 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class StatisticsViewController: StatLoggedUIViewController, StatisticsViewProtocol {
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
+    var isEndReached = false
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
-        let btnImage = UIImage(named: "sortButton")
+        let btnImage = UIImage.ypSort
         btn.setImage(btnImage, for: .normal)
         btn.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -58,8 +60,13 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     }
 
     func displayUserCells(_ users: [User]) {
-        self.users = users
-        statisticsTableView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            self.users.append(contentsOf: users)
+            // TODO: разобраться с сортировкой пользователей
+//            self.users.sort { $0.nfts.count < $1.nfts.count }
+            statisticsTableView.reloadData()
+        }
     }
 
     // MARK: - private methods
@@ -87,17 +94,48 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     }
 
     @objc private func sortButtonTapped() {
-        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "По имени", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            presenter.setUsersSortingParametr(SortParametr.byName)
-        }))
-        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            presenter.setUsersSortingParametr(SortParametr.byRating)
-        }))
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-            self.present(alert, animated: true)
+        let alert = UIAlertController(
+            title: "Сортировка",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "По имени",
+                style: .default,
+                handler: { [weak self] _ in
+                    guard let self else { return }
+                    presenter.setUsersSortingParametr(SortParametr.byName)
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "По рейтингу",
+                style: .default,
+                handler: { [weak self] _ in
+                    guard let self else { return }
+                    presenter.setUsersSortingParametr(SortParametr.byRating)
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Закрыть",
+                style: .cancel
+            )
+        )
+        self.present(alert, animated: true)
+    }
+
+    func updateTableViewAnimated(indexes: Range<Int>) {
+            statisticsTableView.performBatchUpdates {
+                let indexPath = indexes.map { item in
+                    IndexPath(row: item, section: 0)
+                }
+                statisticsTableView.insertRows(at: indexPath, with: .automatic)
+            } completion: { _ in
+            }
     }
 }
 
@@ -114,6 +152,19 @@ extension StatisticsViewController: UITableViewDataSource {
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
 
         cell.setupCell(with: users[indexPath.row])
+
+        let url = URL(string: users[indexPath.row].avatar)
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        cell.userImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholderImage"),
+            options: [.processor(processor)]
+        ) { _ in
+                tableView.reloadRows(
+                    at: [indexPath],
+                    with: .automatic
+                )
+        }
         return cell
     }
 }
@@ -125,5 +176,17 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // TODO: останавливать загрузку если новые записи не добавляются
+        let usersCount = users.count
+        if indexPath.row + 1 == usersCount && !isEndReached {
+            presenter.loadUsers(with: presenter.getSortParametr())
+            let newUserCount = users.count
+            if usersCount != newUserCount {
+                updateTableViewAnimated(indexes: usersCount..<newUserCount)
+            }
+        }
     }
 }

@@ -21,5 +21,7 @@ extension UIImage {
     static let ypSuitHeartFill = UIImage(systemName: "suit.heart.fill") ?? UIImage()
     static let ypSortButton = UIImage(named: "sortButton") ?? UIImage()
     static let ypClose = UIImage(named: "close") ?? UIImage()
+
+    static let ypSort = UIImage(named: "sortButton") ?? UIImage()
 }
 // swiftlint:enable object_literal

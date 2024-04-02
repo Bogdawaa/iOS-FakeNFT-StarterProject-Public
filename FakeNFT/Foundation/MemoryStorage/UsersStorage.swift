@@ -14,13 +14,14 @@ protocol UsersStorage: AnyObject {
 
 // Пример простого класса, который сохраняет данные из сети
 final class UsersStorageImpl: UsersStorage {
+
     private var storage: [User] = []
 
     private let syncQueue = DispatchQueue(label: "sync-nft-queue")
 
     func saveUsers(_ users: [User]) {
         syncQueue.async { [weak self] in
-            self?.storage = users
+            self?.storage.append(contentsOf: users)
         }
     }
 
