@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
 
@@ -69,19 +68,6 @@ final class StatisticsTableViewCell: UITableViewCell {
         userRating.text = model.rating
         userName.text = model.name
         userNFTs.text = String(model.nfts.count)
-
-//        userImage.layer.cornerRadius = userImage.frame.size.width / 2
-        updateUserAvatar(with: model.avatar)
-    }
-
-    func updateUserAvatar(with userAvatar: String) {
-        let url = URL(string: userAvatar)
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
-        userImage.kf.setImage(
-            with: url,
-            placeholder: UIImage(named: "placeholder"),
-            options: [.processor(processor)]
-        )
     }
 
     // MARK: - private methods
@@ -96,7 +82,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         cardStackView.addSubview(userImage)
         cardStackView.addSubview(userName)
         cardStackView.addSubview(userNFTs)
-        cardStackView.backgroundColor = .ypLightGray // TODO: посмотреть цвет
+        cardStackView.backgroundColor = .ypLightGray
 
         applyConstraints()
     }

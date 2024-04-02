@@ -9,6 +9,7 @@ import Foundation
 
 protocol StatisticsViewProtocol: AnyObject {
     var presenter: StatisticsPresenterProtocol { get set }
+    var isEndReached: Bool { get set }
     func displayUserCells(_ users: [User])
 }
 
@@ -16,4 +17,6 @@ protocol StatisticsPresenterProtocol {
     var view: StatisticsViewProtocol? { get set }
     func viewDidLoad()
     func setUsersSortingParametr(_ parametr: SortParametr)
+    func loadUsers(with parametr: SortParametr)
+    func getSortParametr() -> SortParametr
 }
