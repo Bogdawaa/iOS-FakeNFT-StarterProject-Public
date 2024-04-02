@@ -49,12 +49,12 @@
 		7943632F2BB8364500F3F527 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943632E2BB8364500F3F527 /* DIContainer.swift */; };
 		79BC4FC82BB8379E007005F7 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC72BB8379E007005F7 /* Swinject */; };
 		79BC4FCA2BB8379E007005F7 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC92BB8379E007005F7 /* Swinject-Dynamic */; };
-		A7029C3449B8B0F60C9EDD9B /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FCE6E24A52E1534343A3D1 /* Pods_FakeNFT.framework */; };
 		91995DDB2BB15591007F51C7 /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 91995DDA2BB15591007F51C7 /* Profile.md */; };
 		91995DDD2BB18C39007F51C7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DDC2BB18C39007F51C7 /* ProfileViewController.swift */; };
 		91995DE12BB80A11007F51C7 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DE02BB80A11007F51C7 /* ProfileTableCell.swift */; };
 		91995DE42BB81F28007F51C7 /* MyNFTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DE32BB81F28007F51C7 /* MyNFTViewController.swift */; };
 		91995DE62BB94C3C007F51C7 /* MyNFTTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DE52BB94C3C007F51C7 /* MyNFTTableCell.swift */; };
+		A7029C3449B8B0F60C9EDD9B /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FCE6E24A52E1534343A3D1 /* Pods_FakeNFT.framework */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
 		E1C4485F950773155A235DC5 /* Pods_FakeNFT_FakeNFTUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CED2E41A2F69CB381765C2 /* Pods_FakeNFT_FakeNFTUITests.framework */; };
@@ -282,7 +282,6 @@
 			isa = PBXGroup;
 			children = (
 				794363272BB7FB2900F3F527 /* Helpers */,
-				91995DD92BB1556E007F51C7 /* Profile */,
 				E1CD40DA2A96BE9B00BE7FE8 /* Resources */,
 				3F478ECD29DB473000F6D39E /* DesignSystem */,
 				3F6806CE29CBBD1B00B4F915 /* Foundation */,
@@ -326,6 +325,7 @@
 		3F6806C729CBBC5B00B4F915 /* Scenes  */ = {
 			isa = PBXGroup;
 			children = (
+				91995DD92BB1556E007F51C7 /* Profile */,
 				E1A1B9D82AA01C9700C3AFBC /* TabBarController */,
 				0CF2C2D92A783C1600FDC837 /* Common */,
 				0CFCB7472A7808870009A829 /* Catalog */,
@@ -399,8 +399,8 @@
 				794363282BB7FB3D00F3F527 /* String+Extension.swift */,
 			);
 			path = Helpers;
-            sourceTree = "<group>";
-        };
+			sourceTree = "<group>";
+		};
 		91995DD92BB1556E007F51C7 /* Profile */ = {
 			isa = PBXGroup;
 			children = (

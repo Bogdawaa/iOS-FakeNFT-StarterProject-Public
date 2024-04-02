@@ -14,7 +14,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.tintColor = .black
+        button.tintColor = .ypBlack
         self.view.addSubview(button)
         return button
     }()
@@ -48,7 +48,7 @@ final class ProfileViewController: StatLoggedUIViewController {
     private lazy var profileHyperlink: UILabel = {
         let label = UILabel()
         label.text = "Joaquin Phoenix.com"
-        label.textColor = .systemBlue
+        label.textColor = .ypBlueUniversal
         label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(label)
@@ -70,6 +70,7 @@ final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .ypWhite
         constraitsProfileEditButton()
         constraitsProfileImage()
         constraitsProfileNameLabel()

@@ -27,8 +27,8 @@ final class ProfileTableCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.textLabel?.font = .bodyBold
         constraitsChevronImage()
+        NSLayoutConstraint.activate([contentView.heightAnchor.constraint(equalToConstant: 54)])
     }
-
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
