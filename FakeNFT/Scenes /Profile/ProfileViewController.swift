@@ -40,6 +40,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         let textView = UITextView()
         textView.font = .caption1
         textView.isEditable = false
+        textView.backgroundColor = .ypWhite
         textView.text = "Дизайнер из Казани, люблю цифровое искусство  и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(textView)
@@ -62,6 +63,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .ypWhite
         self.profileTableView = tableView
         self.view.addSubview(tableView)
         return tableView
@@ -128,16 +130,28 @@ final class ProfileViewController: StatLoggedUIViewController {
 func createProfileViewController() -> UINavigationController {
     let myNFTViewController = MyNFTViewController()
     return UINavigationController(rootViewController: myNFTViewController)
+}
+func createFavoritesNFTViewController() -> UINavigationController {
+    let myNFTViewController = FavoritesNFTViewController()
+    return UINavigationController(rootViewController: myNFTViewController)
 
 }
 
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let view = createProfileViewController()
-        view.modalPresentationStyle = .fullScreen
+        if indexPath.row == 0 {
+            let view = createProfileViewController()
+            view.modalPresentationStyle = .fullScreen
 
-        present(view, animated: true)
+            present(view, animated: true)
+        }
+        if indexPath.row == 1 {
+            let view = createFavoritesNFTViewController()
+            view.modalPresentationStyle = .fullScreen
+
+            present(view, animated: true)
+        }
     }
 }
 
@@ -153,15 +167,15 @@ extension ProfileViewController: UITableViewDataSource {
         }
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "Мои NFT (122)"
+            cell.textLabel?.text = "Profile.myNFT"~
         case 1:
-            cell.textLabel?.text = "Избранные NFT (11)"
+            cell.textLabel?.text = "Profile.favoritesNFT"~
         case 2:
-            cell.textLabel?.text = "О разработчике"
+            cell.textLabel?.text = "Profile.aboutDeveloper"~
         default:
             break
         }
-
+        cell.backgroundColor = .ypWhite
         return cell
     }
 

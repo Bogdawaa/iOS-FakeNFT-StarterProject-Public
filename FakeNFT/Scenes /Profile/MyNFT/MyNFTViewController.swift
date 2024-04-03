@@ -34,8 +34,7 @@ final class MyNFTViewController: UIViewController {
         rightSwipe.direction = UISwipeGestureRecognizer.Direction.right
         view.addGestureRecognizer(rightSwipe)
     }
-
-    // MARK: - NAV BAR SETTING
+    // MARK: - NAV BAR SETUP
     private func navBarSetup() {
         if let navBar = navigationController?.navigationBar {
 
@@ -49,7 +48,7 @@ final class MyNFTViewController: UIViewController {
             navigationItem.leftBarButtonItem = leftButton
 
             let test = UILabel()
-            test.text = "Мои NFT"
+            test.text = "Profile.MyNFT.Title"~
             test.font = .bodyBold
             navBar.topItem?.titleView = test
 
@@ -65,17 +64,17 @@ final class MyNFTViewController: UIViewController {
     }
     // MARK: - Configure Sort Menu
     func configureSortMenu() {
-        let priceSortItem = UIAlertAction(title: "По цене", style: .default) { _ in
+        let priceSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByPrice"~, style: .default) { _ in
            // todo
         }
-        let ratingSortItem = UIAlertAction(title: "По рейтингу", style: .default) { _ in
+        let ratingSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByRating"~, style: .default) { _ in
            // todo
         }
-        let namegSortItem = UIAlertAction(title: "По названию", style: .default) { _ in
+        let namegSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByName"~, style: .default) { _ in
            // todo
         }
-        let cancelAction = UIAlertAction(title: "Закрыть", style: .cancel)
-        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Profile.MyNFT.Sort.Close"~, style: .cancel)
+        let alert = UIAlertController(title: "Profile.MyNFT.Sort.Title"~, message: nil, preferredStyle: .actionSheet)
         alert.addAction(priceSortItem)
         alert.addAction(ratingSortItem)
         alert.addAction(namegSortItem)
@@ -123,18 +122,6 @@ extension MyNFTViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
-        /*
-        switch indexPath.row {
-        case 0:
-            cell.textLabel?.text = "Мои NFT (122)"
-        case 1:
-            cell.textLabel?.text = "Избранные NFT (11)"
-        case 2:
-            cell.textLabel?.text = "О разработчике"
-        default:
-            break
-        }
-        */
         return cell
     }
 }

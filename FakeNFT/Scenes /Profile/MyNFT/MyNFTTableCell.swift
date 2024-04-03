@@ -14,7 +14,6 @@ final class MyNFTTableCell: UITableViewCell {
     // MARK: - UI
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .ypProfileNftMockImage
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,7 +23,6 @@ final class MyNFTTableCell: UITableViewCell {
     private lazy var nftTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.text = "Amogus drip"
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
@@ -32,7 +30,6 @@ final class MyNFTTableCell: UITableViewCell {
     private lazy var nftPriceTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.text = "Цена"
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
@@ -40,7 +37,6 @@ final class MyNFTTableCell: UITableViewCell {
     private lazy var nftPriceLabel: UILabel = {
         let label = UILabel()
         label.font = .bodyBold
-        label.text = "1,78 ETH"
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
@@ -48,14 +44,12 @@ final class MyNFTTableCell: UITableViewCell {
     private lazy var nftAuthorLabel: UILabel = {
         let label = UILabel()
         label.font = .caption2
-        label.text = "от John Doe"
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
     }()
     private lazy var nftRatingImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .ypProfileNftMockRatingImage
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         return imageView
@@ -65,18 +59,29 @@ final class MyNFTTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         NSLayoutConstraint.activate([contentView.heightAnchor.constraint(equalToConstant: 140)])
-         contentView.backgroundColor = .ypWhite
+        contentView.backgroundColor = .ypWhite
         constraitsNftImageView()
         constraitsNftTitleLabel()
         constraitsNftRatingImageView()
         constraitsNftAuthorLabel()
         constraitsNftPriceTitleLabel()
         constraitsNftPriceLabel()
+        mockSetup()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - MOCK SETUP
+    private func mockSetup() {
+        nftPriceLabel.text = "1,78 ETH"
+        nftPriceTitleLabel.text = "Цена"
+        nftTitleLabel.text = "Amogus"
+        nftAuthorLabel.text = "от John Doe"
+        nftImageView.image = .ypProfileNftMockImage
+        nftRatingImageView.image = .ypProfileNftMockRatingImage
+    }
     // MARK: - CONSTRAITS
+
     private func constraitsNftImageView() {
         NSLayoutConstraint.activate([
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
@@ -107,7 +112,7 @@ final class MyNFTTableCell: UITableViewCell {
     }
     private func constraitsNftPriceTitleLabel() {
         NSLayoutConstraint.activate([
-            nftPriceTitleLabel.leadingAnchor.constraint(equalTo: nftTitleLabel.trailingAnchor, constant: 39),
+            nftPriceTitleLabel.leadingAnchor.constraint(equalTo: nftRatingImageView.trailingAnchor, constant: 39),
             nftPriceTitleLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33)
         ])
     }
