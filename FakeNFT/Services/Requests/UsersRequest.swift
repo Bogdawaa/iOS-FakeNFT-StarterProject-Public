@@ -13,22 +13,15 @@ enum SortParametr {
 
 struct UsersRequest: BaseNftRequest {
 
-    private var lastLoadedPage: Int?
-
     private var parametr = SortParametr.byRating
     private var parametrSortBy: String = ""
-    private var parametrUsersOnPage: String = ""
 
     var endpoint: URL? {
-        return URL(string: "\(RequestConstants.baseURL)/api/v1/users?\(parametrSortBy)\(parametrUsersOnPage)")
+        return URL(string: "\(RequestConstants.baseURL)/api/v1/users?\(parametrSortBy)")
     }
 
     init() {
         sortUsers(by: parametr)
-    }
-
-    mutating func fetchNextPage(nextPage: Int, usersOnPage: Int) {
-        parametrUsersOnPage = "&page=\(nextPage)&size=\(usersOnPage)"
     }
 
     mutating func sortUsers(by parametr: SortParametr) {
