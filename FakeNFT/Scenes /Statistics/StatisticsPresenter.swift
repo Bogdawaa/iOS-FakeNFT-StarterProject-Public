@@ -13,9 +13,6 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
 
     private let service: UsersService
     private var parametr = SortParametr.byName
-    private var storage = UsersStorageImpl()
-    private var userStorageObserver: NSObjectProtocol?
-    private var users: [User] = [User]()
 
      // MARK: - Init
 
@@ -40,12 +37,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
          service.loadUsers(with: parametr) { [weak self] result in
              switch result {
              case .success(let user):
-                 if user.isEmpty {
-                     self?.view?.isEndReached = true
-                 } else {
-                     self?.view?.isEndReached = false
-                     self?.view?.displayUserCells(user)
-                 }
+                self?.view?.displayUserCells(user)
              case .failure(let error):
                  print("error: \(error.localizedDescription)")
              }

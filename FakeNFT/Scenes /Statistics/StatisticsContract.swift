@@ -9,7 +9,6 @@ import Foundation
 
 protocol StatisticsViewProtocol: AnyObject {
     var presenter: StatisticsPresenterProtocol { get set }
-    var isEndReached: Bool { get set }
     func displayUserCells(_ users: [User])
 }
 

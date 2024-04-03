@@ -12,7 +12,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
-    var isEndReached = false
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
@@ -32,6 +31,13 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.attributedTitle = NSAttributedString(string: "Обновить данные")
+        control.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return control
     }()
 
     private var users: [User] = []
@@ -54,17 +60,15 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.dataSource = self
 
         setupUI()
+
         presenter.view = self
         presenter.viewDidLoad()
-
     }
 
     func displayUserCells(_ users: [User]) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
-            self.users.append(contentsOf: users)
-            // TODO: разобраться с сортировкой пользователей
-//            self.users.sort { $0.nfts.count < $1.nfts.count }
+            self.users = users
             statisticsTableView.reloadData()
         }
     }
@@ -74,6 +78,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         view.backgroundColor = .systemBackground
         view.addSubview(sortButton)
         view.addSubview(statisticsTableView)
+        statisticsTableView.addSubview(refreshControl)
         applyConstraints()
     }
 
@@ -128,14 +133,13 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         self.present(alert, animated: true)
     }
 
-    func updateTableViewAnimated(indexes: Range<Int>) {
-            statisticsTableView.performBatchUpdates {
-                let indexPath = indexes.map { item in
-                    IndexPath(row: item, section: 0)
-                }
-                statisticsTableView.insertRows(at: indexPath, with: .automatic)
-            } completion: { _ in
-            }
+    @objc func refreshData() {
+        let currentSortParam = presenter.getSortParametr()
+        presenter.loadUsers(with: currentSortParam)
+
+        if refreshControl.isRefreshing {
+            self.refreshControl.endRefreshing()
+        }
     }
 }
 
@@ -154,10 +158,10 @@ extension StatisticsViewController: UITableViewDataSource {
         cell.setupCell(with: users[indexPath.row])
 
         let url = URL(string: users[indexPath.row].avatar)
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        let processor = RoundCornerImageProcessor(cornerRadius: 28)
         cell.userImage.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "placeholderImage"),
+            placeholder: nil,
             options: [.processor(processor)]
         ) { _ in
                 tableView.reloadRows(
@@ -176,17 +180,5 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // TODO: останавливать загрузку если новые записи не добавляются
-        let usersCount = users.count
-        if indexPath.row + 1 == usersCount && !isEndReached {
-            presenter.loadUsers(with: presenter.getSortParametr())
-            let newUserCount = users.count
-            if usersCount != newUserCount {
-                updateTableViewAnimated(indexes: usersCount..<newUserCount)
-            }
-        }
     }
 }
