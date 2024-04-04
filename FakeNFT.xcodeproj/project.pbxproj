@@ -84,6 +84,7 @@
 		F00DF4B92BB3351600825462 /* UsersRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4B82BB3351600825462 /* UsersRequest.swift */; };
 		F00DF4BB2BB338A900825462 /* UsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BA2BB338A900825462 /* UsersStorage.swift */; };
 		F00DF4BD2BB33A8C00825462 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BC2BB33A8C00825462 /* UsersService.swift */; };
+		F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +188,7 @@
 		F00DF4B82BB3351600825462 /* UsersRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequest.swift; sourceTree = "<group>"; };
 		F00DF4BA2BB338A900825462 /* UsersStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorage.swift; sourceTree = "<group>"; };
 		F00DF4BC2BB33A8C00825462 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
+		F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -406,6 +408,7 @@
 				3F6806D629CBC50A00B4F915 /* CellsReusingUtils.swift */,
 				3FC8C39229D246BA0081F015 /* DateFormatters+Presets.swift */,
 				0CFCB74A2A780EA80009A829 /* UIView+Constraints.swift */,
+				F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -898,6 +901,7 @@
 				91013CD52BCFC6F000105D5E /* EditProfile.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
 				91995DF62BC3BC45007F51C7 /* ProfileByRequest.swift in Sources */,
+				F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */,
 				79143C772BB9479E007E2AAB /* BaseNftRequest.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
