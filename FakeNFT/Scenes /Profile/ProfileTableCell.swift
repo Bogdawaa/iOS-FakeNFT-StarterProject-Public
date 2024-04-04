@@ -17,7 +17,7 @@ final class ProfileTableCell: UITableViewCell {
         let image = UIImage(systemName: "chevron.right")
         imageView.contentMode = .scaleToFill
         imageView.image = image
-        imageView.tintColor = .black
+        imageView.tintColor = .ypBlack
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)
         return imageView

@@ -21,6 +21,10 @@
 "Profile.MyNFT.Sort.ByName" = "По названию";
 "Profile.MyNFT.Sort.Close" = "Закрыть";
 "Profile.Favorites.Title" = "Избранные NFT";
+"Profile.Edit.Change.Avatar.Title" = "Сменить \nфото";
+"Profile.Edit.NameTitle" = "Имя";
+"Profile.Edit.CaptionTitle" = "Описание";
+"Profile.Edit.WebsiteTitle" = "Сайт";
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
 

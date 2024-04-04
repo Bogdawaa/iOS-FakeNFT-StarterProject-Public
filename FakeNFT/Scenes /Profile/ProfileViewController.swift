@@ -15,6 +15,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tintColor = .ypBlack
+        button.addTarget(self, action: #selector(profileEditButtonClicked), for: .touchDown)
         self.view.addSubview(button)
         return button
     }()
@@ -68,7 +69,6 @@ final class ProfileViewController: StatLoggedUIViewController {
         self.view.addSubview(tableView)
         return tableView
     }()
-
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +79,12 @@ final class ProfileViewController: StatLoggedUIViewController {
         constraitsProfileTextView()
         constraitsProfileHyperlink()
         constraitsProfileTableView()
+    }
+    // MARK: - OBJC
+    @objc
+    private func profileEditButtonClicked(_ sender: UIButton) {
+        let view = EditProfileViewController()
+        self.present(view, animated: true)
     }
     // MARK: - constraits
     private func constraitsProfileEditButton() {
