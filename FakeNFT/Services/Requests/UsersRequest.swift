@@ -7,8 +7,9 @@
 
 import Foundation
 
-enum SortParametr {
-    case byName, byRating
+enum SortParametr: String {
+    case byName = "byName"
+    case byRating = "byRating"
 }
 
 struct UsersRequest: BaseNftRequest {

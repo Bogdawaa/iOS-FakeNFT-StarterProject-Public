@@ -66,11 +66,8 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     }
 
     func displayUserCells(_ users: [User]) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            self.users = users
-            statisticsTableView.reloadData()
-        }
+        self.users = users
+        statisticsTableView.reloadData()
     }
 
     // MARK: - private methods
@@ -79,6 +76,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         view.addSubview(sortButton)
         view.addSubview(statisticsTableView)
         statisticsTableView.addSubview(refreshControl)
+        statisticsTableView.sendSubviewToBack(refreshControl)
         applyConstraints()
     }
 
@@ -134,12 +132,13 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     }
 
     @objc func refreshData() {
+        DispatchQueue.main.async {
+            self.users.removeAll()
+            self.statisticsTableView.reloadData()
+        }
         let currentSortParam = presenter.getSortParametr()
         presenter.loadUsers(with: currentSortParam)
-
-        if refreshControl.isRefreshing {
-            self.refreshControl.endRefreshing()
-        }
+        refreshControl.endRefreshing()
     }
 }
 
@@ -163,12 +162,7 @@ extension StatisticsViewController: UITableViewDataSource {
             with: url,
             placeholder: nil,
             options: [.processor(processor)]
-        ) { _ in
-                tableView.reloadRows(
-                    at: [indexPath],
-                    with: .automatic
-                )
-        }
+        )
         return cell
     }
 }
