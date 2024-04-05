@@ -8,5 +8,5 @@
 import Foundation
 
 enum UserDefaultsKeys: String {
-    case sortParam = "sortParam"
+    case sortParam = "sort_Param"
 }
