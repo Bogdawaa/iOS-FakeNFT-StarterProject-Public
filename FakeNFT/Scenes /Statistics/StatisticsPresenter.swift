@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import ProgressHUD
 
 final class StatisticsPresenter: StatisticsPresenterProtocol {
 
@@ -40,20 +39,20 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
     }
 
     func loadUsers(with parametr: SortParametr) {
-        ProgressHUD.show()
-         service.loadUsers(with: parametr) { [weak self] result in
-             guard let self else { return }
-             switch result {
-             case .success(let user):
-                 ProgressHUD.dismiss()
-                 DispatchQueue.main.async {
-                     self.view?.displayUserCells(user)
-                 }
-             case .failure(let error):
-                 print("error: \(error.localizedDescription)")
-             }
-         }
-     }
+        view?.loadingDataStarted()
+        service.loadUsers(with: parametr) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    self.view?.loadingDataFinished()
+                    self.view?.displayUserCells(user)
+                }
+            case .failure(let error):
+                print("error: \(error.localizedDescription)")
+            }
+        }
+    }
 
     private func saveSortParam(sortParametr: SortParametr) {
         defaults.set(sortParametr.rawValue, forKey: UserDefaultsKeys.sortParam.rawValue)

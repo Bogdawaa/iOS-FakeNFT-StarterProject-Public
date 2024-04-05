@@ -7,11 +7,14 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class StatisticsViewController: StatLoggedUIViewController, StatisticsViewProtocol {
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
+
+    private var isShowing = false
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
@@ -65,9 +68,29 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         presenter.viewDidLoad()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if isShowing {
+            ProgressHUD.dismiss()
+        }
+    }
+
     func displayUserCells(_ users: [User]) {
         self.users = users
         statisticsTableView.reloadData()
+    }
+
+    func loadingDataStarted() {
+        isShowing = true
+        ProgressHUD.show()
+        statisticsTableView.isUserInteractionEnabled = false
+    }
+
+    func loadingDataFinished() {
+        isShowing = false
+        ProgressHUD.dismiss()
+        statisticsTableView.isUserInteractionEnabled = true
     }
 
     // MARK: - private methods

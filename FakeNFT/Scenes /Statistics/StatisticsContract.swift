@@ -10,6 +10,8 @@ import Foundation
 protocol StatisticsViewProtocol: AnyObject {
     var presenter: StatisticsPresenterProtocol { get set }
     func displayUserCells(_ users: [User])
+    func loadingDataStarted()
+    func loadingDataFinished()
 }
 
 protocol StatisticsPresenterProtocol {
