@@ -15,7 +15,6 @@ final class StatisticsTableViewCell: UITableViewCell {
     lazy var userImage: UIImageView = {
         let imgView = UIImageView()
         imgView.clipsToBounds = true
-        imgView.contentMode = .scaleAspectFill
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
     }()
@@ -71,6 +70,12 @@ final class StatisticsTableViewCell: UITableViewCell {
     }
 
     // MARK: - private methods
+    private func setupUserImage() {
+        userImage.layoutIfNeeded()
+        userImage.layer.masksToBounds = true
+        userImage.layer.cornerRadius = userImage.frame.size.width / 2
+    }
+
     private func setupCellUI() {
 
         // contentview
@@ -85,6 +90,7 @@ final class StatisticsTableViewCell: UITableViewCell {
         cardStackView.backgroundColor = .ypLightGray
 
         applyConstraints()
+        setupUserImage()
     }
 
     private func applyConstraints() {
