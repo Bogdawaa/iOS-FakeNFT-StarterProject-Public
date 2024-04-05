@@ -44,7 +44,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "suit.heart.fill")
-        imageView.tintColor = .red
+        imageView.tintColor = .ypRedUniversal
         favNftImageView.addSubview(imageView)
         return imageView
     }()

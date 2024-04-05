@@ -25,6 +25,14 @@ final class FavoritesNFTViewController: UIViewController {
         self.favoritesNftCollectionView = collectionView
         return collectionView
     }()
+    private lazy var favoritesNftEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyBold
+        label.text = "Profile.favoritesNFT.Empty"~
+        view.addSubview(label)
+        return label
+    }()
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +40,8 @@ final class FavoritesNFTViewController: UIViewController {
         navbarSetup()
         setupGestureRecognizers()
         constraitsFavoritesNftCollectionView()
-        favoritesNftCollectionView.reloadData()
+        favoritesNftCollectionView.isHidden = truew
+        constraitsFavoritesNftEmptyLabel()
     }
     // MARK: - NAVBAR SETUP
     private func navbarSetup() {
@@ -75,6 +84,12 @@ final class FavoritesNFTViewController: UIViewController {
             favoritesNftCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
+    private func constraitsFavoritesNftEmptyLabel() {
+        NSLayoutConstraint.activate([
+            favoritesNftEmptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            favoritesNftEmptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 // MARK: - UICollectionViewDelegate
 extension FavoritesNFTViewController: UICollectionViewDelegate {
@@ -85,7 +100,6 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        return 25
     }
-
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath

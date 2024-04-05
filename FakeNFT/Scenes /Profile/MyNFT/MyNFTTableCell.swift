@@ -54,13 +54,21 @@ final class MyNFTTableCell: UITableViewCell {
         contentView.addSubview(imageView)
         return imageView
     }()
-
+    private lazy var nftHeartImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "suit.heart.fill")
+        imageView.tintColor = .ypWhiteUniversal
+        nftImageView.addSubview(imageView)
+        return imageView
+    }()
     // MARK: - INITIALIZERS
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         NSLayoutConstraint.activate([contentView.heightAnchor.constraint(equalToConstant: 140)])
         contentView.backgroundColor = .ypWhite
         constraitsNftImageView()
+        constraitsNftHeartImageView()
         constraitsNftTitleLabel()
         constraitsNftRatingImageView()
         constraitsNftAuthorLabel()
@@ -81,13 +89,18 @@ final class MyNFTTableCell: UITableViewCell {
         nftRatingImageView.image = .ypProfileNftMockRatingImage
     }
     // MARK: - CONSTRAITS
-
     private func constraitsNftImageView() {
         NSLayoutConstraint.activate([
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16)
+        ])
+    }
+    private func constraitsNftHeartImageView() {
+        NSLayoutConstraint.activate([
+            nftHeartImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12),
+            nftHeartImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12)
         ])
     }
     private func constraitsNftTitleLabel() {

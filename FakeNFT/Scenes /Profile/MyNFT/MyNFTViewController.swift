@@ -20,6 +20,14 @@ final class MyNFTViewController: UIViewController {
         view.addSubview(tableView)
         return tableView
     }()
+    private lazy var nftEmptyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .bodyBold
+        label.text = "Profile.MyNFT.Empty"~
+        view.addSubview(label)
+        return label
+    }()
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +35,7 @@ final class MyNFTViewController: UIViewController {
         navBarSetup()
         setupGestureRecognizers()
         constraitsNftTableView()
+        constraitsNftEmptyLabel()
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {
@@ -103,6 +112,12 @@ final class MyNFTViewController: UIViewController {
             nftTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    private func constraitsNftEmptyLabel() {
+        NSLayoutConstraint.activate([
+            nftEmptyLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nftEmptyLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 }
 // MARK: - UITableViewDelegate
 extension MyNFTViewController: UITableViewDelegate {
@@ -113,7 +128,6 @@ extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: MyNFTTableCell.identifier,
