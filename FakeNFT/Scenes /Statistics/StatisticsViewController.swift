@@ -157,11 +157,9 @@ extension StatisticsViewController: UITableViewDataSource {
         cell.setupCell(with: users[indexPath.row])
 
         let url = URL(string: users[indexPath.row].avatar)
-        let processor = RoundCornerImageProcessor(cornerRadius: 28)
         cell.userImage.kf.setImage(
             with: url,
-            placeholder: nil,
-            options: [.processor(processor)]
+            placeholder: nil
         )
         return cell
     }
