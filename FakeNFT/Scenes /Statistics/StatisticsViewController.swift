@@ -26,7 +26,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         let table = UITableView()
         table.register(
             StatisticsTableViewCell.self,
-            forCellReuseIdentifier: StatisticsTableViewCell.reuseIdentifier
+            forCellReuseIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier
         )
         table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -150,7 +150,7 @@ extension StatisticsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: StatisticsTableViewCell.reuseIdentifier,
+            withIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier,
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
 

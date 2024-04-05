@@ -10,7 +10,7 @@ import UIKit
 final class StatisticsTableViewCell: UITableViewCell {
 
     // MARK: - properties
-    static let reuseIdentifier = "cell"
+    static let statisticsTableViewCellIdentifier = "statisticsCellIdentifier"
 
     lazy var userImage: UIImageView = {
         let imgView = UIImageView()
