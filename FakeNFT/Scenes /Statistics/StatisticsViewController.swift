@@ -182,7 +182,7 @@ extension StatisticsViewController: UITableViewDataSource {
         let url = URL(string: users[indexPath.row].avatar)
         cell.userImage.kf.setImage(
             with: url,
-            placeholder: nil
+            placeholder: UIImage.ypUserPlaceholder
         )
         return cell
     }
