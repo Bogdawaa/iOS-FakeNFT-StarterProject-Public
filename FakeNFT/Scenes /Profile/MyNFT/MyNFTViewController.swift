@@ -33,9 +33,10 @@ final class MyNFTViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
         navBarSetup()
-        setupGestureRecognizers()
         constraitsNftTableView()
+        setupGestureRecognizers()
         constraitsNftEmptyLabel()
+        nftEmptyLabel.isHidden = true
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {

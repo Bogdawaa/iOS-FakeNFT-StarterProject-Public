@@ -42,6 +42,7 @@ final class FavoritesNFTViewController: UIViewController {
         constraitsFavoritesNftCollectionView()
        // favoritesNftCollectionView.isHidden = true
         constraitsFavoritesNftEmptyLabel()
+        favoritesNftEmptyLabel.isHidden = true
     }
     // MARK: - NAVBAR SETUP
     private func navbarSetup() {
