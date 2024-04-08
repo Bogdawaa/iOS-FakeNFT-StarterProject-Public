@@ -40,7 +40,7 @@ final class FavoritesNFTViewController: UIViewController {
         navbarSetup()
         setupGestureRecognizers()
         constraitsFavoritesNftCollectionView()
-        favoritesNftCollectionView.isHidden = truew
+       // favoritesNftCollectionView.isHidden = true
         constraitsFavoritesNftEmptyLabel()
     }
     // MARK: - NAVBAR SETUP
