@@ -7,6 +7,7 @@ final class DIContainer {
         registerFoundation()
         registerCatalog()
         registerStatistics()
+        registerUserCard()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
@@ -19,6 +20,10 @@ final class DIContainer {
 
     func tabBarController() -> TabBarController {
         container.resolve(TabBarController.self)!
+    }
+
+    func userCardController() -> UserCardViewController {
+        container.resolve(UserCardViewController.self)!
     }
 
     private func registerCatalog() {
@@ -69,6 +74,21 @@ final class DIContainer {
         container.register(StatisticsViewController.self) { diResolver in
             StatisticsViewController(
                 presenter: diResolver.resolve(StatisticsPresenter.self)!,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
+        .inObjectScope(.container)
+    }
+
+    private func registerUserCard() {
+        container.register(UserCardPresenter.self) { _ in
+            UserCardPresenter()
+        }
+        .inObjectScope(.container)
+
+        container.register(UserCardViewController.self) { diResolver in
+            UserCardViewController(
+                presenter: diResolver.resolve(UserCardPresenter.self)!,
                 statlog: diResolver.resolve(StatLog.self)!
             )
         }
