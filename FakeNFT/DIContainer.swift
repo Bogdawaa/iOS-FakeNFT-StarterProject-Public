@@ -29,13 +29,24 @@ final class DIContainer {
             )
         }
     }
-
     private func registerProfile() {
-        container.register(ProfileViewController.self) { diResolver in
-            ProfileViewController(
-                statLog: diResolver.resolve(StatLog.self)!
+        container.register(ProfileViewPresenter.self) { diResolver in
+            ProfileViewPresenter(
+                service: ProfileServiceImpl(
+                networkClient: diResolver.resolve(NetworkClient.self)!,
+                storage: ProfileStorageImpl()
+            )
             )
         }
+        .inObjectScope(.container)
+
+        container.register(ProfileViewController.self) { diResolver in
+            ProfileViewController(
+                presenter: diResolver.resolve(ProfileViewPresenter.self)!,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
+        .inObjectScope(.container)
     }
 
     private func registerFoundation() {

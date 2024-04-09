@@ -7,8 +7,24 @@
 
 import Foundation
 import UIKit
+import ProgressHUD
+import Kingfisher
 
 final class ProfileViewController: StatLoggedUIViewController {
+    // MARK: - presenter
+    var presenter: ProfilePresenterProtocol
+    // MARK: - private properties
+    private var isLoadingSwitch = false {
+        didSet {
+            if isLoadingSwitch == true {
+                profileTableView.allowsSelection = false
+                profileEditButton.isEnabled = false
+            } else {
+                profileTableView.allowsSelection = true
+                profileEditButton.isEnabled = true
+            }
+        }
+    }
     // MARK: - UI
     private lazy var profileEditButton: UIButton = {
         let button = UIButton(type: .system)
@@ -32,7 +48,7 @@ final class ProfileViewController: StatLoggedUIViewController {
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline3
-        label.text = "Joaquin Phoenix"
+        // label.text = "Joaquin Phoenix"
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
         return label
@@ -42,14 +58,13 @@ final class ProfileViewController: StatLoggedUIViewController {
         textView.font = .caption1
         textView.isEditable = false
         textView.backgroundColor = .ypWhite
-        textView.text = "Дизайнер из Казани, люблю цифровое искусство  и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(textView)
         return textView
     }()
     private lazy var profileHyperlink: UILabel = {
         let label = UILabel()
-        label.text = "Joaquin Phoenix.com"
+       // label.text = "Joaquin Phoenix.com"
         label.textColor = .ypBlueUniversal
         label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +84,11 @@ final class ProfileViewController: StatLoggedUIViewController {
         self.view.addSubview(tableView)
         return tableView
     }()
+    // MARK: - init
+    init(presenter: ProfilePresenterProtocol, statlog: StatLog) {
+        self.presenter = presenter
+        super.init(statLog: statlog)
+    }
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,12 +99,23 @@ final class ProfileViewController: StatLoggedUIViewController {
         constraitsProfileTextView()
         constraitsProfileHyperlink()
         constraitsProfileTableView()
+        presenter.view = self
+        presenter.viewDidLoad()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
     }
     // MARK: - OBJC
+
     @objc
     private func profileEditButtonClicked(_ sender: UIButton) {
         let view = EditProfileViewController()
         self.present(view, animated: true)
+    }
+    // MARK: - private
+    private func switchUiAccess () {
     }
     // MARK: - constraits
     private func constraitsProfileEditButton() {
@@ -189,4 +220,24 @@ extension ProfileViewController: UITableViewDataSource {
         3
     }
 
+}
+// MARK: - ProfileViewProtocol
+extension ProfileViewController: ProfileViewProtocol {
+    func displayProfile(_ profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileTextView.text = profile.description
+        profileHyperlink.text = profile.website
+        let url = URL(string: profile.avatar)
+        profileImage.kf.setImage(
+            with: url
+        )
+    }
+    func loadingDataStarted() {
+        ProgressHUD.show()
+        isLoadingSwitch = true
+    }
+    func loadingDataFinished() {
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
 }
