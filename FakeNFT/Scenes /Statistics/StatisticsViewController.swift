@@ -15,6 +15,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     var presenter: StatisticsPresenterProtocol
 
     private var isShowing = false
+    private var diContainer = DIContainer()
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
@@ -66,6 +67,8 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
         presenter.view = self
         presenter.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor.black
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -119,7 +122,9 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         NSLayoutConstraint.activate(statisticsTableViewConstraints)
     }
 
-    @objc private func sortButtonTapped() {
+    // MARK: - actions
+    @objc
+    private func sortButtonTapped() {
         let alert = UIAlertController(
             title: "Сортировка",
             message: nil,
@@ -154,7 +159,8 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         self.present(alert, animated: true)
     }
 
-    @objc func refreshData() {
+    @objc
+    func refreshData() {
         DispatchQueue.main.async {
             self.users.removeAll()
             self.statisticsTableView.reloadData()
@@ -195,5 +201,9 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let userCardViewController = diContainer.userCardController()
+        userCardViewController.setUser(user: users[indexPath.row])
+        self.navigationController?.pushViewController(userCardViewController, animated: true)
     }
 }
