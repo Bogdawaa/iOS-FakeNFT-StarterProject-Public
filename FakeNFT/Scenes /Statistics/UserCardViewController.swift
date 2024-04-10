@@ -8,11 +8,9 @@
 import UIKit
 import Kingfisher
 
-final class UserCardViewController: StatLoggedUIViewController, UserCardViewProtocol {
+final class UserCardViewController: StatLoggedUIViewController {
 
     var presenter: UserCardPresenterProtocol
-
-    private var user: User?
 
     private lazy var stackView: UIStackView = {
         let stv = UIStackView()
@@ -85,32 +83,25 @@ final class UserCardViewController: StatLoggedUIViewController, UserCardViewProt
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        setupUI()
-
-        userCollectionNftTableView.delegate = self
+        
         userCollectionNftTableView.dataSource = self
-
+        
         presenter.viewDidLoad()
-
-        userImageView.layoutIfNeeded()
-        userImageView.layer.masksToBounds = true
-        userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
-
-        guard let user else { return }
-        updateUserAvatar(with: user.avatar)
-        setupUserData(with: user)
+        setupUI()
     }
 
-    // MARK: - public methods
-    func setUser(user: User) {
-        self.user = user
-    }
 
     // MARK: - private methods
     private func setupUI() {
+        // userImageView
+        userImageView.layoutIfNeeded()
+        userImageView.layer.masksToBounds = true
+        userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
+        
+        // view
         view.backgroundColor = .systemBackground
         view.addSubview(stackView)
+        
         // stackView
         stackView.addSubview(userInfoView)
         stackView.addSubview(userDesciptionLabel)
@@ -171,26 +162,29 @@ final class UserCardViewController: StatLoggedUIViewController, UserCardViewProt
         NSLayoutConstraint.activate(userCollectionNftTableViewConstraints)
     }
 
-    private func updateUserAvatar(with urlString: String) {
-        let url = URL(string: urlString)
-        userImageView.kf.setImage(
-            with: url,
-            placeholder: UIImage.ypUserPlaceholder
-        )
-    }
-
-    private func setupUserData(with user: User) {
-        userNameLabel.text = user.name
-        userDesciptionLabel.text = user.description
-    }
 
     // MARK: - actions
     @objc
     func userWebsiteButtonTapped() {
-
+        presenter.userWebsiteButtonTapped()
     }
 }
 
+// MARK: - UserCardViewProtocol extension
+extension UserCardViewController: UserCardViewProtocol {
+    func setupUserData(with user: User) {
+        self.userNameLabel.text = user.name
+        self.userDesciptionLabel.text = user.description
+
+        let url = URL(string: user.avatar)
+        self.userImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage.ypUserPlaceholder
+        )
+    }
+}
+
+// MARK: - UITableViewDataSource extension
 extension UserCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -199,11 +193,7 @@ extension UserCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = "Коллекция NFT (\(user?.nfts.count))"
+        cell.textLabel?.text = "Коллекция NFT (\(presenter.countUserNFTS()))"
         return cell
     }
-}
-
-extension UserCardViewController: UITableViewDelegate {
-
 }
