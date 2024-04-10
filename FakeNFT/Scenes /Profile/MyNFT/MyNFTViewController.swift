@@ -75,13 +75,13 @@ final class MyNFTViewController: UIViewController {
     // MARK: - Configure Sort Menu
     func configureSortMenu() {
         let priceSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByPrice"~, style: .default) { _ in
-           // todo
+            // todo
         }
         let ratingSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByRating"~, style: .default) { _ in
-           // todo
+            // todo
         }
         let namegSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByName"~, style: .default) { _ in
-           // todo
+            // todo
         }
         let cancelAction = UIAlertAction(title: "Profile.MyNFT.Sort.Close"~, style: .cancel)
         let alert = UIAlertController(title: "Profile.MyNFT.Sort.Title"~, message: nil, preferredStyle: .actionSheet)

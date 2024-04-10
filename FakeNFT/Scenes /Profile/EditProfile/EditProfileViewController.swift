@@ -103,6 +103,8 @@ final class EditProfileViewController: UIViewController {
         view.addSubview(textField)
         return textField
     }()
+    // MARK: - PRIVATE
+    private var activeTextField: UITextField?
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +118,50 @@ final class EditProfileViewController: UIViewController {
         constraitsEditProfileWebsiteLabel()
         cosntraitsEditProfileWebsiteTextField()
         mockSetup()
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(keyboardWillShow),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil
+            )
+        NotificationCenter
+            .default
+            .addObserver(
+                self,
+                selector: #selector(keyboardWillHide),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil
+            )
         cancelKeyboardGestureSetup()
+    }
+    // MARK: - OBJC
+    @objc
+    func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (
+            notification
+                .userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+            as? NSValue
+        )?.cgRectValue else {
+            return
+        }
+        var shouldMoveViewUp = false
+        if let activeTextField {
+
+            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
+            let topOfKeyboard = self.view.frame.height - keyboardSize.height
+            if bottomOfTextField > topOfKeyboard {
+                shouldMoveViewUp = true
+            }
+        }
+        if shouldMoveViewUp {
+            self.view.frame.origin.y = 0 - keyboardSize.height
+        }
+    }
+    @objc
+    func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
     }
     // MARK: - PRIVATE
     private func mockSetup() {
@@ -182,7 +227,7 @@ final class EditProfileViewController: UIViewController {
             editProfileNameTextField.trailingAnchor.constraint(
                 equalTo: view.safeAreaLayoutGuide.trailingAnchor,
                 constant: -16
-                ),
+            ),
             editProfileNameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
@@ -220,6 +265,42 @@ final class EditProfileViewController: UIViewController {
             editProfileWebsiteTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
+    private func constraitsWebsiteTextFieldInEditing() {
+        NSLayoutConstraint.activate([
+            editProfileWebsiteTextField.leadingAnchor.constraint(equalTo: editProfileWebsiteLabel.leadingAnchor),
+            editProfileWebsiteTextField
+                .topAnchor
+                .constraint(
+                    equalTo: editProfileWebsiteLabel.bottomAnchor,
+                    constant: 6
+                ),
+            editProfileWebsiteTextField.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: -16
+            ),
+            editProfileWebsiteTextField.heightAnchor.constraint(equalToConstant: 44)
+        ])
+    }
+    private func constraitsEditProfileWebsiteLabelInEditing() {
+        editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
+        editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
+        editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
+        editProfileWebsiteTextField.removeConstraints(editProfileWebsiteTextField.constraints)
+        editProfileNameLabel.removeConstraints(editProfileNameLabel.constraints)
+        editProfileCaptionLabel.removeConstraints(editProfileCaptionLabel.constraints)
+        editProfileNameTextField.removeConstraints(editProfileNameTextField.constraints)
+        editProfileCaptionTextView.removeConstraints(editProfileCaptionTextView.constraints)
+
+        NSLayoutConstraint.activate([
+            editProfileWebsiteLabel.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 16
+            ),
+            editProfileWebsiteLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 28)
+        ])
+
+    }
 }
 // MARK: - UITextFieldDelegate
 extension EditProfileViewController: UITextFieldDelegate {
@@ -233,6 +314,16 @@ extension EditProfileViewController: UITextFieldDelegate {
         }
         return true
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.activeTextField = textField
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.activeTextField = nil
+    }
 }
 // MARK: - UITextFieldDelegate
 extension EditProfileViewController: UITextViewDelegate {
@@ -241,14 +332,14 @@ extension EditProfileViewController: UITextViewDelegate {
     }
 }
 // MARK: - UIView extension
+// This function will add a layer on any `UIView` to make that `UIView` look darkened
 extension UIView {
-func addoverlay(color: UIColor = .black, alpha: CGFloat = 0.6) {
-    let overlay = UIView()
-    overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    overlay.frame = bounds
-    overlay.backgroundColor = color
-    overlay.alpha = alpha
-    addSubview(overlay)
+    func addoverlay(color: UIColor = .black, alpha: CGFloat = 0.6) {
+        let overlay = UIView()
+        overlay.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        overlay.frame = bounds
+        overlay.backgroundColor = color
+        overlay.alpha = alpha
+        addSubview(overlay)
     }
-    // This function will add a layer on any `UIView` to make that `UIView` look darkened
 }
