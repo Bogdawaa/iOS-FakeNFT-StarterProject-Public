@@ -15,7 +15,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     var presenter: StatisticsPresenterProtocol
 
     private var isShowing = false
-    private var diContainer = DIContainer()
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
@@ -67,8 +66,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
         presenter.view = self
         presenter.viewDidLoad()
-        
-        self.navigationController?.navigationBar.tintColor = UIColor.black
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -99,26 +96,23 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     // MARK: - private methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        view.addSubview(sortButton)
         view.addSubview(statisticsTableView)
         statisticsTableView.addSubview(refreshControl)
         statisticsTableView.sendSubviewToBack(refreshControl)
+
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+
         applyConstraints()
     }
 
     private func applyConstraints() {
-        let sortButtonConstraints = [
-            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            sortButton.widthAnchor.constraint(equalToConstant: 42),
-            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9)
-        ]
         let statisticsTableViewConstraints = [
-            statisticsTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+            statisticsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             statisticsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             statisticsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             statisticsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ]
-        NSLayoutConstraint.activate(sortButtonConstraints)
         NSLayoutConstraint.activate(statisticsTableViewConstraints)
     }
 
@@ -201,9 +195,10 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let userCardViewController = diContainer.userCardController()
-        userCardViewController.setUser(user: users[indexPath.row])
+        let userCardPresenter = UserCardPresenter()
+        let userCardViewController = UserCardViewController(presenter: userCardPresenter, statlog: StatLogImpl())
+        userCardPresenter.view = userCardViewController
+        userCardPresenter.setUser(with: users[indexPath.row])
         self.navigationController?.pushViewController(userCardViewController, animated: true)
     }
 }

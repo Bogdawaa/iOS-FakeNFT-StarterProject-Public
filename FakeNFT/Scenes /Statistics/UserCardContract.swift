@@ -9,11 +9,12 @@ import Foundation
 
 protocol UserCardViewProtocol: AnyObject {
     var presenter: UserCardPresenterProtocol { get set }
-    func setUser(user: User)
+    func setupUserData(with user: User)
 }
 
 protocol UserCardPresenterProtocol {
     var view: UserCardViewProtocol? { get set }
     func viewDidLoad()
-//    func setupUserCard(with user: User)
+    func countUserNFTS() -> Int
+    func userWebsiteButtonTapped()
 }
