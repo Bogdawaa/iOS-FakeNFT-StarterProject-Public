@@ -3,12 +3,12 @@ import UIKit
 final class TabBarController: UITabBarController {
     private let catalogViewController: CatalogViewController
     private let servicesAssembly: ServicesAssembly
-    private let statisticsController: StatisticsViewController
+    private let statisticsController: UINavigationController
 
     init(
         servicesAssembly: ServicesAssembly,
         catalogViewController: CatalogViewController,
-        statisticsController: StatisticsViewController
+        statisticsController: UINavigationController
     ) {
         self.servicesAssembly = servicesAssembly
         self.catalogViewController = catalogViewController
@@ -20,7 +20,7 @@ final class TabBarController: UITabBarController {
             UIViewController(),
             self.catalogViewController,
             UIViewController(),
-            statisticsController
+            self.statisticsController
         ]
 
         let items = [
