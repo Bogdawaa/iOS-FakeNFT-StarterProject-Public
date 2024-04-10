@@ -8,17 +8,22 @@
 import Foundation
 
 final class ProfileViewPresenter: ProfilePresenterProtocol {
+    // MARK: - view delegate
     weak var view: ProfileViewProtocol?
     // MARK: - PRIVATE
     private let service: ProfileService
+    private var myNftId: [String] = []
     // MARK: - INIT
     init(service: ProfileService) {
         self.service = service
     }
+    // MARK: - FUNC
+    func getNftId() -> [String] {
+        return myNftId
+    }
     func viewDidLoad() {
         loadProfile()
     }
-    // MARK: - FUNC
     func loadProfile() {
         view?.loadingDataStarted()
         service.loadProfile(id: "1") { [weak self] result in
@@ -28,6 +33,7 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
                 DispatchQueue.main.async {
                     self.view?.loadingDataFinished()
                     self.view?.displayProfile(profile)
+                    self.myNftId = profile.nfts
                 }
             case .failure(let error):
                 assertionFailure("\(error)")

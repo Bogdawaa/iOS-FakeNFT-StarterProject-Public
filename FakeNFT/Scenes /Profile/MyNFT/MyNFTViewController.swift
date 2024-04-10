@@ -6,8 +6,21 @@
 //
 import UIKit
 import Foundation
+import ProgressHUD
 
-final class MyNFTViewController: UIViewController {
+final class MyNFTViewController: StatLoggedUIViewController {
+    // MARK: - presenter
+    var presenter: MyNFTPresenterProtocol
+    // MARK: - private properties
+    private var isLoadingSwitch = false {
+        didSet {
+            if isLoadingSwitch == true {
+                navigationController?.navigationItem.rightBarButtonItem?.isEnabled = false
+            } else {
+                navigationController?.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+        }
+    }
     // MARK: - UI
     private lazy var nftTableView: UITableView = {
         let tableView = UITableView()
@@ -25,9 +38,18 @@ final class MyNFTViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .bodyBold
         label.text = "Profile.MyNFT.Empty"~
+        label.isHidden = true
         view.addSubview(label)
         return label
     }()
+    // MARK: - INIT
+    init(statLog: StatLog, presenter: MyNFTPresenterProtocol) {
+        self.presenter = presenter
+        super.init(statLog: statLog)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +58,13 @@ final class MyNFTViewController: UIViewController {
         setupGestureRecognizers()
         constraitsNftTableView()
         constraitsNftEmptyLabel()
+        presenter.viewDidLoad()
+        presenter.view = self
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {
@@ -126,7 +155,8 @@ extension MyNFTViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        guard let myNftCount = presenter.getMyNft()?.count else { return 0 }
+        return myNftCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
@@ -136,6 +166,36 @@ extension MyNFTViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
+        guard let nftSetting = presenter.getMyNft()?[indexPath.row] else { return cell}
+        cell.configure(
+            nftImageURL:
+                nftSetting.images
+                .first,
+            nftTitle:
+                nftSetting.name,
+            nftPrice:
+                nftSetting.price,
+            nftAuthor:
+                nftSetting.author,
+            nftRatingStars: nftSetting.rating
+        )
         return cell
+    }
+}
+// MARK: - MyNFTViewProtocol
+extension MyNFTViewController: MyNFTViewProtocol {
+    func displayMyNft(_ nft: [Nft]) {
+        nftTableView.reloadData()
+    }
+    func loadingDataStarted() {
+        ProgressHUD.show()
+        isLoadingSwitch = true
+    }
+    func loadingDataFinished() {
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
+    func setNftId(nftId: [String]) {
+        presenter.setNftId(nftId: nftId)
     }
 }

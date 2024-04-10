@@ -13,6 +13,8 @@ import Kingfisher
 final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: ProfilePresenterProtocol
+    // MARK: - MyNFTviewController
+    var myNFTViewController: MyNFTViewController
     // MARK: - private properties
     private var isLoadingSwitch = false {
         didSet {
@@ -64,7 +66,6 @@ final class ProfileViewController: StatLoggedUIViewController {
     }()
     private lazy var profileHyperlink: UILabel = {
         let label = UILabel()
-       // label.text = "Joaquin Phoenix.com"
         label.textColor = .ypBlueUniversal
         label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -85,8 +86,9 @@ final class ProfileViewController: StatLoggedUIViewController {
         return tableView
     }()
     // MARK: - init
-    init(presenter: ProfilePresenterProtocol, statlog: StatLog) {
+    init(presenter: ProfilePresenterProtocol, statlog: StatLog, myNftViewController: MyNFTViewController) {
         self.presenter = presenter
+        self.myNFTViewController = myNftViewController
         super.init(statLog: statlog)
     }
     // MARK: - lifecycle
@@ -101,6 +103,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         constraitsProfileTableView()
         presenter.view = self
         presenter.viewDidLoad()
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -108,14 +111,10 @@ final class ProfileViewController: StatLoggedUIViewController {
         isLoadingSwitch = false
     }
     // MARK: - OBJC
-
     @objc
     private func profileEditButtonClicked(_ sender: UIButton) {
         let view = EditProfileViewController()
         self.present(view, animated: true)
-    }
-    // MARK: - private
-    private func switchUiAccess () {
     }
     // MARK: - constraits
     private func constraitsProfileEditButton() {
@@ -162,16 +161,15 @@ final class ProfileViewController: StatLoggedUIViewController {
             profileTableView.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
+    private func createProfileViewController() -> UINavigationController {
+        myNFTViewController.setNftId(nftId: presenter.getNftId())
+        return UINavigationController(rootViewController: myNFTViewController)
+    }
+    private func createFavoritesNFTViewController() -> UINavigationController {
+        let myNFTViewController = FavoritesNFTViewController()
 
-}
-func createProfileViewController() -> UINavigationController {
-    let myNFTViewController = MyNFTViewController()
-    return UINavigationController(rootViewController: myNFTViewController)
-}
-func createFavoritesNFTViewController() -> UINavigationController {
-    let myNFTViewController = FavoritesNFTViewController()
-    return UINavigationController(rootViewController: myNFTViewController)
-
+        return UINavigationController(rootViewController: myNFTViewController)
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -180,13 +178,11 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.row == 0 {
             let view = createProfileViewController()
             view.modalPresentationStyle = .fullScreen
-
             present(view, animated: true)
         }
         if indexPath.row == 1 {
             let view = createFavoritesNFTViewController()
             view.modalPresentationStyle = .fullScreen
-
             present(view, animated: true)
         }
     }

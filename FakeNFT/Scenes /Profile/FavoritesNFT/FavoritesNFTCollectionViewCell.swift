@@ -66,7 +66,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     private func mockSetup() {
         favNftImageView.image = .ypProfileNftMockImage
         favNftTitleLabel.text = "Amogus"
-        favNftRatingImageView.image = .ypProfileNftMockRatingImage
+        favNftRatingImageView.image = .ypProfileNftRatingImage3
         favNftPriceLabel.text = "1,78 ETH"
     }
     // MARK: - constraits

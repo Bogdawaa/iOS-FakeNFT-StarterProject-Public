@@ -18,4 +18,5 @@ protocol ProfilePresenterProtocol {
     var view: ProfileViewProtocol? { get set }
     func viewDidLoad()
     func loadProfile()
+    func getNftId() -> [String]
 }

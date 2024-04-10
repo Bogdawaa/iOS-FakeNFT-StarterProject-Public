@@ -30,20 +30,35 @@ final class DIContainer {
         }
     }
     private func registerProfile() {
-        container.register(ProfileViewPresenter.self) { diResolver in
-            ProfileViewPresenter(
-                service: ProfileServiceImpl(
-                networkClient: diResolver.resolve(NetworkClient.self)!,
-                storage: ProfileStorageImpl()
-            )
+        container.register(MyNFTPresenter.self) { diResolver in
+            MyNFTPresenter(
+                service: NftServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: NftStorageImpl()
+                )
             )
         }
         .inObjectScope(.container)
-
+        container.register(MyNFTViewController.self) { diResolver in
+            MyNFTViewController(
+                statLog: diResolver.resolve(StatLog.self)!,
+                presenter: diResolver.resolve(MyNFTPresenter.self)!
+            )
+        }
+        .inObjectScope(.container)
+        container.register(ProfileViewPresenter.self) { diResolver in
+            ProfileViewPresenter(
+                service: ProfileServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: ProfileStorageImpl()
+                )
+            )
+        }
         container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(
                 presenter: diResolver.resolve(ProfileViewPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!
+                statlog: diResolver.resolve(StatLog.self)!,
+                myNftViewController: diResolver.resolve(MyNFTViewController.self)!
             )
         }
         .inObjectScope(.container)

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class MyNFTTableCell: UITableViewCell {
     // MARK: - IDENTIFIER
@@ -79,6 +80,39 @@ final class MyNFTTableCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - public configure
+    func configure(
+        nftImageURL: URL?,
+        nftTitle: String,
+        nftPrice: Float,
+        nftAuthor: String,
+        nftRatingStars: Int
+    ) {
+        self.nftTitleLabel.text = nftTitle
+        self.nftPriceLabel.text = String(nftPrice)
+        self.nftAuthorLabel.text = nftAuthor
+        if let url = nftImageURL {
+            nftImageView.kf.setImage(
+                with: url
+            )
+        }
+        switch nftRatingStars {
+        case 0:
+            nftRatingImageView.image = .ypProfileNftRatingImage0
+        case 1:
+            nftRatingImageView.image = .ypProfileNftRatingImage1
+        case 2:
+            nftRatingImageView.image = .ypProfileNftRatingImage2
+        case 3:
+            nftRatingImageView.image = .ypProfileNftRatingImage3
+        case 4:
+            nftRatingImageView.image = .ypProfileNftRatingImage4
+        case 5:
+            nftRatingImageView.image = .ypProfileNftRatingImage5
+        default: break
+
+        }
+    }
     // MARK: - MOCK SETUP
     private func mockSetup() {
         nftPriceLabel.text = "1,78 ETH"
@@ -86,7 +120,7 @@ final class MyNFTTableCell: UITableViewCell {
         nftTitleLabel.text = "Amogus"
         nftAuthorLabel.text = "от John Doe"
         nftImageView.image = .ypProfileNftMockImage
-        nftRatingImageView.image = .ypProfileNftMockRatingImage
+        nftRatingImageView.image = .ypProfileNftRatingImage3
     }
     // MARK: - CONSTRAITS
     private func constraitsNftImageView() {
