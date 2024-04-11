@@ -25,6 +25,7 @@ final class PaymentViewController: UIViewController {
     private let errorCurrencies = "Error.Currencies"
 
     // MARK: - UiElements
+
     private lazy var navigationBar = UINavigationBar()
 
     private lazy var titleLabel: UILabel = {
@@ -109,7 +110,8 @@ final class PaymentViewController: UIViewController {
         return view
     }()
 
-    // MARK: Initialisation
+    // MARK: - Initialisation
+
     init(viewModel: PaymentViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -121,6 +123,7 @@ final class PaymentViewController: UIViewController {
     }
 
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter = AlertPresenter(viewControler: self)
@@ -131,7 +134,8 @@ final class PaymentViewController: UIViewController {
         viewModel.loadCurrencies()
     }
 
-    // MARK: Binding
+    // MARK: - Binding
+
     private func bind() {
         viewModel.$currencies.bind(observer: { [weak self] _ in
             guard let self else { return }
@@ -146,17 +150,18 @@ final class PaymentViewController: UIViewController {
 
         viewModel.$paymentError.bind(observer: { [weak self] _ in
             guard let self else { return }
-            self.showAlertNetworkError(title: failedPayment)
+            self.showAlertNetworkError(title:  self.failedPayment)
         })
 
         viewModel.$errorLoadingCurrencies.bind(observer: { [weak self] _ in
             guard let self else { return }
-            self.showAlertNetworkError(title: errorCurrencies)
+            self.showAlertNetworkError(title: self.errorCurrencies)
         })
 
     }
 
     // MARK: - Actions
+
     @objc private func backButtonActions() {
         dismiss(animated: true)
     }
@@ -173,6 +178,7 @@ final class PaymentViewController: UIViewController {
     }
 
     // MARK: - Private methods
+
     private func showLoader(isActiv: Bool) {
         if isActiv {
             ProgressHUD.show(interaction: false)
@@ -189,11 +195,11 @@ final class PaymentViewController: UIViewController {
             buttonText: NSLocalizedString("Alert.Repeat", comment: ""),
             completion: { [weak self] in
                 guard let self else { return }
-                showLoader(isActiv: true)
-                if title == failedPayment {
-                    cartPaymentAction()
+                self.showLoader(isActiv: true)
+                if title == self.failedPayment {
+                    self.cartPaymentAction()
                 } else {
-                    viewModel.loadCurrencies()
+                    self.viewModel.loadCurrencies()
                 }
             })
         alertPresenter?.showAlert(with: alert)
