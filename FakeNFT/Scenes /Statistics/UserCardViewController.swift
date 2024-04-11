@@ -83,13 +83,12 @@ final class UserCardViewController: StatLoggedUIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         userCollectionNftTableView.dataSource = self
-        
+
         presenter.viewDidLoad()
         setupUI()
     }
-
 
     // MARK: - private methods
     private func setupUI() {
@@ -97,11 +96,11 @@ final class UserCardViewController: StatLoggedUIViewController {
         userImageView.layoutIfNeeded()
         userImageView.layer.masksToBounds = true
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
-        
+
         // view
         view.backgroundColor = .systemBackground
         view.addSubview(stackView)
-        
+
         // stackView
         stackView.addSubview(userInfoView)
         stackView.addSubview(userDesciptionLabel)
@@ -162,7 +161,6 @@ final class UserCardViewController: StatLoggedUIViewController {
         NSLayoutConstraint.activate(userCollectionNftTableViewConstraints)
     }
 
-
     // MARK: - actions
     @objc
     func userWebsiteButtonTapped() {
@@ -181,6 +179,10 @@ extension UserCardViewController: UserCardViewProtocol {
             with: url,
             placeholder: UIImage.ypUserPlaceholder
         )
+    }
+
+    func showView(viewController: UIViewController) {
+        present(viewController, animated: true)
     }
 }
 

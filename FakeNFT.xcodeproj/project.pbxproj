@@ -83,6 +83,8 @@
 		F00DF4BB2BB338A900825462 /* UsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BA2BB338A900825462 /* UsersStorage.swift */; };
 		F00DF4BD2BB33A8C00825462 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BC2BB33A8C00825462 /* UsersService.swift */; };
 		F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */; };
+		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
+		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
 		F0E68FBE2BC086EC0032AD69 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBD2BC086EC0032AD69 /* Kingfisher */; };
 		F0E68FC02BC2F1320032AD69 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */; };
@@ -192,6 +194,8 @@
 		F00DF4BA2BB338A900825462 /* UsersStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorage.swift; sourceTree = "<group>"; };
 		F00DF4BC2BB33A8C00825462 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
 		F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
 		F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenter.swift; sourceTree = "<group>"; };
@@ -590,6 +594,8 @@
 				F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */,
 				F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */,
 				F0E68FC32BC31D710032AD69 /* UserCardContract.swift */,
+				F0D195052BC72F9700FEAFCA /* WebViewController.swift */,
+				F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -901,6 +907,7 @@
 				91995DF42BC3BBAF007F51C7 /* ProfileService.swift in Sources */,
 				7943632D2BB830B900F3F527 /* UIImages.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
+				F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
@@ -914,6 +921,7 @@
 				F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */,
 				79143C772BB9479E007E2AAB /* BaseNftRequest.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
+				F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				91013CC72BC7D26800105D5E /* FavoritesNFTPresenter.swift in Sources */,
