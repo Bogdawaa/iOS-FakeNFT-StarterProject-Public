@@ -27,6 +27,7 @@ final class UserCardViewController: StatLoggedUIViewController {
     private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.borderWidth = 0.5
+        imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -86,16 +87,16 @@ final class UserCardViewController: StatLoggedUIViewController {
 
         userCollectionNftTableView.dataSource = self
 
-        presenter.viewDidLoad()
         setupUI()
+        presenter.viewDidLoad()
+
+        // userImageView
+        userImageView.layoutIfNeeded()
+        userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
     }
 
     // MARK: - private methods
     private func setupUI() {
-        // userImageView
-        userImageView.layoutIfNeeded()
-        userImageView.layer.masksToBounds = true
-        userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
 
         // view
         view.backgroundColor = .systemBackground
