@@ -17,6 +17,7 @@ final class UsersServiceImpl: UsersService {
 
     private let networkClient: NetworkClient
     private let storage: UsersStorage
+    private var currentSortParam = SortParametr.byRating
 
     init(networkClient: NetworkClient, storage: UsersStorage) {
         self.storage = storage
@@ -24,11 +25,6 @@ final class UsersServiceImpl: UsersService {
     }
 
     func loadUsers(with parametr: SortParametr, completion: @escaping UsersCompletion) {
-//        if let users = storage.getUsers() {
-//            completion(.success(users))
-//            return
-//        }
-
         var request = UsersRequest()
         request.sortUsers(by: parametr)
 

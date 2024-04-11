@@ -10,10 +10,14 @@ import Foundation
 protocol StatisticsViewProtocol: AnyObject {
     var presenter: StatisticsPresenterProtocol { get set }
     func displayUserCells(_ users: [User])
+    func loadingDataStarted()
+    func loadingDataFinished()
 }
 
 protocol StatisticsPresenterProtocol {
     var view: StatisticsViewProtocol? { get set }
     func viewDidLoad()
     func setUsersSortingParametr(_ parametr: SortParametr)
+    func loadUsers(with parametr: SortParametr)
+    func getSortParametr() -> SortParametr
 }

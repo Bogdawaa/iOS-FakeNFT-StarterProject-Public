@@ -5,13 +5,14 @@
 //  Created by Bogdan Fartdinov on 24.03.2024.
 //
 
- import Foundation
+import Foundation
 
 final class StatisticsPresenter: StatisticsPresenterProtocol {
 
     weak var view: StatisticsViewProtocol?
 
     private let service: UsersService
+    private let defaults = UserDefaults.standard
     private var parametr = SortParametr.byName
 
      // MARK: - Init
@@ -21,23 +22,39 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
      }
 
      func viewDidLoad() {
+         parametr = getSortParametr()
          loadUsers(with: parametr)
      }
 
     func setUsersSortingParametr(_ parametr: SortParametr) {
         self.parametr = parametr
+        saveSortParam(sortParametr: parametr)
         loadUsers(with: parametr)
     }
 
-    private func loadUsers(with parametr: SortParametr) {
-         service.loadUsers(with: parametr) { [weak self] result in
-             switch result {
-             case .success(let user):
-                 self?.view?.displayUserCells(user)
-             case .failure(let error):
-                 print("error: \(error.localizedDescription)")
-             }
-         }
-     }
+    func getSortParametr() -> SortParametr {
+        let savedParametr = defaults.string(forKey: UserDefaultsKeys.sortParam.rawValue)
+        guard let savedParametr else { return parametr }
+        return SortParametr(rawValue: savedParametr) ?? parametr
+    }
 
+    func loadUsers(with parametr: SortParametr) {
+        view?.loadingDataStarted()
+        service.loadUsers(with: parametr) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    self.view?.loadingDataFinished()
+                    self.view?.displayUserCells(user)
+                }
+            case .failure(let error):
+                print("error: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func saveSortParam(sortParametr: SortParametr) {
+        defaults.set(sortParametr.rawValue, forKey: UserDefaultsKeys.sortParam.rawValue)
+    }
  }

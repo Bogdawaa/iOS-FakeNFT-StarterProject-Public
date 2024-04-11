@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
+import ProgressHUD
 
 final class StatisticsViewController: StatLoggedUIViewController, StatisticsViewProtocol {
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
 
+    private var isShowing = false
+
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
-        let btnImage = UIImage(named: "sortButton")
+        let btnImage = UIImage.ypSort
         btn.setImage(btnImage, for: .normal)
         btn.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -25,11 +29,18 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         let table = UITableView()
         table.register(
             StatisticsTableViewCell.self,
-            forCellReuseIdentifier: StatisticsTableViewCell.reuseIdentifier
+            forCellReuseIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier
         )
         table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
+    }()
+
+    private lazy var refreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.attributedTitle = NSAttributedString(string: "Обновить данные")
+        control.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        return control
     }()
 
     private var users: [User] = []
@@ -52,9 +63,18 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.dataSource = self
 
         setupUI()
+
+
         presenter.view = self
         presenter.viewDidLoad()
+    }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        if isShowing {
+            ProgressHUD.dismiss()
+        }
     }
 
     func displayUserCells(_ users: [User]) {
@@ -62,11 +82,25 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.reloadData()
     }
 
+    func loadingDataStarted() {
+        isShowing = true
+        ProgressHUD.show()
+        statisticsTableView.isUserInteractionEnabled = false
+    }
+
+    func loadingDataFinished() {
+        isShowing = false
+        ProgressHUD.dismiss()
+        statisticsTableView.isUserInteractionEnabled = true
+    }
+
     // MARK: - private methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
         view.addSubview(sortButton)
         view.addSubview(statisticsTableView)
+        statisticsTableView.addSubview(refreshControl)
+        statisticsTableView.sendSubviewToBack(refreshControl)
         applyConstraints()
     }
 
@@ -87,17 +121,48 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     }
 
     @objc private func sortButtonTapped() {
-        let alert = UIAlertController(title: "Сортировка", message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "По имени", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            presenter.setUsersSortingParametr(SortParametr.byName)
-        }))
-        alert.addAction(UIAlertAction(title: "По рейтингу", style: .default, handler: { [weak self] _ in
-            guard let self else { return }
-            presenter.setUsersSortingParametr(SortParametr.byRating)
-        }))
-        alert.addAction(UIAlertAction(title: "Закрыть", style: .cancel))
-            self.present(alert, animated: true)
+        let alert = UIAlertController(
+            title: "Сортировка",
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "По имени",
+                style: .default,
+                handler: { [weak self] _ in
+                    guard let self else { return }
+                    presenter.setUsersSortingParametr(SortParametr.byName)
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "По рейтингу",
+                style: .default,
+                handler: { [weak self] _ in
+                    guard let self else { return }
+                    presenter.setUsersSortingParametr(SortParametr.byRating)
+                }
+            )
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: "Закрыть",
+                style: .cancel
+            )
+        )
+        self.present(alert, animated: true)
+    }
+
+    @objc func refreshData() {
+        DispatchQueue.main.async {
+            self.users.removeAll()
+            self.statisticsTableView.reloadData()
+        }
+        let currentSortParam = presenter.getSortParametr()
+        presenter.loadUsers(with: currentSortParam)
+        refreshControl.endRefreshing()
     }
 }
 
@@ -109,11 +174,17 @@ extension StatisticsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: StatisticsTableViewCell.reuseIdentifier,
+            withIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier,
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
 
         cell.setupCell(with: users[indexPath.row])
+
+        let url = URL(string: users[indexPath.row].avatar)
+        cell.userImage.kf.setImage(
+            with: url,
+            placeholder: UIImage.ypUserPlaceholder
+        )
         return cell
     }
 }

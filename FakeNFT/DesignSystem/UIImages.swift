@@ -8,5 +8,8 @@ extension UIImage {
     static let ypStatisticsTab = UIImage(named: "statistics") ?? UIImage()
 
     static let ypClose = UIImage(named: "close") ?? UIImage()
+
+    static let ypSort = UIImage(named: "sortButton") ?? UIImage()
+    static let ypUserPlaceholder = UIImage(named: "userPlaceholder") ?? UIImage()
 }
 // swiftlint:enable object_literal
