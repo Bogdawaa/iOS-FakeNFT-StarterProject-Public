@@ -27,6 +27,11 @@ final class UserCardPresenter: UserCardPresenterProtocol {
     }
 
     func userWebsiteButtonTapped() {
-        // TODO: 
+        guard let user else { return }
+        let webViewController = WebViewController()
+        let webViewPresenter = WebViewPresenter(user: user)
+        webViewPresenter.view = webViewController
+        webViewController.presenter = webViewPresenter
+        view?.showView(viewController: webViewController)
     }
 }
