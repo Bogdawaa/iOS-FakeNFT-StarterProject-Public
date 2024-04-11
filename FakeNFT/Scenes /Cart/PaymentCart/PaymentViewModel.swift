@@ -16,7 +16,8 @@ final class PaymentViewModel {
     private let serviceOrder: OrderService
     private let serviceCart: CartService
 
-    // MARK: Initialisation
+    // MARK: - Initialisation
+
     init(serviceCurrency: CurrencyService, serviceOrder: OrderService, serviceCart: CartService) {
         self.serviceCurrency = serviceCurrency
         self.serviceOrder = serviceOrder
@@ -24,6 +25,7 @@ final class PaymentViewModel {
     }
 
     // MARK: - Methods
+
     func cartPayment(currencyId: String) {
         didPayButtonTapped(currencyId: currencyId)
     }
@@ -40,15 +42,16 @@ final class PaymentViewModel {
     }
 
     // MARK: - Private methods
+
     private func didPayButtonTapped(currencyId: String) {
         serviceOrder.checkPaymentResult(with: currencyId) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let paymentResult):
-                removeCart()
-                successfulPayment = paymentResult
+                self.removeCart()
+                self.successfulPayment = paymentResult
             case .failure:
-                paymentError = true
+                self.paymentError = true
             }
         }
     }

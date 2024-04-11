@@ -20,6 +20,7 @@ final class CartViewController: UIViewController {
     private var sortPresenter: SortPresenterProtocol?
 
     // MARK: - UiElements
+
     private lazy var placeholderLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
@@ -178,7 +179,8 @@ final class CartViewController: UIViewController {
         return view
     }()
 
-    // MARK: Initialisation
+    // MARK: - Initialisation
+
     init(viewModel: CartViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -190,6 +192,7 @@ final class CartViewController: UIViewController {
     }
 
     // MARK: - Life Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         alertPresenter = AlertPresenter(viewControler: self)
@@ -202,7 +205,8 @@ final class CartViewController: UIViewController {
         viewModel.updateCart()
     }
 
-    // MARK: Binding
+    // MARK: - Binding
+
     private func bind() {
         viewModel.$nfts.bind(observer: { [weak self] _ in
             guard let self else { return }
@@ -218,6 +222,7 @@ final class CartViewController: UIViewController {
 }
 
 // MARK: - Actions
+
 extension CartViewController {
     @objc private func paymentButtonActions() {
         let defaultNetworkClient = DefaultNetworkClient()
@@ -257,18 +262,19 @@ extension CartViewController {
 }
 
 // MARK: - Private methods
+
 extension CartViewController {
     private func showSortAlert() {
         let alert = SortModel(
             completionPrice: { [weak self] in
                 guard let self else { return }
-                viewModel.sorting(with: .price)
+                self.viewModel.sorting(with: .price)
             }, completionRating: { [weak self] in
                 guard let self else { return }
-                viewModel.sorting(with: .rating)
+                self.viewModel.sorting(with: .rating)
             }, completionName: { [weak self] in
                 guard let self else { return }
-                viewModel.sorting(with: .name)
+                self.viewModel.sorting(with: .name)
             }
         )
         sortPresenter?.showSort(with: alert)
@@ -283,7 +289,7 @@ extension CartViewController {
             completion: { [weak self] in
                 guard let self else { return }
                 ProgressHUD.show(interaction: false)
-                viewModel.updateCart()
+                self.viewModel.updateCart()
             })
         alertPresenter?.showAlert(with: alert)
     }
@@ -360,6 +366,7 @@ extension CartViewController {
 }
 
 // MARK: - UITableViewDataSource
+
 extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = viewModel.nfts.count
@@ -377,6 +384,7 @@ extension CartViewController: UITableViewDataSource {
 }
 
 // MARK: - UITableViewDelegate
+
 extension CartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
@@ -384,6 +392,7 @@ extension CartViewController: UITableViewDelegate {
 }
 
 // MARK: - CartViewControllerDelegate
+
 extension CartViewController: CartViewControllerDelegate {
     func removingNFTsFromCart(id: String, image: UIImage) {
         idNFT = id
