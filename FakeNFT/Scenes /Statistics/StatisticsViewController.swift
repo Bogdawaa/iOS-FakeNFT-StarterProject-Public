@@ -64,6 +64,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
         setupUI()
 
+
         presenter.view = self
         presenter.viewDidLoad()
     }
