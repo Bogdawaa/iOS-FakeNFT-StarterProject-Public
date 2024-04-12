@@ -101,6 +101,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.sendSubviewToBack(refreshControl)
 
         self.navigationController?.navigationBar.tintColor = UIColor.black
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
 
         applyConstraints()
