@@ -49,6 +49,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     init(presenter: StatisticsPresenterProtocol, statlog: StatLog) {
         self.presenter = presenter
         super.init(statLog: statlog)
+        self.presenter.view = self
     }
 
     required init?(coder: NSCoder) {
@@ -63,8 +64,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.dataSource = self
 
         setupUI()
-
-        presenter.view = self
         presenter.viewDidLoad()
     }
 

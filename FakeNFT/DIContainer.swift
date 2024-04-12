@@ -18,7 +18,10 @@ final class DIContainer {
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
                 ),
                 statisticsController: UINavigationController(
-                    rootViewController: diResolver.resolve(StatisticsViewController.self)!
+                    rootViewController: StatisticsViewController(
+                        presenter: diResolver.resolve(StatisticsPresenter.self)!,
+                        statlog: diResolver.resolve(StatLog.self)!
+                    )
                 )
             )
         }
@@ -161,14 +164,6 @@ final class DIContainer {
                     networkClient: diResolver.resolve(NetworkClient.self)!,
                     storage: UsersStorageImpl()
                 )
-            )
-        }
-        .inObjectScope(.container)
-
-        container.register(StatisticsViewController.self) { diResolver in
-            StatisticsViewController(
-                presenter: diResolver.resolve(StatisticsPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!
             )
         }
         .inObjectScope(.container)
