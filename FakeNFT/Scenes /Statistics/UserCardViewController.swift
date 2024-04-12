@@ -75,6 +75,7 @@ final class UserCardViewController: StatLoggedUIViewController {
     init(presenter: UserCardPresenterProtocol, statlog: StatLog) {
         self.presenter = presenter
         super.init(statLog: statlog)
+        self.presenter.view = self
     }
 
     required init?(coder: NSCoder) {

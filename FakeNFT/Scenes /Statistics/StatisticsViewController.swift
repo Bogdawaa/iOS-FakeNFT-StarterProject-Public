@@ -13,6 +13,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
+    let diContainer = DIContainer()
 
     private var isShowing = false
 
@@ -194,10 +195,8 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let userCardPresenter = UserCardPresenter()
-        let userCardViewController = UserCardViewController(presenter: userCardPresenter, statlog: StatLogImpl())
-        userCardPresenter.view = userCardViewController
-        userCardPresenter.setUser(with: users[indexPath.row])
+        let userCardViewController = diContainer.userCard()
+        userCardViewController.presenter.setUser(with: users[indexPath.row])
         self.navigationController?.pushViewController(userCardViewController, animated: true)
     }
 }

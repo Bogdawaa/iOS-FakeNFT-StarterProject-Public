@@ -16,6 +16,7 @@ protocol UserCardViewProtocol: AnyObject {
 protocol UserCardPresenterProtocol {
     var view: UserCardViewProtocol? { get set }
     func viewDidLoad()
+    func setUser(with user: User)
     func countUserNFTS() -> Int
     func userWebsiteButtonTapped()
 }
