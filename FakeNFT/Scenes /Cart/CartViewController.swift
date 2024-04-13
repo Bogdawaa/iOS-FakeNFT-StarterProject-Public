@@ -33,11 +33,29 @@ final class CartViewController: UIViewController {
     private lazy var sortButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "YPSort"), for: .normal)
+        button.imageView?.image = button.imageView?.image?.withRenderingMode(.alwaysTemplate)
         button.backgroundColor = .clear
         button.isHidden = true
         button.addTarget(self, action: #selector(sortButtonActions), for: .touchUpInside)
+
+        self.navigationItem.titleView = button
+
+        if traitCollection.userInterfaceStyle == .dark {
+            button.tintColor = UIColor.white
+        } else {
+            button.tintColor = UIColor.black
+        }
         return button
     }()
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.userInterfaceStyle == .dark {
+            sortButton.tintColor = UIColor.white
+        } else {
+            sortButton.tintColor = UIColor.black
+        }
+    }
 
     private lazy var paymentButton: UIButton = {
         let button = UIButton()
@@ -164,6 +182,7 @@ final class CartViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview($0)
         }
+
         NSLayoutConstraint.activate([
             nftImageView.heightAnchor.constraint(equalToConstant: 108),
             nftImageView.widthAnchor.constraint(equalToConstant: 108),
@@ -312,7 +331,7 @@ extension CartViewController {
 
     private func setTotalInfo() {
         let count = viewModel.nfts.count
-        let total = viewModel.countingTheTotalAmount()
+        let total = viewModel.countTotalAmount()
         quantityNFTLabel.text = "\(count) NFT"
         totalAmountLabel.text = "\(total) ETH"
     }
