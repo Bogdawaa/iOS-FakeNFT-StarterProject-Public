@@ -45,6 +45,7 @@ final class UserCardViewController: StatLoggedUIViewController {
         let lbl = UILabel()
         lbl.font = .systemFont(ofSize: 13, weight: .regular)
         lbl.textColor = UIColor.label
+        lbl.numberOfLines = 0
         lbl.translatesAutoresizingMaskIntoConstraints = false
         return lbl
     }()
@@ -139,8 +140,7 @@ final class UserCardViewController: StatLoggedUIViewController {
         let userDesriptionLabelConstraints = [
             userDesciptionLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
             userDesciptionLabel.leadingAnchor.constraint(equalTo: userInfoView.leadingAnchor, constant: 16),
-            userDesciptionLabel.trailingAnchor.constraint(equalTo: userInfoView.trailingAnchor, constant: -18),
-            userDesciptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 28)
+            userDesciptionLabel.trailingAnchor.constraint(equalTo: userInfoView.trailingAnchor, constant: -18)
         ]
         let userWebsiteButtonConstraints = [
             userWebsiteButton.topAnchor.constraint(equalTo: userDesciptionLabel.bottomAnchor, constant: 28),
