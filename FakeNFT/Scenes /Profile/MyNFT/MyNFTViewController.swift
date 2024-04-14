@@ -55,8 +55,8 @@ final class MyNFTViewController: StatLoggedUIViewController {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
         navBarSetup()
-        setupGestureRecognizers()
         constraitsNftTableView()
+        setupGestureRecognizers()
         constraitsNftEmptyLabel()
         presenter.viewDidLoad()
         presenter.view = self
@@ -65,6 +65,7 @@ final class MyNFTViewController: StatLoggedUIViewController {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
         isLoadingSwitch = false
+        nftEmptyLabel.isHidden = true
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {

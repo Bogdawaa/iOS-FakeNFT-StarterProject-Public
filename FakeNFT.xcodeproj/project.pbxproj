@@ -49,6 +49,8 @@
 		7943632F2BB8364500F3F527 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943632E2BB8364500F3F527 /* DIContainer.swift */; };
 		79BC4FC82BB8379E007005F7 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC72BB8379E007005F7 /* Swinject */; };
 		79BC4FCA2BB8379E007005F7 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC92BB8379E007005F7 /* Swinject-Dynamic */; };
+		91013CC72BC7D26800105D5E /* FavoritesNFTPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91013CC62BC7D26800105D5E /* FavoritesNFTPresenter.swift */; };
+		91013CC92BC7D28000105D5E /* FavoritesNFTContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91013CC82BC7D28000105D5E /* FavoritesNFTContract.swift */; };
 		91995DDB2BB15591007F51C7 /* Profile.md in Resources */ = {isa = PBXBuildFile; fileRef = 91995DDA2BB15591007F51C7 /* Profile.md */; };
 		91995DDD2BB18C39007F51C7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DDC2BB18C39007F51C7 /* ProfileViewController.swift */; };
 		91995DE12BB80A11007F51C7 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DE02BB80A11007F51C7 /* ProfileTableCell.swift */; };
@@ -139,6 +141,8 @@
 		7943632E2BB8364500F3F527 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7BB5CA1EE6C806649EDD875B /* Pods-FakeNFT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.release.xcconfig"; sourceTree = "<group>"; };
 		90FAC42DA72245C005D5FEE5 /* Pods_FakeNFTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91013CC62BC7D26800105D5E /* FavoritesNFTPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTPresenter.swift; sourceTree = "<group>"; };
+		91013CC82BC7D28000105D5E /* FavoritesNFTContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTContract.swift; sourceTree = "<group>"; };
 		91995DDA2BB15591007F51C7 /* Profile.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Profile.md; sourceTree = "<group>"; };
 		91995DDC2BB18C39007F51C7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		91995DE02BB80A11007F51C7 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
@@ -466,6 +470,8 @@
 			children = (
 				91995DE82BBBF8FD007F51C7 /* FavoritesNFTViewController.swift */,
 				91995DEA2BBBFF66007F51C7 /* FavoritesNFTCollectionViewCell.swift */,
+				91013CC62BC7D26800105D5E /* FavoritesNFTPresenter.swift */,
+				91013CC82BC7D28000105D5E /* FavoritesNFTContract.swift */,
 			);
 			path = FavoritesNFT;
 			sourceTree = "<group>";
@@ -797,6 +803,7 @@
 				91995DFA2BC3E7B0007F51C7 /* ProfileContract.swift in Sources */,
 				794363292BB7FB3D00F3F527 /* String+Extension.swift in Sources */,
 				91995DF22BC3B1F2007F51C7 /* Profile.swift in Sources */,
+				91013CC92BC7D28000105D5E /* FavoritesNFTContract.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
 				0CF2C2DD2A783CE600FDC837 /* ErrorView.swift in Sources */,
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
@@ -825,6 +832,7 @@
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
+				91013CC72BC7D26800105D5E /* FavoritesNFTPresenter.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,

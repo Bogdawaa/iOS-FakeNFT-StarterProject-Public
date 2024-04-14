@@ -59,6 +59,7 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
         presenter.view = self
         presenter.viewDidLoad()
         constraitsFavoritesNftEmptyLabel()
+        favoritesNftEmptyLabel.isHidden = true
     }
     // MARK: - NAVBAR SETUP
     private func navbarSetup() {

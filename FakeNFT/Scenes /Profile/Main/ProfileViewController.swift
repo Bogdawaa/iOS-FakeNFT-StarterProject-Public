@@ -193,7 +193,9 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.row == 1 {
             navigateFavoritesNFTViewController()
         }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -217,6 +219,7 @@ extension ProfileViewController: UITableViewDataSource {
             break
         }
         cell.backgroundColor = .ypWhite
+
         return cell
     }
 
