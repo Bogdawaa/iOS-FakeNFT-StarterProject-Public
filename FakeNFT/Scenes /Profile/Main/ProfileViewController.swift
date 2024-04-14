@@ -13,8 +13,9 @@ import Kingfisher
 final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: ProfilePresenterProtocol
-    // MARK: - MyNFTviewController
-    var myNFTViewController: MyNFTViewController
+    // MARK: - controllers
+    var myNFTViewController: MyNFTViewProtocol
+    var favoritesNFTViewController: FavoritesNFTViewProtocol
     // MARK: - private properties
     private var isLoadingSwitch = false {
         didSet {
@@ -50,7 +51,6 @@ final class ProfileViewController: StatLoggedUIViewController {
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline3
-        // label.text = "Joaquin Phoenix"
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
         return label
@@ -86,9 +86,15 @@ final class ProfileViewController: StatLoggedUIViewController {
         return tableView
     }()
     // MARK: - init
-    init(presenter: ProfilePresenterProtocol, statlog: StatLog, myNftViewController: MyNFTViewController) {
+    init(
+        presenter: ProfilePresenterProtocol,
+        statlog: StatLog,
+        myNftViewController: MyNFTViewController,
+        favoritesNFTViewController: FavoritesNFTViewController
+    ) {
         self.presenter = presenter
         self.myNFTViewController = myNftViewController
+        self.favoritesNFTViewController = favoritesNFTViewController
         super.init(statLog: statlog)
     }
     // MARK: - lifecycle
@@ -103,7 +109,6 @@ final class ProfileViewController: StatLoggedUIViewController {
         constraitsProfileTableView()
         presenter.view = self
         presenter.viewDidLoad()
-
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -162,13 +167,17 @@ final class ProfileViewController: StatLoggedUIViewController {
         ])
     }
     private func createProfileViewController() -> UINavigationController {
-        myNFTViewController.setNftId(nftId: presenter.getNftId())
-        return UINavigationController(rootViewController: myNFTViewController)
+        myNFTViewController.setNftId(nftId: presenter.getMyNftId())
+        return UINavigationController(
+            rootViewController: myNFTViewController as? UIViewController ?? UIViewController(nibName: nil, bundle: nil)
+        )
     }
     private func createFavoritesNFTViewController() -> UINavigationController {
-        let myNFTViewController = FavoritesNFTViewController()
-
-        return UINavigationController(rootViewController: myNFTViewController)
+        favoritesNFTViewController.setNftId(nftId: presenter.getLikedNftId())
+        return UINavigationController(
+            rootViewController: favoritesNFTViewController as?
+            UIViewController ?? UIViewController(nibName: nil, bundle: nil)
+        )
     }
 }
 
@@ -215,7 +224,6 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
-
 }
 // MARK: - ProfileViewProtocol
 extension ProfileViewController: ProfileViewProtocol {

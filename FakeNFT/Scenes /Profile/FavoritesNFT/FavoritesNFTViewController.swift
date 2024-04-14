@@ -7,8 +7,19 @@
 
 import Foundation
 import UIKit
+import ProgressHUD
 
-final class FavoritesNFTViewController: UIViewController {
+final class FavoritesNFTViewController: StatLoggedUIViewController {
+    // MARK: - presenter
+    var presenter: FavoriteNFTPresenterProtocol
+    // MARK: - PRIVATE PROPERTIES
+    private var isLoadingSwitch = false {
+        didSet {
+            if isLoadingSwitch == true {
+            } else {
+            }
+        }
+    }
     // MARK: - UI
     private lazy var favoritesNftCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -33,6 +44,11 @@ final class FavoritesNFTViewController: UIViewController {
         view.addSubview(label)
         return label
     }()
+    // MARK: - INIT
+    init( statLog: StatLog, presenter: FavoriteNFTPresenterProtocol) {
+        self.presenter = presenter
+        super.init(statLog: statLog)
+    }
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +56,8 @@ final class FavoritesNFTViewController: UIViewController {
         navbarSetup()
         setupGestureRecognizers()
         constraitsFavoritesNftCollectionView()
-       // favoritesNftCollectionView.isHidden = truew
+        presenter.view = self
+        presenter.viewDidLoad()
         constraitsFavoritesNftEmptyLabel()
     }
     // MARK: - NAVBAR SETUP
@@ -98,7 +115,12 @@ extension FavoritesNFTViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDataSource
 extension FavoritesNFTViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-       return 25
+        if presenter.getFavoriteNft()?.count ?? 0 > 0 {
+            favoritesNftEmptyLabel.isHidden = true
+        } else {
+            favoritesNftEmptyLabel.isHidden = false
+        }
+        return presenter.getFavoriteNft()?.count ?? 0
     }
     func collectionView(
         _ collectionView: UICollectionView,
@@ -108,8 +130,14 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
             withReuseIdentifier: FavoritesNFTCollectionViewCell.favoritesNftCellIdentifier,
             for: indexPath
         ) as? FavoritesNFTCollectionViewCell
-
         else {return UICollectionViewCell()}
+        guard let nftSetting = presenter.getFavoriteNft()?[indexPath.row] else { return cell}
+        cell.configureFavNftCell(
+            favNftImageUrl: nftSetting.images.first,
+            favNftTitle: nftSetting.name,
+            favNftRaiting: nftSetting.rating,
+            favNftPrice: nftSetting.price
+        )
         return cell
     }
 }
@@ -131,5 +159,21 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 8
     }
-
+}
+// MARK: - UICollectionViewDelegateFlowLayout
+extension FavoritesNFTViewController: FavoritesNFTViewProtocol {
+    func displayFavoritesNft(_ nft: [Nft]) {
+        favoritesNftCollectionView.reloadData()
+    }
+    func loadingDataStarted() {
+        ProgressHUD.show()
+        isLoadingSwitch = true
+    }
+    func loadingDataFinished() {
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
+    func setNftId(nftId: [String]) {
+        presenter.setNftId(nftId: nftId)
+    }
 }

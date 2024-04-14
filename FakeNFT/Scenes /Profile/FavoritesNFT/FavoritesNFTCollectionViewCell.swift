@@ -62,6 +62,36 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - PUBLIC FUNC
+    func configureFavNftCell(
+        favNftImageUrl: URL?,
+        favNftTitle: String,
+        favNftRaiting: Int,
+        favNftPrice: Float
+    ) {
+        if let url = favNftImageUrl {
+            favNftImageView.kf.setImage(
+                with: url
+            )
+        }
+        favNftTitleLabel.text = favNftTitle
+        favNftPriceLabel.text = String(favNftPrice)
+        switch favNftRaiting {
+        case 0:
+            favNftRatingImageView.image = .ypProfileNftRatingImage0
+        case 1:
+            favNftRatingImageView.image = .ypProfileNftRatingImage1
+        case 2:
+            favNftRatingImageView.image = .ypProfileNftRatingImage2
+        case 3:
+            favNftRatingImageView.image = .ypProfileNftRatingImage3
+        case 4:
+            favNftRatingImageView.image = .ypProfileNftRatingImage4
+        case 5:
+            favNftRatingImageView.image = .ypProfileNftRatingImage5
+        default: break
+        }
+    }
     // MARK: - PRIVATE
     private func mockSetup() {
         favNftImageView.image = .ypProfileNftMockImage

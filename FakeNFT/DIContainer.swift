@@ -46,6 +46,23 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
+        container.register(FavoritesNFTPresenter.self) { diResolver in
+            FavoritesNFTPresenter(
+                service: NftServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: NftStorageImpl()
+                )
+            )
+        }
+        .inObjectScope(.container)
+        container.register(FavoritesNFTViewController.self) { diResolver in
+            FavoritesNFTViewController(
+                statLog: diResolver.resolve(StatLog.self)!,
+                presenter: diResolver.resolve(FavoritesNFTPresenter.self)!
+            )
+        }
+        .inObjectScope(.container)
+
         container.register(ProfileViewPresenter.self) { diResolver in
             ProfileViewPresenter(
                 service: ProfileServiceImpl(
@@ -58,7 +75,8 @@ final class DIContainer {
             ProfileViewController(
                 presenter: diResolver.resolve(ProfileViewPresenter.self)!,
                 statlog: diResolver.resolve(StatLog.self)!,
-                myNftViewController: diResolver.resolve(MyNFTViewController.self)!
+                myNftViewController: diResolver.resolve(MyNFTViewController.self)!,
+                favoritesNFTViewController: diResolver.resolve(FavoritesNFTViewController.self)!
             )
         }
         .inObjectScope(.container)

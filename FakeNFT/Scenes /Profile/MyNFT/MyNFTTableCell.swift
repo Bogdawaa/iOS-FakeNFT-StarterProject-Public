@@ -110,7 +110,6 @@ final class MyNFTTableCell: UITableViewCell {
         case 5:
             nftRatingImageView.image = .ypProfileNftRatingImage5
         default: break
-
         }
     }
     // MARK: - MOCK SETUP
@@ -159,7 +158,7 @@ final class MyNFTTableCell: UITableViewCell {
     }
     private func constraitsNftPriceTitleLabel() {
         NSLayoutConstraint.activate([
-            nftPriceTitleLabel.leadingAnchor.constraint(equalTo: nftRatingImageView.trailingAnchor, constant: 39),
+            nftPriceTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -81),
             nftPriceTitleLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33)
         ])
     }
