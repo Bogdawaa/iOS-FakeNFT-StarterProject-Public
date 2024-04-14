@@ -11,7 +11,22 @@
 
 
 // Profile
-
+"Profile.myNFT" = "Мои NFT";
+"Profile.favoritesNFT" = "Избранные NFT";
+"Profile.favoritesNFT.Empty" = "У Вас ещё нет избранных NFT";
+"Profile.aboutDeveloper" = "О разработчике";
+"Profile.MyNFT.Title" = "Мои NFT";
+"Profile.MyNFT.Sort.Title" = "Сортировка";
+"Profile.MyNFT.Sort.ByPrice" = "По цене";
+"Profile.MyNFT.Sort.ByRating" = "По рейтингу";
+"Profile.MyNFT.Sort.ByName" = "По названию";
+"Profile.MyNFT.Sort.Close" = "Закрыть";
+"Profile.MyNFT.Empty" = "У вас ещё нет NFT";
+"Profile.Favorites.Title" = "Избранные NFT";
+"Profile.Edit.Change.Avatar.Title" = "Сменить \nфото";
+"Profile.Edit.NameTitle" = "Имя";
+"Profile.Edit.CaptionTitle" = "Описание";
+"Profile.Edit.WebsiteTitle" = "Сайт";
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
 
