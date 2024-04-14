@@ -74,42 +74,32 @@ final class MyNFTViewController: StatLoggedUIViewController {
     }
     // MARK: - NAV BAR SETUP
     private func navBarSetup() {
-        if let navBar = navigationController?.navigationBar {
-
-            let leftButton = UIBarButtonItem(
-                image: UIImage(systemName: "chevron.left"),
-                style: .plain,
-                target: self,
-                action: #selector(self.dismissButtonClicked)
-            )
-            leftButton.tintColor = .ypBlack
-            navigationItem.leftBarButtonItem = leftButton
-
-            let test = UILabel()
-            test.text = "Profile.MyNFT.Title"~
-            test.font = .bodyBold
-            navBar.topItem?.titleView = test
-
-            let rightButton = UIBarButtonItem(
-                image: .ypSortButton,
-                style: .plain,
-                target: self,
-                action: #selector(self.sortButtonClicked)
-            )
-            rightButton.tintColor = .ypBlack
-            navigationItem.rightBarButtonItem = rightButton
-        }
+        let leftButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(self.dismissButtonClicked)
+        )
+        let rightButton = UIBarButtonItem(
+            image: .ypSortButton,
+            style: .plain,
+            target: self,
+            action: #selector(self.sortButtonClicked)
+        )
+        navigationItem.title = "Profile.MyNFT.Title"~
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     // MARK: - Configure Sort Menu
     func configureSortMenu() {
         let priceSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByPrice"~, style: .default) { _ in
-           // todo
+            self.presenter.sortByPrice()
         }
         let ratingSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByRating"~, style: .default) { _ in
-           // todo
+            self.presenter.sortByRating()
         }
         let namegSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByName"~, style: .default) { _ in
-           // todo
+            self.presenter.sortByName()
         }
         let cancelAction = UIAlertAction(title: "Profile.MyNFT.Sort.Close"~, style: .cancel)
         let alert = UIAlertController(title: "Profile.MyNFT.Sort.Title"~, message: nil, preferredStyle: .actionSheet)
@@ -122,11 +112,11 @@ final class MyNFTViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     @objc
     func dismissButtonClicked() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     @objc
     func sortButtonClicked() {

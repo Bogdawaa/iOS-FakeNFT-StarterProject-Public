@@ -13,9 +13,6 @@ import Kingfisher
 final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: ProfilePresenterProtocol
-    // MARK: - controllers
-    var myNFTViewController: MyNFTViewProtocol
-    var favoritesNFTViewController: FavoritesNFTViewProtocol
     // MARK: - private properties
     private var isLoadingSwitch = false {
         didSet {
@@ -28,14 +25,16 @@ final class ProfileViewController: StatLoggedUIViewController {
             }
         }
     }
+    private let diContainer = DIContainer()
     // MARK: - UI
-    private lazy var profileEditButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var profileEditButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: "square.and.pencil"),
+            style: .plain,
+            target: self,
+            action: #selector(profileEditButtonClicked)
+        )
         button.tintColor = .ypBlack
-        button.addTarget(self, action: #selector(profileEditButtonClicked), for: .touchDown)
-        self.view.addSubview(button)
         return button
     }()
     private lazy var profileImage: UIImageView = {
@@ -88,20 +87,16 @@ final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - init
     init(
         presenter: ProfilePresenterProtocol,
-        statlog: StatLog,
-        myNftViewController: MyNFTViewController,
-        favoritesNFTViewController: FavoritesNFTViewController
+        statlog: StatLog
     ) {
         self.presenter = presenter
-        self.myNFTViewController = myNftViewController
-        self.favoritesNFTViewController = favoritesNFTViewController
         super.init(statLog: statlog)
     }
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        constraitsProfileEditButton()
+        setupNavigation()
         constraitsProfileImage()
         constraitsProfileNameLabel()
         constraitsProfileTextView()
@@ -115,6 +110,9 @@ final class ProfileViewController: StatLoggedUIViewController {
         ProgressHUD.dismiss()
         isLoadingSwitch = false
     }
+    func setupNavigation() {
+        navigationItem.rightBarButtonItem = profileEditButton
+    }
     // MARK: - OBJC
     @objc
     private func profileEditButtonClicked(_ sender: UIButton) {
@@ -122,20 +120,12 @@ final class ProfileViewController: StatLoggedUIViewController {
         self.present(view, animated: true)
     }
     // MARK: - constraits
-    private func constraitsProfileEditButton() {
-        NSLayoutConstraint.activate([
-            profileEditButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            profileEditButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
-            profileEditButton.widthAnchor.constraint(equalToConstant: 42),
-            profileEditButton.heightAnchor.constraint(equalToConstant: 42)
-        ])
-    }
     private func constraitsProfileImage() {
         NSLayoutConstraint.activate([
             profileImage.widthAnchor.constraint(equalToConstant: 70),
             profileImage.heightAnchor.constraint(equalToConstant: 70),
             profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            profileImage.topAnchor.constraint(equalTo: profileEditButton.bottomAnchor, constant: 20)
+            profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
         ])
     }
     private func constraitsProfileNameLabel() {
@@ -148,7 +138,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         NSLayoutConstraint.activate([
             profileTextView.leadingAnchor.constraint(equalTo: profileImage.leadingAnchor),
             profileTextView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 20),
-            profileTextView.trailingAnchor.constraint(equalTo: profileEditButton.trailingAnchor),
+            profileTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
             profileTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
@@ -166,33 +156,42 @@ final class ProfileViewController: StatLoggedUIViewController {
             profileTableView.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
-    private func createProfileViewController() -> UINavigationController {
-        myNFTViewController.setNftId(nftId: presenter.getMyNftId())
-        return UINavigationController(
-            rootViewController: myNFTViewController as? UIViewController ?? UIViewController(nibName: nil, bundle: nil)
-        )
+    private func navigateMyNftViewController() {
+        guard let myNftViewController = diContainer.myNftViewController() as? MyNFTViewController
+        else {
+            assertionFailure("cant resolve myNftViewController")
+            return
+        }
+            myNftViewController.setNftId(nftId: presenter.getMyNftId())
+            myNftViewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(
+                myNftViewController,
+                animated: true
+            )
+
     }
-    private func createFavoritesNFTViewController() -> UINavigationController {
-        favoritesNFTViewController.setNftId(nftId: presenter.getLikedNftId())
-        return UINavigationController(
-            rootViewController: favoritesNFTViewController as?
-            UIViewController ?? UIViewController(nibName: nil, bundle: nil)
-        )
+    private func navigateFavoritesNFTViewController() {
+        guard let favoriteNftController = diContainer.favoritesNFTViewController() as? FavoritesNFTViewController
+        else {
+            assertionFailure("cant resolve favoriteNftController")
+            return
+        }
+            favoriteNftController.setNftId(nftId: presenter.getMyNftId())
+            favoriteNftController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(
+                favoriteNftController,
+                animated: true
+            )
     }
 }
-
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let view = createProfileViewController()
-            view.modalPresentationStyle = .fullScreen
-            present(view, animated: true)
+            navigateMyNftViewController()
         }
         if indexPath.row == 1 {
-            let view = createFavoritesNFTViewController()
-            view.modalPresentationStyle = .fullScreen
-            present(view, animated: true)
+            navigateFavoritesNFTViewController()
         }
     }
 }

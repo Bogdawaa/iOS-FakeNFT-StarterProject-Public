@@ -62,20 +62,15 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     }
     // MARK: - NAVBAR SETUP
     private func navbarSetup() {
-        if let navbar = navigationController?.navigationBar {
-            let leftButton = UIBarButtonItem(
-                image: UIImage(systemName: "chevron.left"),
-                style: .plain,
-                target: self,
-                action: #selector(self.dismissButtonClicked)
-            )
-            leftButton.tintColor = .ypBlack
-            navigationItem.leftBarButtonItem = leftButton
-            let navbarLabel = UILabel()
-            navbarLabel.text = "Profile.Favorites.Title"~
-            navbarLabel.font = .bodyBold
-            navbar.topItem?.titleView = navbarLabel
-        }
+        let leftButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(self.dismissButtonClicked)
+        )
+        leftButton.tintColor = .ypBlack
+        navigationItem.title = "Profile.Favorites.Title"~
+        navigationItem.leftBarButtonItem = leftButton
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {
@@ -86,11 +81,11 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     @objc
     func dismissButtonClicked() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     // MARK: - CONSTRAITS
     private func constraitsFavoritesNftCollectionView() {

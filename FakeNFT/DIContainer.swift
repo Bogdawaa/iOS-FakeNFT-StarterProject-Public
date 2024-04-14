@@ -1,4 +1,5 @@
 import Swinject
+import UIKit
 
 final class DIContainer {
     private var container = Container()
@@ -12,7 +13,9 @@ final class DIContainer {
             TabBarController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
                 catalogViewController: diResolver.resolve(CatalogViewController.self)!,
-                profileViewController: diResolver.resolve(ProfileViewController.self)!
+                profileViewController: UINavigationController(
+                    rootViewController: diResolver.resolve(ProfileViewController.self)!
+                )
             )
         }
     }
@@ -20,7 +23,12 @@ final class DIContainer {
     func tabBarController() -> TabBarController {
         container.resolve(TabBarController.self)!
     }
-
+    func myNftViewController() -> MyNFTViewProtocol {
+        container.resolve(MyNFTViewController.self)!
+    }
+    func favoritesNFTViewController() -> FavoritesNFTViewProtocol {
+        container.resolve(FavoritesNFTViewController.self)!
+    }
     private func registerCatalog() {
         container.register(CatalogViewController.self) { diResolver in
             TestCatalogViewController(
@@ -29,6 +37,7 @@ final class DIContainer {
             )
         }
     }
+
     private func registerProfile() {
         container.register(MyNFTPresenter.self) { diResolver in
             MyNFTPresenter(
@@ -38,14 +47,12 @@ final class DIContainer {
                 )
             )
         }
-        .inObjectScope(.container)
         container.register(MyNFTViewController.self) { diResolver in
             MyNFTViewController(
                 statLog: diResolver.resolve(StatLog.self)!,
                 presenter: diResolver.resolve(MyNFTPresenter.self)!
             )
         }
-        .inObjectScope(.container)
         container.register(FavoritesNFTPresenter.self) { diResolver in
             FavoritesNFTPresenter(
                 service: NftServiceImpl(
@@ -54,14 +61,12 @@ final class DIContainer {
                 )
             )
         }
-        .inObjectScope(.container)
         container.register(FavoritesNFTViewController.self) { diResolver in
             FavoritesNFTViewController(
                 statLog: diResolver.resolve(StatLog.self)!,
                 presenter: diResolver.resolve(FavoritesNFTPresenter.self)!
             )
         }
-        .inObjectScope(.container)
 
         container.register(ProfileViewPresenter.self) { diResolver in
             ProfileViewPresenter(
@@ -74,9 +79,7 @@ final class DIContainer {
         container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(
                 presenter: diResolver.resolve(ProfileViewPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!,
-                myNftViewController: diResolver.resolve(MyNFTViewController.self)!,
-                favoritesNFTViewController: diResolver.resolve(FavoritesNFTViewController.self)!
+                statlog: diResolver.resolve(StatLog.self)!
             )
         }
         .inObjectScope(.container)

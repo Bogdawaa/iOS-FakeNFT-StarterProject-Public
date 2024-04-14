@@ -3,11 +3,11 @@ import UIKit
 final class TabBarController: UITabBarController {
     private let catalogViewController: CatalogViewController
     private let servicesAssembly: ServicesAssembly
-    private let profileViewController: ProfileViewController
+    private let profileViewController: UINavigationController
     init(
         servicesAssembly: ServicesAssembly,
         catalogViewController: CatalogViewController,
-        profileViewController: ProfileViewController
+        profileViewController: UINavigationController
     ) {
         self.servicesAssembly = servicesAssembly
         self.catalogViewController = catalogViewController

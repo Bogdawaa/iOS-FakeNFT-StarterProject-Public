@@ -20,5 +20,8 @@ protocol MyNFTPresenterProtocol {
     func viewDidLoad()
     func loadMyNft()
     func setNftId(nftId: [String])
+    func sortByName()
+    func sortByPrice()
+    func sortByRating()
     func getMyNft() -> [Nft]?
 }

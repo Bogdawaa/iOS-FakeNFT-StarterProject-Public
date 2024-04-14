@@ -21,7 +21,26 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     }
     // MARK: - public func
     func viewDidLoad() {
+        myNft = []
         loadMyNft()
+    }
+    func sortByName() {
+        myNft.sort {
+            $0.name < $1.name
+        }
+        view?.displayMyNft(myNft)
+    }
+    func sortByPrice() {
+        myNft.sort {
+            $0.price > $1.price
+        }
+        view?.displayMyNft(myNft)
+    }
+    func sortByRating() {
+        myNft.sort {
+            $0.rating > $1.rating
+        }
+        view?.displayMyNft(myNft)
     }
     func loadMyNft() {
         view?.loadingDataStarted()
