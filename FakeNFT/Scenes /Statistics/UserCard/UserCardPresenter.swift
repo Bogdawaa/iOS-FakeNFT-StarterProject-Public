@@ -15,7 +15,8 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
     func viewDidLoad() {
         guard let user else { return }
-        view?.setupUserData(with: user)
+        let userViewModel = setViewModel(user: user)
+        view?.setupUserData(with: userViewModel)
     }
 
     func setUser(with user: User) {
@@ -33,5 +34,18 @@ final class UserCardPresenter: UserCardPresenterProtocol {
         webViewPresenter.view = webViewController
         webViewController.presenter = webViewPresenter
         view?.showView(viewController: webViewController)
+    }
+
+    private func setViewModel(user: User) -> User {
+        let userViewModel = User(
+            id: user.id,
+            name: user.name,
+            avatar: user.avatar,
+            rating: user.rating,
+            website: user.website,
+            nfts: user.nfts,
+            description: user.description.trimmingCharacters(in: .whitespacesAndNewlines)
+        )
+        return userViewModel
     }
 }
