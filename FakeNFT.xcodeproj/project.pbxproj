@@ -460,17 +460,41 @@
 		F00DF4AD2BB06BFC00825462 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				F028529F2BCDB6B600688074 /* UserCard */,
+				F028529E2BCDB68A00688074 /* StatisticsMain */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		F028529E2BCDB68A00688074 /* StatisticsMain */ = {
+			isa = PBXGroup;
+			children = (
 				F00DF4AE2BB06C2900825462 /* StatisticsViewController.swift */,
 				F00DF4B02BB0726D00825462 /* StatisticsTableViewCell.swift */,
 				F00DF4B22BB0806A00825462 /* StatisticsPresenter.swift */,
 				F00DF4B42BB0822400825462 /* StatisticsContract.swift */,
+			);
+			path = StatisticsMain;
+			sourceTree = "<group>";
+		};
+		F028529F2BCDB6B600688074 /* UserCard */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A02BCDB6C900688074 /* WebView */,
 				F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */,
 				F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */,
 				F0E68FC32BC31D710032AD69 /* UserCardContract.swift */,
+			);
+			path = UserCard;
+			sourceTree = "<group>";
+		};
+		F02852A02BCDB6C900688074 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
 				F0D195052BC72F9700FEAFCA /* WebViewController.swift */,
 				F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */,
 			);
-			path = Statistics;
+			path = WebView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
