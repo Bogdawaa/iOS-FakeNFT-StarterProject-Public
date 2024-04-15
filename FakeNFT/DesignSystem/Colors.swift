@@ -1,7 +1,9 @@
 import UIKit
 
 extension UIColor {
+
     // Creates color from a hex string
+
     convenience init(hexString: String) {
         let hex = hexString.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()
