@@ -22,7 +22,6 @@ protocol WebViewControllerDelegate: AnyObject {
 
 class WebViewController: UIViewController {
 
-    weak var delegate: WebViewControllerDelegate?
     var presenter: WebViewPresenterProtocol?
 
     private var estimatedProgressObservation: NSKeyValueObservation?
@@ -39,7 +38,6 @@ class WebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        webView.navigationDelegate = self
         presenter?.viewDidLoad()
     }
 
@@ -83,14 +81,4 @@ extension WebViewController: WebViewControllerProtocol {
         progressView.progress = newValue
         print(newValue)
     }
-}
-
-// MARK: - WKNavigationDelegate extension
-extension WebViewController: WKNavigationDelegate {
-    func webView(
-        _ webView: WKWebView,
-        decidePolicyFor navigationAction: WKNavigationAction,
-        decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-            decisionHandler(.allow)
-        }
 }
