@@ -31,7 +31,7 @@ final class CartViewModel {
         loadNfts()
     }
 
-    func countingTheTotalAmount() -> Float {
+    func countTotalAmount() -> Float {
         var total: Float = 0.0
         nfts.forEach {
             total += $0.price
