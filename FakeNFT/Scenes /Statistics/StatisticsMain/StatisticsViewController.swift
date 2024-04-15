@@ -197,6 +197,7 @@ extension StatisticsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let userCardViewController = diContainer.userCard()
+        userCardViewController.hidesBottomBarWhenPushed = true
         userCardViewController.presenter.setUser(with: users[indexPath.row])
         self.navigationController?.pushViewController(userCardViewController, animated: true)
     }
