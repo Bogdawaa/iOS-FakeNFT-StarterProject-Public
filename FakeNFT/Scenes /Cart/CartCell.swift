@@ -12,6 +12,7 @@ final class CartCell: UITableViewCell {
     weak var delegate: CartViewControllerDelegate?
     private var nftID: String?
     private let ratingView = RatingView()
+    let button = UIButton()
 
     // MARK: - UiElements
 
@@ -45,13 +46,27 @@ final class CartCell: UITableViewCell {
     }()
 
     private lazy var deleteButton: UIButton = {
-        let button = UIButton()
         button.backgroundColor = .clear
         button.setImage(UIImage(named: "YPTrash"), for: .normal)
         button.addTarget(self, action: #selector(didDeleteButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.userInterfaceStyle == .dark {
+            if let image = button.imageView?.image {
+                button.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
+                button.tintColor = .white
+            }
+        } else {
+            if let image = button.imageView?.image {
+                button.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
+                button.tintColor = .black
+            }
+        }
+    }
 
     // MARK: - Initialisation
 

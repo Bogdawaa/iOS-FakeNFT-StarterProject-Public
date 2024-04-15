@@ -150,7 +150,7 @@ final class PaymentViewController: UIViewController {
 
         viewModel.$paymentError.bind(observer: { [weak self] _ in
             guard let self else { return }
-            self.showAlertNetworkError(title:  self.failedPayment)
+            self.showAlertNetworkError(title: self.failedPayment)
         })
 
         viewModel.$errorLoadingCurrencies.bind(observer: { [weak self] _ in
