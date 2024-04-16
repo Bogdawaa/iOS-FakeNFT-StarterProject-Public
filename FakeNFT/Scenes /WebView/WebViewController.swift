@@ -29,7 +29,8 @@ final class WebViewController: UIViewController {
         return webView
     }()
 
-    // MARK: Initialisation
+    // MARK: - Initialisation
+
     init(link: URL) {
         self.link = link
         super.init(nibName: nil, bundle: nil)
@@ -41,6 +42,7 @@ final class WebViewController: UIViewController {
     }
 
     // MARK: - Lyfe Cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configViews()
@@ -49,18 +51,21 @@ final class WebViewController: UIViewController {
     }
 
     // MARK: - Actions
+
     @objc private func backButtonAction() {
         ProgressHUD.dismiss()
         dismiss(animated: true)
     }
 
     // MARK: - Load Website
+
     private func loadWebView(link: URL) {
         let request = URLRequest(url: link)
         webView.load(request)
     }
 
     // MARK: - Private methods
+
     private func navigationBar() {
         if let topItem = navigationController?.navigationBar.topItem {
             topItem.backBarButtonItem = UIBarButtonItem(
@@ -95,6 +100,7 @@ final class WebViewController: UIViewController {
 }
 
 // MARK: - WKNavigationDelegate
+
 extension WebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         ProgressHUD.show(interaction: false)
