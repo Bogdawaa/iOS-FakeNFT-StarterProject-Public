@@ -27,4 +27,4 @@ Cart
 
 ## 3 Модуль:
 
- - Launch Screen - 5 мин 
+ - Launch Screen - 5 мин / 5 мин
