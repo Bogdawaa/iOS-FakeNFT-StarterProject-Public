@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tabler_trash-x.png",
+      "filename" : "Group 7.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tabler_trash-x@2x.png",
+      "filename" : "Group 7@2x.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tabler_trash-x@3x.png",
+      "filename" : "Group 7@3x.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,5 +19,9 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "compression-type" : "automatic",
+    "template-rendering-intent" : "template"
   }
 }
