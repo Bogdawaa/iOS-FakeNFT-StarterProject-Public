@@ -132,7 +132,9 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
             favNftImageUrl: nftSetting.images.first,
             favNftTitle: nftSetting.name,
             favNftRaiting: nftSetting.rating,
-            favNftPrice: nftSetting.price
+            favNftPrice: nftSetting.price,
+            favnftId: nftSetting.id,
+            delegate: self
         )
         return cell
     }
@@ -171,5 +173,10 @@ extension FavoritesNFTViewController: FavoritesNFTViewProtocol {
     }
     func setNftId(nftId: [String]) {
         presenter.setNftId(nftId: nftId)
+    }
+}
+extension FavoritesNFTViewController: FavoritesNFTCollectionViewCellDelegate {
+    func removeLike(nftId: String) {
+        presenter.removeFavoriteNft(nftId: nftId)
     }
 }

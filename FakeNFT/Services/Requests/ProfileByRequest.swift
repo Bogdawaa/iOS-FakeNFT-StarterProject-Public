@@ -8,6 +8,11 @@
 import Foundation
 
 struct ProfileByRequest: BaseNftRequest {
+    var httpMethod: HttpMethod
+
+    var dto: Encodable?
+    var httpBody: String?
+
     let id: String
 
     var endpoint: URL? {

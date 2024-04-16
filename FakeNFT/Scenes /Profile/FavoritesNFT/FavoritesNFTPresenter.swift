@@ -8,6 +8,7 @@
 import Foundation
 
 final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
+
     // MARK: - view delegate
     var view: FavoritesNFTViewProtocol?
     // MARK: - nft
@@ -31,7 +32,7 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
                 switch result {
                 case .success(let nft):
                     DispatchQueue.main.async {
-                        self.updateNft(newNft: nft)
+                        self.addNft(newNft: nft)
                     }
                 case .failure(let error):
                     assertionFailure("\(error)")
@@ -45,7 +46,17 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
     func setNftId(nftId: [String]) {
         self.nftId = nftId
     }
-    private func updateNft(newNft: Nft) {
+    func removeFavoriteNft(nftId: String) {
+        self.nftId.removeAll(where: {
+            $0 == nftId
+        })
+        self.myNft.removeAll(where: {
+            $0.id == nftId
+        })
+        view?.displayFavoritesNft(myNft)
+    }
+    // MARK: - private func
+    private func addNft(newNft: Nft) {
         myNft.append(newNft)
         view?.displayFavoritesNft(myNft)
     }

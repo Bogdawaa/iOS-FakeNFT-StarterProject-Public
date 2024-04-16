@@ -21,4 +21,5 @@ protocol FavoriteNFTPresenterProtocol {
     func loadFavoriteNft()
     func setNftId(nftId: [String])
     func getFavoriteNft() -> [Nft]?
+    func removeFavoriteNft(nftId: String)
 }

@@ -29,7 +29,7 @@ final class ProfileServiceImpl: ProfileService {
             return
         }
 
-        let request = ProfileByRequest(id: id)
+        let request = ProfileByRequest(httpMethod: .get, id: id)
         networkClient.send(request: request, type: Profile.self) { [weak storage] result in
             switch result {
             case .success(let profile):

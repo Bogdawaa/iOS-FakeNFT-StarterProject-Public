@@ -8,7 +8,13 @@
 import Foundation
 import UIKit
 
+protocol FavoritesNFTCollectionViewCellDelegate: AnyObject {
+    func removeLike(nftId: String)
+}
+
 final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
+    // MARK: - delegate
+    weak var delegate: FavoritesNFTCollectionViewCellDelegate?
     // MARK: - identifier
     static let favoritesNftCellIdentifier = "favoritesNftCell"
     // MARK: - UI
@@ -40,20 +46,25 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(label)
         return label
     }()
-    private lazy var favNftHeartImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "suit.heart.fill")
-        imageView.tintColor = .ypRedUniversal
-        favNftImageView.addSubview(imageView)
-        return imageView
+    private lazy var favNftHeartButton: UIButton = {
+        let button = UIButton.systemButton(
+            with: UIImage(systemName: "suit.heart.fill") ?? UIImage(),
+            target: self,
+            action: #selector(didTapHeartButton)
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .ypRedUniversal
+        addSubview(button)
+        return button
     }()
+    // MARK: - PRIVATE VARIABLES
+    private var nftId: String = ""
     // MARK: - INIT
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .ypWhite
         constraitsFavNftImageView()
-        constraitsfFavNftHeartImageView()
+         constraitsfFavNftHeartButton()
         constraitsFavNftTitleLabel()
         constraitsFavNftRatingImageView()
         constraitsFavNftPriceLabel()
@@ -67,13 +78,17 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         favNftImageUrl: URL?,
         favNftTitle: String,
         favNftRaiting: Int,
-        favNftPrice: Float
+        favNftPrice: Float,
+        favnftId: String,
+        delegate: FavoritesNFTCollectionViewCellDelegate
     ) {
         if let url = favNftImageUrl {
             favNftImageView.kf.setImage(
                 with: url
             )
         }
+        self.delegate = delegate
+        self.nftId = favnftId
         favNftTitleLabel.text = favNftTitle
         favNftPriceLabel.text = String(favNftPrice)
         switch favNftRaiting {
@@ -89,8 +104,14 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
             favNftRatingImageView.image = .ypProfileNftRatingImage4
         case 5:
             favNftRatingImageView.image = .ypProfileNftRatingImage5
-        default: break
+        default:
+            break
         }
+    }
+    // MARK: - OBJC
+    @objc
+    private func didTapHeartButton(_ sender: UIButton) {
+        delegate?.removeLike(nftId: self.nftId)
     }
     // MARK: - PRIVATE
     private func mockSetup() {
@@ -108,12 +129,12 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
             favNftImageView.heightAnchor.constraint(equalToConstant: 80)
         ])
     }
-    private func constraitsfFavNftHeartImageView() {
+    private func constraitsfFavNftHeartButton() {
         NSLayoutConstraint.activate([
-            favNftHeartImageView.heightAnchor.constraint(equalToConstant: 18),
-            favNftHeartImageView.widthAnchor.constraint(equalToConstant: 21),
-            favNftHeartImageView.trailingAnchor.constraint(equalTo: favNftImageView.trailingAnchor, constant: -5),
-            favNftHeartImageView.topAnchor.constraint(equalTo: favNftImageView.topAnchor, constant: 6)
+            favNftHeartButton.heightAnchor.constraint(equalToConstant: 18),
+            favNftHeartButton.widthAnchor.constraint(equalToConstant: 21),
+            favNftHeartButton.trailingAnchor.constraint(equalTo: favNftImageView.trailingAnchor, constant: -5),
+            favNftHeartButton.topAnchor.constraint(equalTo: favNftImageView.topAnchor, constant: 6)
         ])
     }
     private func constraitsFavNftTitleLabel() {
