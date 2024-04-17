@@ -53,6 +53,7 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
         self.myNft.removeAll(where: {
             $0.id == nftId
         })
+        service.updateFavoritesNft(likedNftIds: self.nftId)
         view?.displayFavoritesNft(myNft)
     }
     // MARK: - private func

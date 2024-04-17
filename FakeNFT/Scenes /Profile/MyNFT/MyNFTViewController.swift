@@ -11,6 +11,8 @@ import ProgressHUD
 final class MyNFTViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: MyNFTPresenterProtocol
+    // MARK: - profile delegate
+    weak var delegate: ProfileViewControllerUpdateNftDelegate?
     // MARK: - private properties
     private var isLoadingSwitch = false {
         didSet {
@@ -114,10 +116,12 @@ final class MyNFTViewController: StatLoggedUIViewController {
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
+        delegate?.updateNft()
     }
     @objc
     func dismissButtonClicked() {
         self.navigationController?.popViewController(animated: true)
+        delegate?.updateNft()
     }
     @objc
     func sortButtonClicked() {
@@ -158,18 +162,19 @@ extension MyNFTViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         guard let nftSetting = presenter.getMyNft()?[indexPath.row] else { return cell}
+        let isLiked = presenter.getLikedNftId().contains(where: {
+            $0 == nftSetting.id
+        })
         cell.configure(
-            nftImageURL:
-                nftSetting.images
-                .first,
-            nftTitle:
-                nftSetting.name,
-            nftPrice:
-                nftSetting.price,
-            nftAuthor:
-                nftSetting.author,
-            nftRatingStars: nftSetting.rating
+            nftImageURL: nftSetting.images.first,
+            nftTitle: nftSetting.name,
+            nftPrice: nftSetting.price,
+            nftAuthor: nftSetting.author,
+            nftRatingStars: nftSetting.rating,
+            nftIsLiked: isLiked,
+            nftId: nftSetting.id
         )
+        cell.delegate = self
         return cell
     }
 }
@@ -188,5 +193,24 @@ extension MyNFTViewController: MyNFTViewProtocol {
     }
     func setNftId(nftId: [String]) {
         presenter.setNftId(nftId: nftId)
+    }
+    func setLikedNftId(nftId: [String]) {
+        presenter.setLikedNftId(nftId: nftId)
+    }
+}
+// MARK: - MyNFTTableCellDelegate
+extension MyNFTViewController: MyNFTTableCellDelegate {
+    func setLike(nftId: String) {
+        var likedNft = presenter.getLikedNftId()
+        likedNft.append(nftId)
+        presenter.updateFavoriteNft(nftIds: likedNft)
+
+    }
+    func removeLike(nftId: String) {
+        var likedNft = presenter.getLikedNftId()
+        likedNft.removeAll(where: {
+            $0 == nftId
+        })
+        presenter.updateFavoriteNft(nftIds: likedNft)
     }
 }

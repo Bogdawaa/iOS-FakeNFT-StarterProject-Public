@@ -33,7 +33,6 @@ final class NftServiceImpl: NftService {
             }
         }
     }
-
     func updateFavoritesNft(likedNftIds: [String]) {
         var request = ProfileByRequest(httpMethod: .put, id: "1")
         let joined = likedNftIds.joined(separator: ",")

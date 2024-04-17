@@ -13,10 +13,10 @@ protocol FavoritesNFTCollectionViewCellDelegate: AnyObject {
 }
 
 final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
-    // MARK: - delegate
-    weak var delegate: FavoritesNFTCollectionViewCellDelegate?
     // MARK: - identifier
     static let favoritesNftCellIdentifier = "favoritesNftCell"
+    // MARK: - delegate
+    weak var delegate: FavoritesNFTCollectionViewCellDelegate?
     // MARK: - UI
     private lazy var favNftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -79,15 +79,13 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         favNftTitle: String,
         favNftRaiting: Int,
         favNftPrice: Float,
-        favnftId: String,
-        delegate: FavoritesNFTCollectionViewCellDelegate
+        favnftId: String
     ) {
         if let url = favNftImageUrl {
             favNftImageView.kf.setImage(
                 with: url
             )
         }
-        self.delegate = delegate
         self.nftId = favnftId
         favNftTitleLabel.text = favNftTitle
         favNftPriceLabel.text = String(favNftPrice)

@@ -12,6 +12,8 @@ import ProgressHUD
 final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: FavoriteNFTPresenterProtocol
+    // MARK: - profile delegate
+    weak var delegate: ProfileViewControllerUpdateNftDelegate?
     // MARK: - PRIVATE PROPERTIES
     private var isLoadingSwitch = false {
         didSet {
@@ -82,10 +84,12 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
+        delegate?.updateNft()
         self.navigationController?.popViewController(animated: true)
     }
     @objc
     func dismissButtonClicked() {
+        delegate?.updateNft()
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - CONSTRAITS
@@ -133,9 +137,9 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
             favNftTitle: nftSetting.name,
             favNftRaiting: nftSetting.rating,
             favNftPrice: nftSetting.price,
-            favnftId: nftSetting.id,
-            delegate: self
+            favnftId: nftSetting.id
         )
+        cell.delegate = self
         return cell
     }
 }

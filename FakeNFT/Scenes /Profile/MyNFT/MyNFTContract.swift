@@ -13,6 +13,7 @@ protocol MyNFTViewProtocol {
     func loadingDataStarted()
     func loadingDataFinished()
     func setNftId(nftId: [String])
+    func setLikedNftId(nftId: [String])
 }
 
 protocol MyNFTPresenterProtocol {
@@ -20,8 +21,11 @@ protocol MyNFTPresenterProtocol {
     func viewDidLoad()
     func loadMyNft()
     func setNftId(nftId: [String])
+    func setLikedNftId(nftId: [String])
     func sortByName()
     func sortByPrice()
     func sortByRating()
     func getMyNft() -> [Nft]?
+    func getLikedNftId() -> [String]
+    func updateFavoriteNft(nftIds: [String])
 }

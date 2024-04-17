@@ -8,10 +8,12 @@
 import Foundation
 
 final class MyNFTPresenter: MyNFTPresenterProtocol {
+
     // MARK: - view delegate
     var view: MyNFTViewProtocol?
     // MARK: - nft
-    var nftId: [String] = []
+    private var nftId: [String] = []
+    private var likedNftId: [String] = []
     private var myNft: [Nft] = []
     // MARK: - PRIVATE
     private let service: NftService
@@ -19,11 +21,12 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     init(service: NftService) {
         self.service = service
     }
-    // MARK: - public func
+    // MARK: - viewDidLoad
     func viewDidLoad() {
         myNft = []
         loadMyNft()
     }
+    // MARK: - sort
     func sortByName() {
         myNft.sort {
             $0.name < $1.name
@@ -42,6 +45,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
         }
         view?.displayMyNft(myNft)
     }
+    // MARK: - loadMyNft
     func loadMyNft() {
         view?.loadingDataStarted()
         nftId.forEach { nft in
@@ -50,7 +54,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
                 switch result {
                 case .success(let nft):
                     DispatchQueue.main.async {
-                        self.updateNft(newNft: nft)
+                        self.addNft(newNft: nft)
                     }
                 case .failure(let error):
                     assertionFailure("\(error)")
@@ -58,14 +62,28 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
             }
         }
     }
+    // MARK: - setNft
     func setNftId(nftId: [String]) {
         self.nftId = nftId
     }
+    func setLikedNftId(nftId: [String]) {
+        self.likedNftId = nftId
+    }
+    // MARK: - getNft
     func getMyNft() -> [Nft]? {
         return myNft
     }
-    private func updateNft(newNft: Nft) {
+    func getLikedNftId() -> [String] {
+        return likedNftId
+    }
+    // MARK: - updateNft
+    private func addNft(newNft: Nft) {
         myNft.append(newNft)
+        view?.displayMyNft(myNft)
+    }
+    func updateFavoriteNft(nftIds: [String]) {
+        setLikedNftId(nftId: nftIds)
+        service.updateFavoritesNft(likedNftIds: nftIds)
         view?.displayMyNft(myNft)
     }
 }

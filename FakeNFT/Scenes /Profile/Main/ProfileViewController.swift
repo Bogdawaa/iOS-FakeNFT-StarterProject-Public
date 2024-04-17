@@ -10,6 +10,10 @@ import UIKit
 import ProgressHUD
 import Kingfisher
 
+protocol ProfileViewControllerUpdateNftDelegate: AnyObject {
+    func updateNft()
+}
+
 final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - presenter
     var presenter: ProfilePresenterProtocol
@@ -162,12 +166,14 @@ final class ProfileViewController: StatLoggedUIViewController {
             assertionFailure("cant resolve myNftViewController")
             return
         }
-            myNftViewController.setNftId(nftId: presenter.getMyNftId())
-            myNftViewController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(
-                myNftViewController,
-                animated: true
-            )
+        myNftViewController.delegate = self
+        myNftViewController.setNftId(nftId: presenter.getMyNftId())
+        myNftViewController.setLikedNftId(nftId: presenter.getLikedNftId())
+        myNftViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(
+            myNftViewController,
+            animated: true
+        )
 
     }
     private func navigateFavoritesNFTViewController() {
@@ -176,12 +182,13 @@ final class ProfileViewController: StatLoggedUIViewController {
             assertionFailure("cant resolve favoriteNftController")
             return
         }
-            favoriteNftController.setNftId(nftId: presenter.getLikedNftId())
-            favoriteNftController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(
-                favoriteNftController,
-                animated: true
-            )
+        favoriteNftController.delegate = self
+        favoriteNftController.setNftId(nftId: presenter.getLikedNftId())
+        favoriteNftController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(
+            favoriteNftController,
+            animated: true
+        )
     }
 }
 // MARK: - UITableViewDelegate
@@ -237,6 +244,13 @@ extension ProfileViewController: ProfileViewProtocol {
         profileImage.kf.setImage(
             with: url
         )
+        let indexPathMyNftCell = IndexPath(row: 0, section: 0)
+        let myNftCell = profileTableView.cellForRow(at: indexPathMyNftCell)
+        myNftCell?.textLabel?.text = "Profile.myNFT"~ + " (\(profile.nfts.count))"
+
+        let indexPathFavCell = IndexPath(row: 1, section: 0)
+        let favCell = profileTableView.cellForRow(at: indexPathFavCell)
+        favCell?.textLabel?.text = "Profile.favoritesNFT"~ + " (\(profile.likes.count))"
     }
     func loadingDataStarted() {
         ProgressHUD.show()
@@ -245,5 +259,11 @@ extension ProfileViewController: ProfileViewProtocol {
     func loadingDataFinished() {
         ProgressHUD.dismiss()
         isLoadingSwitch = false
+    }
+}
+// MARK: - ProfileViewControllerUpdateNftDelegate
+extension ProfileViewController: ProfileViewControllerUpdateNftDelegate {
+    func updateNft() {
+        presenter.loadProfile()
     }
 }
