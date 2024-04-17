@@ -31,7 +31,7 @@ private extension AboutDeveloperViewController {
     }
     // MARK: - Network
     func fetchWeb() {
-        if let url = URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ") {
+        if let url = URL(string: "https://support.apple.com/ru-ru") {
             let request = URLRequest(url: url)
             webView.load(request)
         } else {
