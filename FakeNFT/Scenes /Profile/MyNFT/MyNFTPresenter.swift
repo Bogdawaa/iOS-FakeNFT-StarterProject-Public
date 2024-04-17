@@ -10,7 +10,7 @@ import Foundation
 final class MyNFTPresenter: MyNFTPresenterProtocol {
 
     // MARK: - view delegate
-    var view: MyNFTViewProtocol?
+    weak var view: MyNFTViewProtocol?
     // MARK: - nft
     private var nftId: [String] = []
     private var likedNftId: [String] = []

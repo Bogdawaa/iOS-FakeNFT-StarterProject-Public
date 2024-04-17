@@ -29,6 +29,9 @@ final class DIContainer {
     func favoritesNFTViewController() -> FavoritesNFTViewProtocol {
         container.resolve(FavoritesNFTViewController.self)!
     }
+    func editProfileViewController() -> EditProfileViewProtocol {
+        container.resolve(EditProfileViewController.self)!
+    }
     private func registerCatalog() {
         container.register(CatalogViewController.self) { diResolver in
             TestCatalogViewController(
@@ -39,6 +42,20 @@ final class DIContainer {
     }
 
     private func registerProfile() {
+        container.register(EditProfileViewController.self) { diResolver in
+            EditProfileViewController(
+                statLog: diResolver.resolve(StatLog.self)!,
+                presenter: diResolver.resolve(EditProfilePresenter.self)!
+            )
+        }
+        container.register(EditProfilePresenter.self) { diResolver in
+            EditProfilePresenter(
+                service: EditProfileServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!
+                )
+            )
+        }
+
         container.register(MyNFTPresenter.self) { diResolver in
             MyNFTPresenter(
                 service: NftServiceImpl(

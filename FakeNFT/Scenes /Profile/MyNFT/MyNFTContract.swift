@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MyNFTViewProtocol {
+protocol MyNFTViewProtocol: AnyObject {
     var presenter: MyNFTPresenterProtocol { get set }
     func displayMyNft(_ nft: [Nft])
     func loadingDataStarted()

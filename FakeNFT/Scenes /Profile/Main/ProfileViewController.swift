@@ -11,7 +11,7 @@ import ProgressHUD
 import Kingfisher
 
 protocol ProfileViewControllerUpdateNftDelegate: AnyObject {
-    func updateNft()
+    func updateProfile()
 }
 
 final class ProfileViewController: StatLoggedUIViewController {
@@ -120,8 +120,13 @@ final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     private func profileEditButtonClicked(_ sender: UIButton) {
-        let view = EditProfileViewController()
-        self.present(view, animated: true)
+        guard let editProfileViewController = diContainer.editProfileViewController() as? EditProfileViewController
+        else {
+            assertionFailure("cant resolve myNftViewController")
+            return
+        }
+        editProfileViewController.delegate = self
+        self.present(editProfileViewController, animated: true)
     }
     // MARK: - constraits
     private func constraitsProfileImage() {
@@ -200,6 +205,11 @@ extension ProfileViewController: UITableViewDelegate {
         if indexPath.row == 1 {
             navigateFavoritesNFTViewController()
         }
+        if indexPath.row == 2 {
+            let viewController = AboutDeveloperViewController()
+            viewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -263,7 +273,13 @@ extension ProfileViewController: ProfileViewProtocol {
 }
 // MARK: - ProfileViewControllerUpdateNftDelegate
 extension ProfileViewController: ProfileViewControllerUpdateNftDelegate {
-    func updateNft() {
+    func updateProfile() {
         presenter.loadProfile()
+    }
+}
+// MARK: - EditProfileViewControllerDelegate
+extension ProfileViewController: EditProfileViewControllerDelegate {
+    func getEditProfileModel() -> EditProfile? {
+        presenter.getEditProfileModel()
     }
 }

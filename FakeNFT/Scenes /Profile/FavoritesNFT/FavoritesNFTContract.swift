@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol FavoritesNFTViewProtocol {
+protocol FavoritesNFTViewProtocol: AnyObject {
     var presenter: FavoriteNFTPresenterProtocol { get set }
     func displayFavoritesNft(_ nft: [Nft])
     func loadingDataStarted()

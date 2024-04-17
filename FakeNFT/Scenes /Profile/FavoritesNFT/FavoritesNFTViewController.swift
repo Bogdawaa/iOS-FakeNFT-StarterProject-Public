@@ -84,12 +84,12 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
-        delegate?.updateNft()
+        delegate?.updateProfile()
         self.navigationController?.popViewController(animated: true)
     }
     @objc
     func dismissButtonClicked() {
-        delegate?.updateNft()
+        delegate?.updateProfile()
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - CONSTRAITS

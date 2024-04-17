@@ -14,6 +14,7 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     private let service: ProfileService
     private var myNftId: [String] = []
     private var likedNftId: [String] = []
+    private var editProfileModel: EditProfile?
     // MARK: - INIT
     init(service: ProfileService) {
         self.service = service
@@ -28,6 +29,9 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
     func getLikedNftId() -> [String] {
         return likedNftId
     }
+    func getEditProfileModel() -> EditProfile? {
+        return editProfileModel
+    }
     func loadProfile() {
         view?.loadingDataStarted()
         service.loadProfile(id: "1") { [weak self] result in
@@ -39,6 +43,12 @@ final class ProfileViewPresenter: ProfilePresenterProtocol {
                     self.view?.displayProfile(profile)
                     self.myNftId = profile.nfts
                     self.likedNftId = profile.likes
+                    self.editProfileModel = EditProfile(
+                        name: profile.name,
+                        avatar: profile.avatar,
+                        description: profile.description,
+                        website: profile.website
+                    )
                 }
             case .failure(let error):
                 assertionFailure("\(error)")

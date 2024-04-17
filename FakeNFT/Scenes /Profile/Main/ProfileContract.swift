@@ -20,4 +20,5 @@ protocol ProfilePresenterProtocol {
     func loadProfile()
     func getMyNftId() -> [String]
     func getLikedNftId() -> [String]
+    func getEditProfileModel() -> EditProfile?
 }

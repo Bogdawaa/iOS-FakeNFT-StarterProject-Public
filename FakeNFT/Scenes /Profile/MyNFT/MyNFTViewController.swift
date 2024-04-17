@@ -116,12 +116,12 @@ final class MyNFTViewController: StatLoggedUIViewController {
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
-        delegate?.updateNft()
+        delegate?.updateProfile()
     }
     @objc
     func dismissButtonClicked() {
         self.navigationController?.popViewController(animated: true)
-        delegate?.updateNft()
+        delegate?.updateProfile()
     }
     @objc
     func sortButtonClicked() {
