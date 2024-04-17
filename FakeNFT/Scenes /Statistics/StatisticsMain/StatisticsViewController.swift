@@ -44,7 +44,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         return control
     }()
 
-    private var users: [User] = []
+    private(set) var users: [User] = []
 
     // MARK: - init
     init(presenter: StatisticsPresenterProtocol, statlog: StatLog) {
@@ -91,6 +91,10 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         isShowing = false
         ProgressHUD.dismiss()
         statisticsTableView.isUserInteractionEnabled = true
+    }
+
+    func loadingDataFailed(message: String) {
+        // TODO: реализовать обработку ошибок в 3 эпике.
     }
 
     // MARK: - private methods

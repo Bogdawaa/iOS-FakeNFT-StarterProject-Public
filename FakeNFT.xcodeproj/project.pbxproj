@@ -58,6 +58,12 @@
 		F00DF4BB2BB338A900825462 /* UsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BA2BB338A900825462 /* UsersStorage.swift */; };
 		F00DF4BD2BB33A8C00825462 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BC2BB33A8C00825462 /* UsersService.swift */; };
 		F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */; };
+		F02852A32BCED7DC00688074 /* StatisticsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */; };
+		F02852A52BCED82800688074 /* StatisticsViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */; };
+		F02852A72BCEDC4A00688074 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A62BCEDC4A00688074 /* ServiceMock.swift */; };
+		F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */; };
+		F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */; };
+		F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AD2BD065A200688074 /* StatlogMock.swift */; };
 		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
 		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
@@ -146,6 +152,12 @@
 		F00DF4BA2BB338A900825462 /* UsersStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorage.swift; sourceTree = "<group>"; };
 		F00DF4BC2BB33A8C00825462 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenterTests.swift; sourceTree = "<group>"; };
+		F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewControllerMock.swift; sourceTree = "<group>"; };
+		F02852A62BCEDC4A00688074 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
+		F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewTests.swift; sourceTree = "<group>"; };
+		F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenterMock.swift; sourceTree = "<group>"; };
+		F02852AD2BD065A200688074 /* StatlogMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatlogMock.swift; sourceTree = "<group>"; };
 		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -304,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806AD29CBBAF200B4F915 /* ExampleUnitTests.swift */,
+				F02852A12BCED73B00688074 /* StatisticsTests */,
 			);
 			path = FakeNFTTests;
 			sourceTree = "<group>";
@@ -495,6 +508,27 @@
 				F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */,
 			);
 			path = WebView;
+			sourceTree = "<group>";
+		};
+		F02852A12BCED73B00688074 /* StatisticsTests */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A82BD05CF000688074 /* Mock */,
+				F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */,
+				F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */,
+			);
+			path = StatisticsTests;
+			sourceTree = "<group>";
+		};
+		F02852A82BD05CF000688074 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A62BCEDC4A00688074 /* ServiceMock.swift */,
+				F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */,
+				F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */,
+				F02852AD2BD065A200688074 /* StatlogMock.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -821,7 +855,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */,
 				3F6806AE29CBBAF200B4F915 /* ExampleUnitTests.swift in Sources */,
+				F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */,
+				F02852A52BCED82800688074 /* StatisticsViewControllerMock.swift in Sources */,
+				F02852A32BCED7DC00688074 /* StatisticsPresenterTests.swift in Sources */,
+				F02852A72BCEDC4A00688074 /* ServiceMock.swift in Sources */,
+				F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,7 @@ protocol StatisticsViewProtocol: AnyObject {
     func displayUserCells(_ users: [User])
     func loadingDataStarted()
     func loadingDataFinished()
+    func loadingDataFailed(message: String)
 }
 
 protocol StatisticsPresenterProtocol {

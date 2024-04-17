@@ -49,7 +49,7 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
                     self.view?.displayUserCells(user)
                 }
             case .failure(let error):
-                print("error: \(error.localizedDescription)")
+                self.view?.loadingDataFailed(message: error.localizedDescription)
             }
         }
     }
