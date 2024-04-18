@@ -8,16 +8,18 @@
 import Foundation
 
 protocol MyNFTViewProtocol: AnyObject {
-    var presenter: MyNFTPresenterProtocol { get set }
+   // var presenter: MyNFTPresenterProtocol { get set }
     func displayMyNft(_ nft: [Nft])
     func loadingDataStarted()
     func loadingDataFinished()
     func setNftId(nftId: [String])
     func setLikedNftId(nftId: [String])
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate)
 }
 
 protocol MyNFTPresenterProtocol {
     var view: MyNFTViewProtocol? { get set }
+    var delegate: ProfileViewControllerUpdateNftDelegate? { get set }
     func viewDidLoad()
     func loadMyNft()
     func setNftId(nftId: [String])
@@ -28,4 +30,5 @@ protocol MyNFTPresenterProtocol {
     func getMyNft() -> [Nft]?
     func getLikedNftId() -> [String]
     func updateFavoriteNft(nftIds: [String])
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate)
 }

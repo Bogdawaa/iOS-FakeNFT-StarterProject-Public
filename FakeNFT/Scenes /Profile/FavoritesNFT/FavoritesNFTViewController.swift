@@ -11,7 +11,7 @@ import ProgressHUD
 
 final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - presenter
-    private var presenter: FavoriteNFTPresenterProtocol
+    private let presenter: FavoriteNFTPresenterProtocol
     // MARK: - PRIVATE PROPERTIES
     private var isLoadingSwitch = false {
         didSet {
@@ -166,7 +166,7 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension FavoritesNFTViewController: FavoritesNFTViewProtocol {
     func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
-        presenter.delegate = delegate
+        presenter.setProfileDelegate(delegate: delegate)
     }
     func displayFavoritesNft(_ nft: [Nft]) {
         favoritesNftCollectionView.reloadData()

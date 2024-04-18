@@ -10,9 +10,7 @@ import ProgressHUD
 
 final class MyNFTViewController: StatLoggedUIViewController {
     // MARK: - presenter
-    var presenter: MyNFTPresenterProtocol
-    // MARK: - profile delegate
-    weak var delegate: ProfileViewControllerUpdateNftDelegate?
+    private let presenter: MyNFTPresenterProtocol
     // MARK: - private properties
     private var isLoadingSwitch = false {
         didSet {
@@ -49,6 +47,7 @@ final class MyNFTViewController: StatLoggedUIViewController {
         self.presenter = presenter
         super.init(statLog: statLog)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,6 +62,7 @@ final class MyNFTViewController: StatLoggedUIViewController {
         presenter.viewDidLoad()
         presenter.view = self
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
@@ -89,6 +89,8 @@ final class MyNFTViewController: StatLoggedUIViewController {
             target: self,
             action: #selector(self.sortButtonClicked)
         )
+        leftButton.tintColor = .ypBlack
+        rightButton.tintColor = .ypBlack
         navigationItem.title = "Profile.MyNFT.Title"~
         navigationItem.leftBarButtonItem = leftButton
         navigationItem.rightBarButtonItem = rightButton
@@ -116,13 +118,15 @@ final class MyNFTViewController: StatLoggedUIViewController {
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
         self.navigationController?.popViewController(animated: true)
-        delegate?.updateProfile()
+        presenter.delegate?.updateProfile()
     }
+    
     @objc
     func dismissButtonClicked() {
         self.navigationController?.popViewController(animated: true)
-        delegate?.updateProfile()
+        presenter.delegate?.updateProfile()
     }
+    
     @objc
     func sortButtonClicked() {
         configureSortMenu()
@@ -180,20 +184,28 @@ extension MyNFTViewController: UITableViewDataSource {
 }
 // MARK: - MyNFTViewProtocol
 extension MyNFTViewController: MyNFTViewProtocol {
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
+        presenter.setProfileDelegate(delegate: delegate)
+    }
+
     func displayMyNft(_ nft: [Nft]) {
         nftTableView.reloadData()
     }
+    
     func loadingDataStarted() {
         ProgressHUD.show()
         isLoadingSwitch = true
     }
+    
     func loadingDataFinished() {
         ProgressHUD.dismiss()
         isLoadingSwitch = false
     }
+    
     func setNftId(nftId: [String]) {
         presenter.setNftId(nftId: nftId)
     }
+    
     func setLikedNftId(nftId: [String]) {
         presenter.setLikedNftId(nftId: nftId)
     }
@@ -206,6 +218,7 @@ extension MyNFTViewController: MyNFTTableCellDelegate {
         presenter.updateFavoriteNft(nftIds: likedNft)
 
     }
+    
     func removeLike(nftId: String) {
         var likedNft = presenter.getLikedNftId()
         likedNft.removeAll(where: {

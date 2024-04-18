@@ -8,9 +8,10 @@
 import Foundation
 
 final class MyNFTPresenter: MyNFTPresenterProtocol {
-
     // MARK: - view delegate
     weak var view: MyNFTViewProtocol?
+    // MARK: - profile delegate
+    weak var delegate: ProfileViewControllerUpdateNftDelegate?
     // MARK: - nft
     private var nftId: [String] = []
     private var likedNftId: [String] = []
@@ -33,19 +34,22 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
         }
         view?.displayMyNft(myNft)
     }
+    
     func sortByPrice() {
         myNft.sort {
             $0.price > $1.price
         }
         view?.displayMyNft(myNft)
     }
+    
     func sortByRating() {
         myNft.sort {
             $0.rating > $1.rating
         }
         view?.displayMyNft(myNft)
     }
-    // MARK: - loadMyNft
+    
+    // MARK: - public
     func loadMyNft() {
         view?.loadingDataStarted()
         nftId.forEach { nft in
@@ -62,28 +66,36 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
             }
         }
     }
-    // MARK: - setNft
+
     func setNftId(nftId: [String]) {
         self.nftId = nftId
     }
+    
     func setLikedNftId(nftId: [String]) {
         self.likedNftId = nftId
     }
-    // MARK: - getNft
+
     func getMyNft() -> [Nft]? {
         return myNft
     }
+    
     func getLikedNftId() -> [String] {
         return likedNftId
     }
-    // MARK: - updateNft
-    private func addNft(newNft: Nft) {
-        myNft.append(newNft)
-        view?.displayMyNft(myNft)
+    
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
+        self.delegate = delegate
     }
+    
     func updateFavoriteNft(nftIds: [String]) {
         setLikedNftId(nftId: nftIds)
         service.updateFavoritesNft(likedNftIds: nftIds)
         view?.displayMyNft(myNft)
     }
+    // MARK: - private
+    private func addNft(newNft: Nft) {
+        myNft.append(newNft)
+        view?.displayMyNft(myNft)
+    }
+
 }

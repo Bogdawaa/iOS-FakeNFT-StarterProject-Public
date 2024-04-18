@@ -106,8 +106,8 @@ final class MyNFTTableCell: UITableViewCell {
         self.isLiked = nftIsLiked
         nftHeartButton.tintColor = nftIsLiked ? .ypRedUniversal : .ypWhiteUniversal
         self.nftTitleLabel.text = nftTitle
-        self.nftPriceLabel.text = String(nftPrice)
-        self.nftAuthorLabel.text = nftAuthor
+        self.nftPriceLabel.text = String(nftPrice).replacingOccurrences(of: ".", with: ",") + " ETH"
+        self.nftAuthorLabel.text = "Profile.MyNFT.From"~ + nftAuthor
         if let url = nftImageURL {
             nftImageView.kf.setImage(
                 with: url
