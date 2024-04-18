@@ -187,7 +187,7 @@ final class ProfileViewController: StatLoggedUIViewController {
             assertionFailure("cant resolve favoriteNftController")
             return
         }
-        favoriteNftController.delegate = self
+        favoriteNftController.setProfileDelegate(delegate: self)
         favoriteNftController.setNftId(nftId: presenter.getLikedNftId())
         favoriteNftController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(

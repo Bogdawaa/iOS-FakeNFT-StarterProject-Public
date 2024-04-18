@@ -55,7 +55,8 @@ final class DIContainer {
                     networkClient: diResolver.resolve(NetworkClient.self)!
                 )
             )
-        }.initCompleted {resolver, presenter in
+        }
+        .initCompleted {resolver, presenter in
             let child = presenter
             child.view = resolver.resolve(EditProfileViewController.self)
         }
@@ -68,12 +69,14 @@ final class DIContainer {
                 )
             )
         }
+
         container.register(MyNFTViewController.self) { diResolver in
             MyNFTViewController(
                 statLog: diResolver.resolve(StatLog.self)!,
                 presenter: diResolver.resolve(MyNFTPresenter.self)!
             )
         }
+
         container.register(FavoritesNFTPresenter.self) { diResolver in
             FavoritesNFTPresenter(
                 service: NftServiceImpl(
@@ -82,6 +85,11 @@ final class DIContainer {
                 )
             )
         }
+        .initCompleted {resolver, presenter in
+            let child = presenter
+            child.view = resolver.resolve(FavoritesNFTViewController.self)
+        }
+
         container.register(FavoritesNFTViewController.self) { diResolver in
             FavoritesNFTViewController(
                 statLog: diResolver.resolve(StatLog.self)!,
@@ -97,6 +105,7 @@ final class DIContainer {
                 )
             )
         }
+
         container.register(ProfileViewController.self) { diResolver in
             ProfileViewController(
                 presenter: diResolver.resolve(ProfileViewPresenter.self)!,

@@ -8,15 +8,16 @@
 import Foundation
 
 protocol FavoritesNFTViewProtocol: AnyObject {
-    var presenter: FavoriteNFTPresenterProtocol { get set }
     func displayFavoritesNft(_ nft: [Nft])
     func loadingDataStarted()
     func loadingDataFinished()
     func setNftId(nftId: [String])
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate)
 }
 
 protocol FavoriteNFTPresenterProtocol {
     var view: FavoritesNFTViewProtocol? { get set }
+    var delegate: ProfileViewControllerUpdateNftDelegate? { get set }
     func viewDidLoad()
     func loadFavoriteNft()
     func setNftId(nftId: [String])

@@ -8,9 +8,10 @@
 import Foundation
 
 final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
-
     // MARK: - view delegate
     weak var view: FavoritesNFTViewProtocol?
+    // MARK: - update nft in profile delegate
+    weak var delegate: ProfileViewControllerUpdateNftDelegate?
     // MARK: - nft
     var nftId: [String] = []
     private var myNft: [Nft] = []

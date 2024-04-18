@@ -11,9 +11,7 @@ import ProgressHUD
 
 final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - presenter
-    var presenter: FavoriteNFTPresenterProtocol
-    // MARK: - profile delegate
-    weak var delegate: ProfileViewControllerUpdateNftDelegate?
+    private var presenter: FavoriteNFTPresenterProtocol
     // MARK: - PRIVATE PROPERTIES
     private var isLoadingSwitch = false {
         didSet {
@@ -58,7 +56,6 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
         navbarSetup()
         setupGestureRecognizers()
         constraitsFavoritesNftCollectionView()
-        presenter.view = self
         presenter.viewDidLoad()
         constraitsFavoritesNftEmptyLabel()
         favoritesNftEmptyLabel.isHidden = true
@@ -74,6 +71,7 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
         leftButton.tintColor = .ypBlack
         navigationItem.title = "Profile.Favorites.Title"~
         navigationItem.leftBarButtonItem = leftButton
+
     }
     // MARK: - GESTURE SETTING
     private func setupGestureRecognizers() {
@@ -84,12 +82,12 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
-        delegate?.updateProfile()
+        presenter.delegate?.updateProfile()
         self.navigationController?.popViewController(animated: true)
     }
     @objc
     func dismissButtonClicked() {
-        delegate?.updateProfile()
+        presenter.delegate?.updateProfile()
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - CONSTRAITS
@@ -161,9 +159,15 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 8
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+           return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        }
 }
 // MARK: - UICollectionViewDelegateFlowLayout
 extension FavoritesNFTViewController: FavoritesNFTViewProtocol {
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
+        presenter.delegate = delegate
+    }
     func displayFavoritesNft(_ nft: [Nft]) {
         favoritesNftCollectionView.reloadData()
     }

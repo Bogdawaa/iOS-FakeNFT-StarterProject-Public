@@ -28,7 +28,9 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var favNftTitleLabel: UILabel = {
         let label = UILabel()
-        label.font = .bodyBold
+        // label.font = .bodyBold
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
@@ -41,7 +43,8 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var favNftPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = .caption1
+        // label.font = .caption1
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
@@ -88,7 +91,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         }
         self.nftId = favnftId
         favNftTitleLabel.text = favNftTitle
-        favNftPriceLabel.text = String(favNftPrice)
+        favNftPriceLabel.text = String(favNftPrice).replacingOccurrences(of: ".", with: ",") + " ETH"
         switch favNftRaiting {
         case 0:
             favNftRatingImageView.image = .ypProfileNftRatingImage0
@@ -138,13 +141,14 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     private func constraitsFavNftTitleLabel() {
         NSLayoutConstraint.activate([
             favNftTitleLabel.leadingAnchor.constraint(equalTo: favNftImageView.trailingAnchor, constant: 12),
-            favNftTitleLabel.topAnchor.constraint(equalTo: favNftImageView.topAnchor, constant: 7)
+            favNftTitleLabel.topAnchor.constraint(equalTo: favNftImageView.topAnchor, constant: 7),
+            favNftTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
     private func constraitsFavNftRatingImageView() {
         NSLayoutConstraint.activate([
             favNftRatingImageView.leadingAnchor.constraint(equalTo: favNftTitleLabel.leadingAnchor),
-            favNftRatingImageView.topAnchor.constraint(equalTo: favNftTitleLabel.bottomAnchor, constant: 8),
+            favNftRatingImageView.topAnchor.constraint(equalTo: favNftTitleLabel.bottomAnchor, constant: 1),
             favNftRatingImageView.heightAnchor.constraint(equalToConstant: 12),
             favNftRatingImageView.widthAnchor.constraint(equalToConstant: 68)
         ])
@@ -152,7 +156,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     private func constraitsFavNftPriceLabel() {
         NSLayoutConstraint.activate([
             favNftPriceLabel.leadingAnchor.constraint(equalTo: favNftRatingImageView.leadingAnchor),
-            favNftPriceLabel.topAnchor.constraint(equalTo: favNftRatingImageView.bottomAnchor, constant: 8)
+            favNftPriceLabel.topAnchor.constraint(equalTo: favNftRatingImageView.bottomAnchor, constant: 3)
         ])
     }
 }
