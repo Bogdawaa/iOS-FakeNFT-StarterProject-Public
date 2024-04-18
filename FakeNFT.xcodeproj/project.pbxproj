@@ -89,6 +89,10 @@
 		F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */; };
 		F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */; };
 		F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AD2BD065A200688074 /* StatlogMock.swift */; };
+		F02852B22BD072C700688074 /* UserCardPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B12BD072C700688074 /* UserCardPresenterTests.swift */; };
+		F02852B42BD073C400688074 /* UserCardViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B32BD073C400688074 /* UserCardViewMock.swift */; };
+		F02852B62BD185DD00688074 /* UserCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B52BD185DD00688074 /* UserCardViewTests.swift */; };
+		F02852B82BD186F000688074 /* UserCardPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B72BD186F000688074 /* UserCardPresenterMock.swift */; };
 		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
 		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
@@ -206,6 +210,10 @@
 		F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewTests.swift; sourceTree = "<group>"; };
 		F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenterMock.swift; sourceTree = "<group>"; };
 		F02852AD2BD065A200688074 /* StatlogMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatlogMock.swift; sourceTree = "<group>"; };
+		F02852B12BD072C700688074 /* UserCardPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenterTests.swift; sourceTree = "<group>"; };
+		F02852B32BD073C400688074 /* UserCardViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewMock.swift; sourceTree = "<group>"; };
+		F02852B52BD185DD00688074 /* UserCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewTests.swift; sourceTree = "<group>"; };
+		F02852B72BD186F000688074 /* UserCardPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenterMock.swift; sourceTree = "<group>"; };
 		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -640,9 +648,9 @@
 		F02852A12BCED73B00688074 /* StatisticsTests */ = {
 			isa = PBXGroup;
 			children = (
+				F02852B02BD072A200688074 /* UserCard */,
 				F02852A82BD05CF000688074 /* Mock */,
-				F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */,
-				F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */,
+				F02852AF2BD0726E00688074 /* StatisticsMain */,
 			);
 			path = StatisticsTests;
 			sourceTree = "<group>";
@@ -654,8 +662,28 @@
 				F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */,
 				F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */,
 				F02852AD2BD065A200688074 /* StatlogMock.swift */,
+				F02852B32BD073C400688074 /* UserCardViewMock.swift */,
+				F02852B72BD186F000688074 /* UserCardPresenterMock.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		F02852AF2BD0726E00688074 /* StatisticsMain */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */,
+				F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */,
+			);
+			path = StatisticsMain;
+			sourceTree = "<group>";
+		};
+		F02852B02BD072A200688074 /* UserCard */ = {
+			isa = PBXGroup;
+			children = (
+				F02852B12BD072C700688074 /* UserCardPresenterTests.swift */,
+				F02852B52BD185DD00688074 /* UserCardViewTests.swift */,
+			);
+			path = UserCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1008,10 +1036,14 @@
 				F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */,
 				3F6806AE29CBBAF200B4F915 /* ExampleUnitTests.swift in Sources */,
 				F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */,
+				F02852B22BD072C700688074 /* UserCardPresenterTests.swift in Sources */,
 				F02852A52BCED82800688074 /* StatisticsViewControllerMock.swift in Sources */,
 				F02852A32BCED7DC00688074 /* StatisticsPresenterTests.swift in Sources */,
 				F02852A72BCEDC4A00688074 /* ServiceMock.swift in Sources */,
+				F02852B82BD186F000688074 /* UserCardPresenterMock.swift in Sources */,
+				F02852B62BD185DD00688074 /* UserCardViewTests.swift in Sources */,
 				F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */,
+				F02852B42BD073C400688074 /* UserCardViewMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
