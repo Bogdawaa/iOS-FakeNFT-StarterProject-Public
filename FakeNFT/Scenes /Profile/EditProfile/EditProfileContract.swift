@@ -8,11 +8,16 @@
 import Foundation
 
 protocol EditProfileViewProtocol: AnyObject {
-    var presenter: EditProfilePresenterProtocol { get set }
+    func setDelegate(delegate: EditProfileViewControllerDelegate)
     func setProfile()
 }
 
 protocol EditProfilePresenterProtocol {
-    var view: EditProfileViewProtocol? { get set }
+    var view: EditProfileViewProtocol? { get }
+    var delegate: EditProfileViewControllerDelegate? { get set }
+
     func updateProfile(editProfileModel: EditProfile)
+    func setAvatarUrl(avatarUrl: String)
+    func getAvatarUrl() -> String
+    func setEditProfileView(view: EditProfileViewProtocol)
 }

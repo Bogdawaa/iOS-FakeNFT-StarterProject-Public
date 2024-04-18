@@ -48,12 +48,16 @@ final class DIContainer {
                 presenter: diResolver.resolve(EditProfilePresenter.self)!
             )
         }
+
         container.register(EditProfilePresenter.self) { diResolver in
             EditProfilePresenter(
                 service: EditProfileServiceImpl(
                     networkClient: diResolver.resolve(NetworkClient.self)!
                 )
             )
+        }.initCompleted {resolver, presenter in
+            let child = presenter
+            child.view = resolver.resolve(EditProfileViewController.self)
         }
 
         container.register(MyNFTPresenter.self) { diResolver in

@@ -125,7 +125,7 @@ final class ProfileViewController: StatLoggedUIViewController {
             assertionFailure("cant resolve myNftViewController")
             return
         }
-        editProfileViewController.delegate = self
+        editProfileViewController.setDelegate(delegate: self)
         self.present(editProfileViewController, animated: true)
     }
     // MARK: - constraits

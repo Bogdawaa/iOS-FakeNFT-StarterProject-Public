@@ -15,10 +15,7 @@ protocol EditProfileViewControllerDelegate: AnyObject, ProfileViewControllerUpda
 
 final class EditProfileViewController: StatLoggedUIViewController {
     // MARK: - PRESENTER
-    var presenter: EditProfilePresenterProtocol
-    // MARK: - delegate
-    weak var delegate: EditProfileViewControllerDelegate?
-    var avatarURL: String = ""
+    private var presenter: EditProfilePresenterProtocol
     // MARK: - UI
     private lazy var editProfilecloseButton: UIButton = {
         let button = UIButton(type: .system)
@@ -138,7 +135,6 @@ final class EditProfileViewController: StatLoggedUIViewController {
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter.view = self
         view.backgroundColor = .ypWhite
         constraitsEditProfilecloseButton()
         constraitsEditProfileImageView()
@@ -171,7 +167,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         let test = EditProfile(
             name: editProfileNameTextField.text ?? "",
-            avatar: avatarURL,
+            avatar: presenter.getAvatarUrl(),
             description: editProfileCaptionTextView.text ?? "",
             website: editProfileWebsiteTextField.text ?? ""
         )
@@ -179,10 +175,10 @@ final class EditProfileViewController: StatLoggedUIViewController {
         super.viewWillDisappear(animated)
     }
     // MARK: - private
-    func setData() {
-        if let editProfileModel = delegate?.getEditProfileModel() {
+    private func setData() {
+        if let editProfileModel = presenter.delegate?.getEditProfileModel() {
             let url = URL(string: editProfileModel.avatar)
-            avatarURL = editProfileModel.avatar
+            presenter.setAvatarUrl(avatarUrl: editProfileModel.avatar)
             editProfileImageView.kf.setImage(
                 with: url
             )
@@ -222,6 +218,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfilecloseButton.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
+
     private func constraitsEditProfileImageView() {
         NSLayoutConstraint.activate([
             editProfileImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -232,6 +229,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileChangeAvatarLabel.centerYAnchor.constraint(equalTo: editProfileImageView.centerYAnchor)
         ])
     }
+
     private func constraitsEditProfileNameLabel() {
         NSLayoutConstraint.activate([
             editProfileNameLabel.leadingAnchor.constraint(
@@ -241,12 +239,14 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileNameLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 28)
         ])
     }
+
     private func constraitsEditProfileLoadAvatarLabel() {
         NSLayoutConstraint.activate([
             editProfileLoadAvatarLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             editProfileLoadAvatarLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 15)
         ])
     }
+
     private func constraitsEditProfileNameTextField() {
         NSLayoutConstraint.activate([
             editProfileNameTextField.leadingAnchor.constraint(equalTo: editProfileNameLabel.leadingAnchor),
@@ -258,12 +258,14 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileNameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
     private func constraitsEditProfileCaptionLabel() {
         NSLayoutConstraint.activate([
             editProfileCaptionLabel.leadingAnchor.constraint(equalTo: editProfileNameTextField.leadingAnchor),
             editProfileCaptionLabel.topAnchor.constraint(equalTo: editProfileNameTextField.bottomAnchor, constant: 24)
         ])
     }
+
     private func constraitsEditProfileCaptionTextView() {
         NSLayoutConstraint.activate([
             editProfileCaptionTextView.leadingAnchor.constraint(equalTo: editProfileCaptionLabel.leadingAnchor),
@@ -275,12 +277,14 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileCaptionTextView.heightAnchor.constraint(equalToConstant: 132)
         ])
     }
+
     private func constraitsEditProfileWebsiteLabel() {
         NSLayoutConstraint.activate([
             editProfileWebsiteLabel.leadingAnchor.constraint(equalTo: editProfileCaptionTextView.leadingAnchor),
             editProfileWebsiteLabel.topAnchor.constraint(equalTo: editProfileCaptionTextView.bottomAnchor, constant: 28)
         ])
     }
+
     private func cosntraitsEditProfileWebsiteTextField() {
         NSLayoutConstraint.activate([
             editProfileWebsiteTextField.leadingAnchor.constraint(equalTo: editProfileWebsiteLabel.leadingAnchor),
@@ -292,6 +296,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileWebsiteTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
     private func constraitsWebsiteTextFieldInEditing() {
         NSLayoutConstraint.activate([
             editProfileWebsiteTextField.leadingAnchor.constraint(equalTo: editProfileWebsiteLabel.leadingAnchor),
@@ -308,6 +313,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
             editProfileWebsiteTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
     private func constraitsEditProfileWebsiteLabelInEditing() {
         editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
         editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
@@ -339,14 +345,17 @@ extension EditProfileViewController: UITextFieldDelegate {
         }
         return true
     }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
 
     }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
     }
@@ -359,8 +368,12 @@ extension EditProfileViewController: UITextViewDelegate {
 }
 // MARK: - EditProfileViewProtocol
 extension EditProfileViewController: EditProfileViewProtocol {
+    func setDelegate(delegate: EditProfileViewControllerDelegate) {
+        presenter.delegate = delegate
+    }
+
     func setProfile() {
-        delegate?.updateProfile()
+        presenter.delegate?.updateProfile()
     }
 }
 // MARK: - UIView extension
@@ -383,6 +396,7 @@ extension EditProfileViewController {
             let url = NSURL(string: urlString) else { return false }
         return UIApplication.shared.canOpenURL(url as URL)
     }
+
     @objc
     func changeImageDidTap(_ sender: UITapGestureRecognizer) {
       //  loadAvatarLabel.isHidden = false
@@ -406,7 +420,7 @@ extension EditProfileViewController {
                     let urlString = textField.text
                 else { return }
                 if validateURLFormat(urlString: urlString) {
-                    self.avatarURL = urlString
+                    presenter.setAvatarUrl(avatarUrl: urlString)
                     let url = URL(string: urlString)
                     editProfileImageView.kf.setImage(
                         with: url
@@ -442,6 +456,7 @@ extension EditProfileViewController {
         self.editProfileWebsiteTextField.endEditing(true)
         self.editProfileCaptionTextView.endEditing(true)
     }
+
     @objc
     func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (
