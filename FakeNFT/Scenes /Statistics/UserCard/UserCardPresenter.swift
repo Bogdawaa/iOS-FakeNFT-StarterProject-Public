@@ -11,7 +11,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
     weak var view: UserCardViewProtocol?
 
-    private var user: User?
+    private(set) var user: User?
 
     func viewDidLoad() {
         guard let user else { return }

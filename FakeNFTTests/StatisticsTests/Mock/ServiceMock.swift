@@ -40,7 +40,7 @@ class ServiceMock: UsersService {
         if loadUsersFailed {
             completion(.failure(ServiceMockError.loadError("load error")))
         } else {
-            var users: [User] = [user1, user2]
+            let users: [User] = [user1, user2]
             completion(.success(users))
         }
     }

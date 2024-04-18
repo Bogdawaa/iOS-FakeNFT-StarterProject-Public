@@ -34,7 +34,7 @@ final class StatisticsPresenterTests: XCTestCase {
         instance = StatisticsPresenter(service: serviceMock)
         viewMock = StatisticsViewControllerMock(presenter: instance)
         instance.view = viewMock
-        var parametr = SortParametr.byName
+        let parametr = SortParametr.byName
         
         // when
         serviceMock.loadUsersFailed = true
