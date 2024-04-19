@@ -8,6 +8,8 @@
 import Foundation
 
 struct OrderRequest: NetworkRequest {
+    var secretInjector: (URLRequest) -> URLRequest
+
     let currencyId: String
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/orders/1/payment/1")

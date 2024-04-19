@@ -45,7 +45,7 @@ final class PaymentViewModel {
 
     private func didPayButtonTapped(currencyId: String) {
         serviceOrder.checkPaymentResult(with: currencyId) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success(let paymentResult):
                 self.removeCart()
@@ -59,6 +59,6 @@ final class PaymentViewModel {
     private func removeCart() {
         let id = "1"
         let nftsID: [String] = []
-        serviceCart.updateFromCart(id: id, nftsID: nftsID) {_ in }
+        serviceCart.updateFromCart(id: id, nftsID: nftsID) { _ in }
     }
 }

@@ -302,7 +302,7 @@ extension PaymentViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         let availableWidth = collectionView.frame.width - collectionSettings.paddingWidth
-        let cellWidth =  availableWidth / CGFloat(collectionSettings.cellCount)
+        let cellWidth = availableWidth / CGFloat(collectionSettings.cellCount)
         return CGSize(width: cellWidth, height: 46)
     }
 

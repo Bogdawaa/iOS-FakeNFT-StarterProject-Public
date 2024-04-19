@@ -8,6 +8,8 @@
 import Foundation
 
 struct CartRequestPut: NetworkRequest {
+    var secretInjector: (URLRequest) -> URLRequest
+
     let id: String
     let nfts: [String]
     var endpoint: URL? {

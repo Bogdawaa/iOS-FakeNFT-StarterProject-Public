@@ -21,7 +21,9 @@ final class CurrencyServiceImpl: CurrencyService {
     }
 
     func loadCurrencies(completion: @escaping CurrencyCompletion) {
-        let request = CurrencyRequest()
+        let request = CurrencyRequest(secretInjector: { request in
+            return request
+        })
         networkClient.send(request: request, type: CurrencyModel.self, onResponse: completion)
     }
 }

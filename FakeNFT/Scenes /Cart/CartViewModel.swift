@@ -45,7 +45,7 @@ final class CartViewModel {
         })
         loadingLastSort()
         let nftsID = nfts.map { $0.id }
-        service.updateFromCart(id: id, nftsID: nftsID) {_ in }
+        service.updateFromCart(id: id, nftsID: nftsID) { _ in }
     }
 
     func loadingLastSort() {

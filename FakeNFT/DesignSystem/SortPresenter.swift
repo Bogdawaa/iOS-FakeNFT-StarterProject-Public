@@ -31,22 +31,22 @@ extension SortPresenter: SortPresenterProtocol {
             title: NSLocalizedString("Sort.Alert.Price", comment: ""),
             style: .default) { _ in
                 model.completionPrice?()
-            }
+        }
         let ratingAction = UIAlertAction(
             title: NSLocalizedString("Sort.Alert.Rating", comment: ""),
             style: .default) { _ in
                 model.completionRating?()
-            }
+        }
         let nameAction = UIAlertAction(
             title: NSLocalizedString("Sort.Alert.Name", comment: ""),
             style: .default) { _ in
                 model.completionName?()
-            }
+        }
         let actionCancel = UIAlertAction(
             title: NSLocalizedString("Sort.Alert.Close", comment: ""),
             style: .cancel) { _ in
                 alert.dismiss(animated: true)
-            }
+        }
 
         alert.addAction(priceAction)
         alert.addAction(ratingAction)
