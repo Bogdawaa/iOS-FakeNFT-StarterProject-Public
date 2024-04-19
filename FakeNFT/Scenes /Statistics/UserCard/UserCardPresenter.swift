@@ -10,8 +10,8 @@ import Foundation
 final class UserCardPresenter: UserCardPresenterProtocol {
 
     weak var view: UserCardViewProtocol?
-
     private(set) var user: User?
+
 
     func viewDidLoad() {
         guard let user else { return }
@@ -28,12 +28,10 @@ final class UserCardPresenter: UserCardPresenterProtocol {
     }
 
     func userWebsiteButtonTapped() {
-        guard let user else { return }
-        let webViewController = WebViewController()
-        let webViewPresenter = WebViewPresenter(user: user)
-        webViewPresenter.view = webViewController
-        webViewController.presenter = webViewPresenter
-        view?.showView(viewController: webViewController)
+        guard let user,
+        let view else { return }
+        let router = UserCardRouter(userCardViewController: view, user: user)
+        router.showNextController()
     }
 
     private func setViewModel(user: User) -> User {

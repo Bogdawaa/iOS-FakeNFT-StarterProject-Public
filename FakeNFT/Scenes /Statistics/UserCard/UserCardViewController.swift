@@ -11,6 +11,7 @@ import Kingfisher
 final class UserCardViewController: StatLoggedUIViewController {
 
     var presenter: UserCardPresenterProtocol
+    private let collectionNFTCellIdentifier = "collectionNFTCell"
 
     private lazy var stackView: UIStackView = {
         let stv = UIStackView()
@@ -54,10 +55,10 @@ final class UserCardViewController: StatLoggedUIViewController {
         let btn = UIButton()
         btn.layer.cornerRadius = 16
         btn.layer.borderWidth = 1
-        btn.layer.borderColor = UIColor.ypBlackUniversal.cgColor
-        btn.backgroundColor = .systemBackground
+        btn.layer.borderColor = UIColor.ypBlack.cgColor
+        btn.backgroundColor = .ypWhite
         btn.addTarget(self, action: #selector(userWebsiteButtonTapped), for: .touchUpInside)
-        btn.setTitle("Перейти на сайт пользователя", for: .normal)
+        btn.setTitle("UserCard.goToWebsiteButtonTitle"~, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
         btn.setTitleColor(UIColor.label, for: .normal)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -66,8 +67,10 @@ final class UserCardViewController: StatLoggedUIViewController {
 
     private lazy var userCollectionNftTableView: UITableView = {
         let table = UITableView()
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "collectionNFTCell")
+        table.register(UITableViewCell.self, forCellReuseIdentifier: collectionNFTCellIdentifier)
         table.separatorStyle = .none
+        table.backgroundColor = .ypWhite
+        table.isScrollEnabled = false
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -88,20 +91,23 @@ final class UserCardViewController: StatLoggedUIViewController {
         super.viewDidLoad()
 
         userCollectionNftTableView.dataSource = self
+        userCollectionNftTableView.delegate = self
 
         setupUI()
         presenter.viewDidLoad()
+        setupUserImage()
+    }
 
-        // userImageView
+    // MARK: - private methods
+    private func setupUserImage() {
         userImageView.layoutIfNeeded()
         userImageView.layer.cornerRadius = userImageView.frame.size.width / 2
     }
 
-    // MARK: - private methods
     private func setupUI() {
 
         // view
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .ypWhite
         view.addSubview(stackView)
 
         // stackView
@@ -197,7 +203,14 @@ extension UserCardViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.accessoryType = .disclosureIndicator
-        cell.textLabel?.text = "Коллекция NFT (\(presenter.countUserNFTS()))"
+        cell.backgroundColor = .ypWhite
+        cell.textLabel?.text = "UserCard.collectionNFTTableTitle"~ + " (\(presenter.countUserNFTS()))"
         return cell
+    }
+}
+
+extension UserCardViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
