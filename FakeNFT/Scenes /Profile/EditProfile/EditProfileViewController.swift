@@ -19,7 +19,7 @@ final class EditProfileViewController: StatLoggedUIViewController {
     // MARK: - UI
     private lazy var editProfilecloseButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(.ypXmark, for: .normal)
         button.tintColor = .ypBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(closeButtonDidClicked), for: .touchUpInside)

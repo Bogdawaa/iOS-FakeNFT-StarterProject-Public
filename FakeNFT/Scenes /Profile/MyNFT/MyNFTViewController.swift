@@ -47,7 +47,7 @@ final class MyNFTViewController: StatLoggedUIViewController {
         self.presenter = presenter
         super.init(statLog: statLog)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -60,9 +60,8 @@ final class MyNFTViewController: StatLoggedUIViewController {
         setupGestureRecognizers()
         constraitsNftEmptyLabel()
         presenter.viewDidLoad()
-        presenter.view = self
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         ProgressHUD.dismiss()
@@ -78,7 +77,7 @@ final class MyNFTViewController: StatLoggedUIViewController {
     // MARK: - NAV BAR SETUP
     private func navBarSetup() {
         let leftButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
+            image: .ypChevronLeft,
             style: .plain,
             target: self,
             action: #selector(self.dismissButtonClicked)
@@ -120,13 +119,13 @@ final class MyNFTViewController: StatLoggedUIViewController {
         self.navigationController?.popViewController(animated: true)
         presenter.delegate?.updateProfile()
     }
-    
+
     @objc
     func dismissButtonClicked() {
         self.navigationController?.popViewController(animated: true)
         presenter.delegate?.updateProfile()
     }
-    
+
     @objc
     func sortButtonClicked() {
         configureSortMenu()
@@ -191,21 +190,21 @@ extension MyNFTViewController: MyNFTViewProtocol {
     func displayMyNft(_ nft: [Nft]) {
         nftTableView.reloadData()
     }
-    
+
     func loadingDataStarted() {
         ProgressHUD.show()
         isLoadingSwitch = true
     }
-    
+
     func loadingDataFinished() {
         ProgressHUD.dismiss()
         isLoadingSwitch = false
     }
-    
+
     func setNftId(nftId: [String]) {
         presenter.setNftId(nftId: nftId)
     }
-    
+
     func setLikedNftId(nftId: [String]) {
         presenter.setLikedNftId(nftId: nftId)
     }
@@ -218,7 +217,7 @@ extension MyNFTViewController: MyNFTTableCellDelegate {
         presenter.updateFavoriteNft(nftIds: likedNft)
 
     }
-    
+
     func removeLike(nftId: String) {
         var likedNft = presenter.getLikedNftId()
         likedNft.removeAll(where: {

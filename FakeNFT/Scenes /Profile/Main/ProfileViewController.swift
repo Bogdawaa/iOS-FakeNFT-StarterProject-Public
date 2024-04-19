@@ -33,7 +33,7 @@ final class ProfileViewController: StatLoggedUIViewController {
     // MARK: - UI
     private lazy var profileEditButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
-            image: UIImage(systemName: "square.and.pencil"),
+            image: .ypSquareAndPencil,
             style: .plain,
             target: self,
             action: #selector(profileEditButtonClicked)

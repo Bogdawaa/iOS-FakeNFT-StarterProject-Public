@@ -14,9 +14,8 @@ final class ProfileTableCell: UITableViewCell {
     // MARK: - UI
     private lazy var chevronImage: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(systemName: "chevron.right")
         imageView.contentMode = .scaleToFill
-        imageView.image = image
+        imageView.image = .ypChevronRight
         imageView.tintColor = .ypBlack
         imageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(imageView)

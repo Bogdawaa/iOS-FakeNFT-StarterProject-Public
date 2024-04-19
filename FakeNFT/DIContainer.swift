@@ -69,6 +69,10 @@ final class DIContainer {
                 )
             )
         }
+        .initCompleted {resolver, presenter in
+            let child = presenter
+            child.view = resolver.resolve(MyNFTViewController.self)
+        }
 
         container.register(MyNFTViewController.self) { diResolver in
             MyNFTViewController(

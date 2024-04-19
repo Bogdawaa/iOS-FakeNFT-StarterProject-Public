@@ -28,8 +28,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var favNftTitleLabel: UILabel = {
         let label = UILabel()
-        // label.font = .bodyBold
-        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.font = .favNftTitle
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
@@ -43,15 +42,14 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
     }()
     private lazy var favNftPriceLabel: UILabel = {
         let label = UILabel()
-        // label.font = .caption1
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = .favNftCaption
         label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
     }()
     private lazy var favNftHeartButton: UIButton = {
         let button = UIButton.systemButton(
-            with: UIImage(systemName: "suit.heart.fill") ?? UIImage(),
+            with: .ypSuitHeartFill,
             target: self,
             action: #selector(didTapHeartButton)
         )

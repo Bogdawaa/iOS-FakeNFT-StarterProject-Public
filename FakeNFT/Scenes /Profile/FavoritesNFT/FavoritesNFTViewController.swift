@@ -63,7 +63,7 @@ final class FavoritesNFTViewController: StatLoggedUIViewController {
     // MARK: - NAVBAR SETUP
     private func navbarSetup() {
         let leftButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
+            image: .ypChevronLeft,
             style: .plain,
             target: self,
             action: #selector(self.dismissButtonClicked)

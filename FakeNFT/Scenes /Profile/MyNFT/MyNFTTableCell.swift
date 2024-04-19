@@ -63,7 +63,7 @@ final class MyNFTTableCell: UITableViewCell {
     }()
     private lazy var nftHeartButton: UIButton = {
         let button = UIButton.systemButton(
-            with: UIImage(systemName: "suit.heart.fill") ?? UIImage(),
+            with: .ypSuitHeartFill,
             target: self,
             action: #selector(didTapHeartButton)
         )

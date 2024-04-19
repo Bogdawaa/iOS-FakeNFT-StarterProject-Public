@@ -14,6 +14,11 @@ extension UIImage {
     static let ypProfileNftRatingImage3 = UIImage(named: "Rating_3") ?? UIImage()
     static let ypProfileNftRatingImage4 = UIImage(named: "Rating_4") ?? UIImage()
     static let ypProfileNftRatingImage5 = UIImage(named: "Rating_5") ?? UIImage()
+    static let ypSquareAndPencil = UIImage(systemName: "square.and.pencil") ?? UIImage()
+    static let ypChevronRight = UIImage(systemName: "chevron.right") ?? UIImage()
+    static let ypChevronLeft = UIImage(systemName: "chevron.left") ?? UIImage()
+    static let ypXmark = UIImage(systemName: "xmark") ?? UIImage()
+    static let ypSuitHeartFill = UIImage(systemName: "suit.heart.fill") ?? UIImage()
     static let ypSortButton = UIImage(named: "sortButton") ?? UIImage()
     static let ypClose = UIImage(named: "close") ?? UIImage()
 }

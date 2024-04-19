@@ -25,7 +25,7 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
     func viewDidLoad() {
         loadFavoriteNft()
     }
-    
+
     func loadFavoriteNft() {
         view?.loadingDataStarted()
         nftId.forEach { nft in
@@ -42,15 +42,15 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
             }
         }
     }
-    
+
     func getFavoriteNft() -> [Nft]? {
         return myNft
     }
-    
+
     func setNftId(nftId: [String]) {
         self.nftId = nftId
     }
-    
+
     func removeFavoriteNft(nftId: String) {
         self.nftId.removeAll(where: {
             $0 == nftId
@@ -61,7 +61,7 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
         service.updateFavoritesNft(likedNftIds: self.nftId)
         view?.displayFavoritesNft(myNft)
     }
-    
+
     func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
         self.delegate = delegate
     }
@@ -70,5 +70,5 @@ final class FavoritesNFTPresenter: FavoriteNFTPresenterProtocol {
         myNft.append(newNft)
         view?.displayFavoritesNft(myNft)
     }
-    
+
 }

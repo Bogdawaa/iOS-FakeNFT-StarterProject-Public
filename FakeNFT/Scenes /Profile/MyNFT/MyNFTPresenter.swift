@@ -34,21 +34,21 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
         }
         view?.displayMyNft(myNft)
     }
-    
+
     func sortByPrice() {
         myNft.sort {
             $0.price > $1.price
         }
         view?.displayMyNft(myNft)
     }
-    
+
     func sortByRating() {
         myNft.sort {
             $0.rating > $1.rating
         }
         view?.displayMyNft(myNft)
     }
-    
+
     // MARK: - public
     func loadMyNft() {
         view?.loadingDataStarted()
@@ -70,7 +70,7 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     func setNftId(nftId: [String]) {
         self.nftId = nftId
     }
-    
+
     func setLikedNftId(nftId: [String]) {
         self.likedNftId = nftId
     }
@@ -78,15 +78,15 @@ final class MyNFTPresenter: MyNFTPresenterProtocol {
     func getMyNft() -> [Nft]? {
         return myNft
     }
-    
+
     func getLikedNftId() -> [String] {
         return likedNftId
     }
-    
+
     func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
         self.delegate = delegate
     }
-    
+
     func updateFavoriteNft(nftIds: [String]) {
         setLikedNftId(nftId: nftIds)
         service.updateFavoritesNft(likedNftIds: nftIds)
