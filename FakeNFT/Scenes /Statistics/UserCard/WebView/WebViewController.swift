@@ -8,8 +8,8 @@
 import UIKit
 import WebKit
 
-public protocol WebViewControllerProtocol: AnyObject {
-    var presenter: WebViewPresenterProtocol? { get set }
+protocol WebViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol { get set }
     func load(request: URLRequest)
     func setProgressHidden(_ isHidden: Bool)
     func setProgressValue(_ newValue: Float)
@@ -22,7 +22,7 @@ protocol WebViewControllerDelegate: AnyObject {
 
 class WebViewController: UIViewController {
 
-    var presenter: WebViewPresenterProtocol?
+    var presenter: WebViewPresenterProtocol
 
     private var estimatedProgressObservation: NSKeyValueObservation?
     private var webView = WKWebView()
@@ -34,11 +34,20 @@ class WebViewController: UIViewController {
         return view
     }()
 
+    init(presenter: WebViewPresenterProtocol) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        presenter?.viewDidLoad()
+        presenter.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -48,7 +57,7 @@ class WebViewController: UIViewController {
                 \.estimatedProgress,
                  changeHandler: { [weak self] _, _ in
                      guard let self else { return }
-                     self.presenter?.didUpdateProgressValue(webView.estimatedProgress)
+                     self.presenter.didUpdateProgressValue(webView.estimatedProgress)
                  }
             )
         }

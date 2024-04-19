@@ -20,6 +20,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
         let btnImage = UIImage.ypSort
+        btn.tintColor = .ypBlack
         btn.setImage(btnImage, for: .normal)
         btn.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +40,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
-        control.attributedTitle = NSAttributedString(string: "Обновить данные")
+        control.attributedTitle = NSAttributedString(string: "Statistics.refreshData"~)
         control.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return control
     }()
@@ -104,7 +105,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.addSubview(refreshControl)
         statisticsTableView.sendSubviewToBack(refreshControl)
 
-        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationController?.navigationBar.tintColor = UIColor.ypBlack
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
 
@@ -125,13 +126,13 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
     @objc
     private func sortButtonTapped() {
         let alert = UIAlertController(
-            title: "Сортировка",
+            title: "Statistics.sortAllertTitle"~,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
             UIAlertAction(
-                title: "По имени",
+                title: "Statistics.sortButton.byName"~,
                 style: .default,
                 handler: { [weak self] _ in
                     guard let self else { return }
@@ -141,7 +142,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         )
         alert.addAction(
             UIAlertAction(
-                title: "По рейтингу",
+                title: "Statistics.sortButton.byRating"~,
                 style: .default,
                 handler: { [weak self] _ in
                     guard let self else { return }
@@ -151,7 +152,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         )
         alert.addAction(
             UIAlertAction(
-                title: "Закрыть",
+                title: "Statistics.sortButton.close"~,
                 style: .cancel
             )
         )
