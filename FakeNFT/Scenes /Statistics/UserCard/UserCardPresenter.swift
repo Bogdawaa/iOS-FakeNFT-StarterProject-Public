@@ -12,7 +12,6 @@ final class UserCardPresenter: UserCardPresenterProtocol {
     weak var view: UserCardViewProtocol?
     private(set) var user: User?
 
-
     func viewDidLoad() {
         guard let user else { return }
         let userViewModel = setViewModel(user: user)
@@ -28,10 +27,9 @@ final class UserCardPresenter: UserCardPresenterProtocol {
     }
 
     func userWebsiteButtonTapped() {
-        guard let user,
-        let view else { return }
-        let router = UserCardRouter(userCardViewController: view, user: user)
-        router.showNextController()
+        guard let user else { return }
+        let webView = ViewBuilder.buildWebViewController(with: user)
+        view?.showView(viewController: webView)
     }
 
     private func setViewModel(user: User) -> User {

@@ -93,7 +93,7 @@
 		F02852B42BD073C400688074 /* UserCardViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B32BD073C400688074 /* UserCardViewMock.swift */; };
 		F02852B62BD185DD00688074 /* UserCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B52BD185DD00688074 /* UserCardViewTests.swift */; };
 		F02852B82BD186F000688074 /* UserCardPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B72BD186F000688074 /* UserCardPresenterMock.swift */; };
-		F02852BA2BD1B41A00688074 /* UserCardRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B92BD1B40E00688074 /* UserCardRouter.swift */; };
+		F02852BA2BD1B41A00688074 /* ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B92BD1B40E00688074 /* ViewBuilder.swift */; };
 		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
 		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
@@ -215,7 +215,7 @@
 		F02852B32BD073C400688074 /* UserCardViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewMock.swift; sourceTree = "<group>"; };
 		F02852B52BD185DD00688074 /* UserCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewTests.swift; sourceTree = "<group>"; };
 		F02852B72BD186F000688074 /* UserCardPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenterMock.swift; sourceTree = "<group>"; };
-		F02852B92BD1B40E00688074 /* UserCardRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardRouter.swift; sourceTree = "<group>"; };
+		F02852B92BD1B40E00688074 /* ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBuilder.swift; sourceTree = "<group>"; };
 		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -610,6 +610,7 @@
 		F00DF4AD2BB06BFC00825462 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				F02852B92BD1B40E00688074 /* ViewBuilder.swift */,
 				F028529F2BCDB6B600688074 /* UserCard */,
 				F028529E2BCDB68A00688074 /* StatisticsMain */,
 			);
@@ -634,7 +635,6 @@
 				F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */,
 				F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */,
 				F0E68FC32BC31D710032AD69 /* UserCardContract.swift */,
-				F02852B92BD1B40E00688074 /* UserCardRouter.swift */,
 			);
 			path = UserCard;
 			sourceTree = "<group>";
@@ -1015,7 +1015,7 @@
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				91013CC72BC7D26800105D5E /* FavoritesNFTPresenter.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
-				F02852BA2BD1B41A00688074 /* UserCardRouter.swift in Sources */,
+				F02852BA2BD1B41A00688074 /* ViewBuilder.swift in Sources */,
 				F00DF4B92BB3351600825462 /* UsersRequest.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
