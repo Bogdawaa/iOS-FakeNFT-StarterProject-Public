@@ -14,11 +14,8 @@ final class DIContainer {
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
                 catalogViewController: diResolver.resolve(CatalogViewController.self)!,
                 statisticsController: UINavigationController(
-                    rootViewController: StatisticsViewController(
-                        presenter: diResolver.resolve(StatisticsPresenter.self)!,
-                        statlog: diResolver.resolve(StatLog.self)!
+                    rootViewController: diResolver.resolve(StatisticsViewController.self)!
                     )
-                )
             )
         }
     }
@@ -29,6 +26,10 @@ final class DIContainer {
 
     func userCard() -> UserCardViewController {
         container.resolve(UserCardViewController.self)!
+    }
+
+    func statisticsViewController() -> StatisticsViewController {
+        container.resolve(StatisticsViewController.self)!
     }
 
     private func registerCatalog() {
@@ -75,6 +76,13 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
+
+        container.register(StatisticsViewController.self) { diResolver in
+            StatisticsViewController(
+                presenter: diResolver.resolve(StatisticsPresenter.self)!,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
     }
 
     private func registerUserCard() {
