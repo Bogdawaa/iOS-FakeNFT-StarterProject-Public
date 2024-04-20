@@ -5,7 +5,7 @@
 //  Created by admin on 09.04.2024.
 //
 
- import Foundation
+import Foundation
 
 struct CurrencyRequest: NetworkRequest {
     var secretInjector: (URLRequest) -> URLRequest
@@ -13,4 +13,4 @@ struct CurrencyRequest: NetworkRequest {
     var endpoint: URL? {
         URL(string: "\(RequestConstants.baseURL)/api/v1/currencies")
     }
- }
+}

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import AppMetricaCore // Добавленный импорт
+import AppMetricaCore
 
 protocol StatLog {
     func report<T>(from screen: T.Type, event: LogEvent)
@@ -43,16 +43,15 @@ enum LogEvent {
     var name: String {
         switch self {
         case .open:
-            return "Open" // Добавленный return
+            return "Open"
         case .close:
-            return "Close" // Добавленный return
+            return "Close"
         case .click:
-            return "Click" // Добавленный return
+            return "Click"
         }
     }
 }
 
-// Наследуемся от этого класса, что бы контроллер автоматом писал в метрику.
 class StatLoggedUIViewController: UIViewController {
     let statLog: StatLog
 

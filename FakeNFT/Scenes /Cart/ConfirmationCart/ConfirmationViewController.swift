@@ -12,7 +12,7 @@ final class ConfirmationViewController: UIViewController {
     // MARK: - UiElements
 
     private lazy var successImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "YPPaymentSuccess")) // Используем инициализатор с изображением
+        let imageView = UIImageView(image: UIImage(named: "YPPaymentSuccess"))
         imageView.backgroundColor = .clear
         return imageView
     }()
@@ -53,9 +53,9 @@ final class ConfirmationViewController: UIViewController {
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl()
         )
-//        let tabBarContoller = TabBarController(servicesAssembly: servicesAssembly)
-//        tabBarContoller.modalPresentationStyle = .fullScreen
-//        present(tabBarContoller, animated: true)
+        //        let tabBarContoller = TabBarController(servicesAssembly: servicesAssembly)
+        //        tabBarContoller.modalPresentationStyle = .fullScreen
+        //        present(tabBarContoller, animated: true)
     }
 
     // MARK: - Private methods

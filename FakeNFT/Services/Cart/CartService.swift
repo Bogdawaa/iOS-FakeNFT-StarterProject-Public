@@ -23,12 +23,11 @@ final class CartServiceImpl: CartService {
     }
 
     func downloadServiceNFTs(with id: String, completion: @escaping NftsCompletion) {
-        // Код метода downloadServiceNFTs остается без изменений
+
     }
 
     func updateFromCart(id: String, nftsID: [String], completion: @escaping CartCompletion) {
         let request = CartRequestPut(secretInjector: { request in
-            // Здесь можно модифицировать request по необходимости
             return request
         }, id: id, nfts: nftsID)
         networkClient.send(request: request, type: CartModel.self, onResponse: completion)
@@ -36,7 +35,6 @@ final class CartServiceImpl: CartService {
 
     private func downloadCart(id: String, completion: @escaping CartCompletion) {
         let request = CartRequest(secretInjector: { request in
-            // Здесь можно модифицировать request по необходимости
             return request
         }, id: id)
         networkClient.send(request: request, type: CartModel.self, onResponse: completion)
