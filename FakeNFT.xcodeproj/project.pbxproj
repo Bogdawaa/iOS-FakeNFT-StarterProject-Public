@@ -73,7 +73,6 @@
 		F02852C32BD4766700688074 /* UsersCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852C22BD4766700688074 /* UsersCollectionCell.swift */; };
 		F02852C52BD4767A00688074 /* UsersCollectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852C42BD4767A00688074 /* UsersCollectionPresenter.swift */; };
 		F02852C72BD5110200688074 /* UsersCollectionContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852C62BD5110200688074 /* UsersCollectionContract.swift */; };
-		F02852C92BD5144400688074 /* UsersCollectionCellFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852C82BD5144400688074 /* UsersCollectionCellFooter.swift */; };
 		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
 		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
@@ -177,7 +176,6 @@
 		F02852C22BD4766700688074 /* UsersCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionCell.swift; sourceTree = "<group>"; };
 		F02852C42BD4767A00688074 /* UsersCollectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionPresenter.swift; sourceTree = "<group>"; };
 		F02852C62BD5110200688074 /* UsersCollectionContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionContract.swift; sourceTree = "<group>"; };
-		F02852C82BD5144400688074 /* UsersCollectionCellFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionCellFooter.swift; sourceTree = "<group>"; };
 		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
@@ -580,7 +578,6 @@
 				F02852C22BD4766700688074 /* UsersCollectionCell.swift */,
 				F02852C42BD4767A00688074 /* UsersCollectionPresenter.swift */,
 				F02852C62BD5110200688074 /* UsersCollectionContract.swift */,
-				F02852C82BD5144400688074 /* UsersCollectionCellFooter.swift */,
 			);
 			path = UsersCollection;
 			sourceTree = "<group>";
@@ -882,7 +879,6 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				7943632D2BB830B900F3F527 /* UIImages.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
-				F02852C92BD5144400688074 /* UsersCollectionCellFooter.swift in Sources */,
 				F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,

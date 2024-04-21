@@ -190,7 +190,7 @@ extension UserCardViewController: UserCardViewProtocol {
     }
 
     func showView(viewController: UIViewController) {
-        present(viewController, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -204,6 +204,7 @@ extension UserCardViewController: UITableViewDataSource {
         let cell = UITableViewCell()
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = .ypWhite
+        cell.textLabel?.font = .bodyBold
         cell.textLabel?.text = "UserCard.collectionNFTTableTitle"~ + " (\(presenter.countUserNFTS()))"
         return cell
     }
@@ -212,5 +213,6 @@ extension UserCardViewController: UITableViewDataSource {
 extension UserCardViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        presenter.presentNftCollectionTapped()
     }
 }

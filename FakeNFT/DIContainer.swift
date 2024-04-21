@@ -8,6 +8,7 @@ final class DIContainer {
         registerCatalog()
         registerStatistics()
         registerUserCard()
+        registerUsersCollectionNft()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
@@ -30,6 +31,10 @@ final class DIContainer {
 
     func statisticsViewController() -> StatisticsViewController {
         container.resolve(StatisticsViewController.self)!
+    }
+
+    func usersCollectionNftController() -> UsersCollectionViewController {
+        container.resolve(UsersCollectionViewController.self)!
     }
 
     private func registerCatalog() {
@@ -92,6 +97,25 @@ final class DIContainer {
         container.register(UserCardViewController.self) { diResolver in
             UserCardViewController(
                 presenter: diResolver.resolve(UserCardPresenter.self)!,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
+    }
+
+    private func registerUsersCollectionNft() {
+        container.register(UsersCollectionPresenter.self) { diResolver in
+            UsersCollectionPresenter(
+                service: NftServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: NftStorageImpl()
+                )
+            )
+        }
+        .inObjectScope(.container)
+
+        container.register(UsersCollectionViewController.self) { diResolver in
+            UsersCollectionViewController(
+                presenter: diResolver.resolve(UsersCollectionPresenter.self)!,
                 statlog: diResolver.resolve(StatLog.self)!
             )
         }

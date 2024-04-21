@@ -11,6 +11,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
     weak var view: UserCardViewProtocol?
     private(set) var user: User?
+    private let diContainer = DIContainer()
 
     func viewDidLoad() {
         guard let user else { return }
@@ -32,12 +33,11 @@ final class UserCardPresenter: UserCardPresenterProtocol {
         view?.showView(viewController: webView)
     }
 
-//    func presentNftCollectionTapped() {
-//        let usersColletionViewPresenter = UsersCollectionPresenter(nfts: user?.nfts ?? [])
-//        let usersColletionViewController = UsersCollectionViewController(
-//            presenter: <#T##any UsersCollectionPresenterProtocol#>,
-//            statlog: <#T##any StatLog#>)
-//    }
+    func presentNftCollectionTapped() {
+        let usersColletionViewController = diContainer.usersCollectionNftController()
+        usersColletionViewController.presenter.setNftsId(nftsId: user?.nfts ?? [])
+        view?.showView(viewController: usersColletionViewController)
+    }
 
     private func setViewModel(user: User) -> User {
         let userViewModel = User(
