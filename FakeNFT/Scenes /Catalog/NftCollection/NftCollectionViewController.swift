@@ -1,19 +1,18 @@
 import UIKit
 
-protocol CatalogViewControllerDepsFactory {
+protocol NftCollectionViewControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController?
-
 }
 
-final class CatalogViewController: StatLoggedUIViewController {
-    private let contentView: CatalogView
-    private var presenter: CatalogPresenter
-    private let depsFactory: CatalogViewControllerDepsFactory
+final class NftCollectionViewController: StatLoggedUIViewController {
+    private let contentView: NftCollectionView
+    private var presenter: NftCollectionPresenter
+    private let depsFactory: NftCollectionViewControllerDepsFactory
 
     init(
-        contentView: CatalogView,
-        presenter: CatalogPresenter,
-        depsFactory: CatalogViewControllerDepsFactory,
+        contentView: NftCollectionView,
+        presenter: NftCollectionPresenter,
+        depsFactory: NftCollectionViewControllerDepsFactory,
         statlog: StatLog
     ) {
         self.contentView = contentView
@@ -23,16 +22,23 @@ final class CatalogViewController: StatLoggedUIViewController {
         super.init(statLog: statlog)
 
         self.presenter.delegate = self
+        self.presenter.view = contentView
         self.contentView.delegate = self.presenter
     }
 
     override func loadView() {
         view = contentView
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.presenter.viewDidLoad()
+    }
+
 }
 
-extension CatalogViewController: CatalogPresenterDelegate {
-    func didSelectRow(rowData: CatalogRowData) {
+extension NftCollectionViewController: NftCollectionPresenterDelegate {
+    func didSelectRow(rowData: NftCollection) {
         let nftCollectionViewController = depsFactory.nftCollectionViewController()
         guard let nftCollectionViewController else { return }
 //        nftCollectionViewController.delegate = self

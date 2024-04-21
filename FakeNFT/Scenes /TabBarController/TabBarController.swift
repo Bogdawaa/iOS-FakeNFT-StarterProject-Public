@@ -1,12 +1,12 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let catalogViewController: CatalogViewController
+    private let catalogViewController: NftCollectionViewController
     private let servicesAssembly: ServicesAssembly
 
     init(
         servicesAssembly: ServicesAssembly,
-        catalogViewController: CatalogViewController
+        catalogViewController: NftCollectionViewController
     ) {
         self.servicesAssembly = servicesAssembly
         self.catalogViewController = catalogViewController
