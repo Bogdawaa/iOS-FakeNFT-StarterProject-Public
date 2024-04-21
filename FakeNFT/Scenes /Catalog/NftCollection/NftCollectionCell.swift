@@ -1,8 +1,8 @@
 import UIKit
 import Kingfisher
 
-final class CatalogCell: UITableViewCell {
-    static let reuseIdentifier = String(describing: CatalogCell.self)
+final class NftCollectionCell: UITableViewCell {
+    static let reuseIdentifier = String(describing: NftCollectionCell.self)
 
     private lazy var rowImage: UIImageView = {
         let view = UIImageView()
@@ -57,9 +57,9 @@ final class CatalogCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func initData(rowData: CatalogRowData) {
-        rowLable.text = "\(rowData.name) (\(rowData.nftCount))"
-        rowImage.kf.setImage(with: rowData.imageURL) { [weak self] result in
+    func initData(rowData: NftCollection) {
+        rowLable.text = "\(rowData.name) (\(rowData.nfts.count))"
+        rowImage.kf.setImage(with: rowData.coverURL) { [weak self] result in
             guard let self else { return }
 
             switch result {

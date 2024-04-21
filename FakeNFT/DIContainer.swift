@@ -15,7 +15,7 @@ final class DIContainer {
         container.register(TabBarController.self) { diResolver in
             TabBarController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
-                catalogViewController: diResolver.resolve(CatalogViewController.self)!,
+                catalogViewController: diResolver.resolve(NftCollectionViewController.self)!,
                 profileViewController: UINavigationController(
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
                 ),
@@ -59,15 +59,19 @@ final class DIContainer {
     }
 
     private func registerCatalog() {
-        container.register(CatalogPresenter.self) { _ in
-            CatalogPresenterImpl(
+        container.register(NftCollectionPresenter.self) { diResolver in
+            NftCollectionPresenterImpl(
+                listService: ListService<NftCollection>(
+                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!,
+                    nftApiPath: .collectionList
+                )
             )
         }
 
-        container.register(CatalogViewController.self) { diResolver in
-            CatalogViewController(
-                contentView: CatalogView(),
-                presenter: diResolver.resolve(CatalogPresenter.self)!,
+        container.register(NftCollectionViewController.self) { diResolver in
+            NftCollectionViewController(
+                contentView: NftCollectionView(),
+                presenter: diResolver.resolve(NftCollectionPresenter.self)!,
                 depsFactory: self,
                 statlog: diResolver.resolve(StatLog.self)!
             )
@@ -158,6 +162,11 @@ final class DIContainer {
         }
         .inObjectScope(.container)
 
+        container.register(AsyncNetworkClient.self) { _ in
+            AsyncNetworkClientImpl()
+        }
+        .inObjectScope(.container)
+
         container.register(NftStorage.self) { _ in
             NftStorageImpl()
         }
@@ -214,7 +223,7 @@ final class DIContainer {
     }
 }
 
-extension DIContainer: CatalogViewControllerDepsFactory {
+extension DIContainer: NftCollectionViewControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController? {
         UIViewController()
     }

@@ -1,14 +1,14 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let catalogViewController: CatalogViewController
+    private let catalogViewController: NftCollectionViewController
     private let servicesAssembly: ServicesAssembly
     private let profileViewController: UINavigationController
     private let statisticsController: StatisticsViewController
 
     init(
         servicesAssembly: ServicesAssembly,
-        catalogViewController: CatalogViewController,
+        catalogViewController: NftCollectionViewController,
         profileViewController: UINavigationController,
         statisticsController: StatisticsViewController
     ) {

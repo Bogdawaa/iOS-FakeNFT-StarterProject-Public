@@ -169,7 +169,7 @@ extension MyNFTViewController: UITableViewDataSource {
             $0 == nftSetting.id
         })
         cell.configure(
-            nftImageURL: nftSetting.images.first,
+            nftImageURL: nftSetting.imagesURL.first,
             nftTitle: nftSetting.name,
             nftPrice: nftSetting.price,
             nftAuthor: nftSetting.author,

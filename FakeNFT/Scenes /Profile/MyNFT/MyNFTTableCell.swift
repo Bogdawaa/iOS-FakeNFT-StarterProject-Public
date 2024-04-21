@@ -96,7 +96,7 @@ final class MyNFTTableCell: UITableViewCell {
     func configure(
         nftImageURL: URL?,
         nftTitle: String,
-        nftPrice: Float,
+        nftPrice: Double,
         nftAuthor: String,
         nftRatingStars: Int,
         nftIsLiked: Bool,

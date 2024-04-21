@@ -131,7 +131,7 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         else {return UICollectionViewCell()}
         guard let nftSetting = presenter.getFavoriteNft()?[indexPath.row] else { return cell}
         cell.configureFavNftCell(
-            favNftImageUrl: nftSetting.images.first,
+            favNftImageUrl: nftSetting.imagesURL.first,
             favNftTitle: nftSetting.name,
             favNftRaiting: nftSetting.rating,
             favNftPrice: nftSetting.price,

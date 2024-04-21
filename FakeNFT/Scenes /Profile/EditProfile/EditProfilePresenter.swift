@@ -25,7 +25,7 @@ final class EditProfilePresenter: EditProfilePresenterProtocol {
             DispatchQueue.main.async {
                 guard let self else { return }
                 switch result {
-                case .success(let profile):
+                case .success:
                     self.view?.setProfile()
                 case .failure(let error):
                     assertionFailure("\(error)")
