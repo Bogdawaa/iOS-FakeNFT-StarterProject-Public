@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol UsersCollectionCellDelegate: AnyObject {
+    func favouriteButtonTapped(_ cell: UsersCollectionCell)
+}
+
 final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
 
     // MARK: - properties
+    weak var delegate: UsersCollectionCellDelegate?
+    var isFavourite = false
+
     lazy var nftImageView: UIImageView = {
         let object = UIImageView()
         object.layer.masksToBounds = true
@@ -22,6 +29,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var nftFaVouriteButton: UIButton = {
         let object = UIButton()
         object.setImage(.ypFavouriteButtonInactive, for: .normal)
+        object.addTarget(self, action: #selector(favouriteButtonTapped), for: .touchUpInside)
         object.translatesAutoresizingMaskIntoConstraints = false
         return object
     }()
@@ -118,6 +126,16 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
+    func changeFavouriteButton() {
+        self.isFavourite = !isFavourite
+        switch isFavourite {
+        case true:
+            nftFaVouriteButton.setImage(.ypFavouriteButtonActive, for: .normal)
+        case false:
+            nftFaVouriteButton.setImage(.ypFavouriteButtonInactive, for: .normal)
+        }
+    }
+
     private func applyConstaints() {
         let nftImageViewConstraints = [
             nftImageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
@@ -172,5 +190,11 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         NSLayoutConstraint.activate(nftNameLabelConstraints)
         NSLayoutConstraint.activate(nftPriceLabelConstraints)
         NSLayoutConstraint.activate(cartButtonConstraints)
+    }
+
+    // MARK: - actions
+    @objc
+    func favouriteButtonTapped(_ sender: Any) {
+        delegate?.favouriteButtonTapped(self)
     }
 }
