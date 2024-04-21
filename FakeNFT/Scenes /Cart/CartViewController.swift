@@ -25,14 +25,14 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.text = NSLocalizedString("Сart.isEmpty", comment: "")
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         label.isHidden = true
         return label
     }()
 
     private lazy var sortButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "YPSort"), for: .normal)
+        button.setImage(.ypSort, for: .normal)
         button.imageView?.image = button.imageView?.image?.withRenderingMode(.alwaysTemplate)
         button.backgroundColor = .clear
         button.isHidden = true
@@ -71,7 +71,7 @@ final class CartViewController: UIViewController {
     private lazy var quantityNFTLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption1
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         label.text = "0 NFT"
         return label
     }()
@@ -80,7 +80,7 @@ final class CartViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.bodyBold
         label.text = "0 ETH"
-        label.textColor = UIColor(named: "YPGreen")
+        label.textColor = .ypGreenUniversal
         return label
     }()
 
@@ -139,7 +139,7 @@ final class CartViewController: UIViewController {
         label.font = UIFont.caption1
         label.text = NSLocalizedString("Remove.trash", comment: "")
         label.textAlignment = .center
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         return label
     }()
 

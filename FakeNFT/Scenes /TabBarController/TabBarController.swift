@@ -22,23 +22,23 @@ final class TabBarController: UITabBarController {
 
         let items = [
             UITabBarItem(
-                title: "Tab.profile",
-                image: UIImage(named: "profile"),
+                title: "Tab.profile"~,
+                image: UIImage.ypProfileTab,
                 selectedImage: nil
             ),
             UITabBarItem(
-                title: "Tab.catalog",
-                image: UIImage(named: "catalog"),
+                title: "Tab.catalog"~,
+                image: UIImage.ypCatalogTab,
                 selectedImage: nil
             ),
             UITabBarItem(
-                title: "Tab.cart",
-                image: UIImage(named: "cart"),
+                title: "Tab.cart"~,
+                image: UIImage.ypCartTab,
                 selectedImage: nil
             ),
             UITabBarItem(
-                title: "Tab.statistics",
-                image: UIImage(named: "statistics"),
+                title: "Tab.statistics"~,
+                image: UIImage.ypStatisticsTab,
                 selectedImage: nil
             )
         ]

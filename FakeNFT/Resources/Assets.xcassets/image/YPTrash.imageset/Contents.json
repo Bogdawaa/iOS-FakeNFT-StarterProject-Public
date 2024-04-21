@@ -2,18 +2,7 @@
   "images" : [
     {
       "filename" : "Group 7.svg",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Group 7@2x.svg",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Group 7@3x.svg",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "idiom" : "universal"
     }
   ],
   "info" : {
@@ -21,7 +10,7 @@
     "version" : 1
   },
   "properties" : {
-    "compression-type" : "automatic",
+    "preserves-vector-representation" : true,
     "template-rendering-intent" : "template"
   }
 }

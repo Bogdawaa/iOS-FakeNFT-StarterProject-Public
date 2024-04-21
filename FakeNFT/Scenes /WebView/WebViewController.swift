@@ -15,7 +15,7 @@ final class WebViewController: UIViewController {
 
     private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "YPBackward"), for: .normal)
+        button.setImage(.ypBackward, for: .normal)
         button.backgroundColor = .clear
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)

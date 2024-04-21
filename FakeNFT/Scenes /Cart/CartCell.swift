@@ -19,14 +19,14 @@ final class CartCell: UITableViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         return label
     }()
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.bodyBold
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         return label
     }()
 
@@ -34,7 +34,7 @@ final class CartCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.caption2
         label.text = NSLocalizedString("Price", comment: "")
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         return label
     }()
 
@@ -47,7 +47,7 @@ final class CartCell: UITableViewCell {
 
     private lazy var deleteButton: UIButton = {
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "YPTrash"), for: .normal)
+        button.setImage(.ypTrash, for: .normal)
         button.addTarget(self, action: #selector(didDeleteButtonAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

@@ -22,14 +22,14 @@ final class PaymentCell: UICollectionViewCell {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption2
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         return label
     }()
 
     private lazy var abbreviationLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption2
-        label.textColor = UIColor(named: "YPGreen")
+        label.textColor = .ypGreenUniversal
         return label
     }()
 
@@ -52,7 +52,7 @@ final class PaymentCell: UICollectionViewCell {
     func configureCell(with currency: CurrencyModelElement) {
         nameLabel.text = currency.title
         abbreviationLabel.text = currency.id
-        let placeholderImage = UIImage(named: "YPMockImageСurrency")
+        let placeholderImage = UIImage.ypMockImageСurrency
         guard let url = URL(string: currency.image) else { return }
         currencyImageView.kf.indicator?.startAnimatingView()
         currencyImageView.kf.setImage(

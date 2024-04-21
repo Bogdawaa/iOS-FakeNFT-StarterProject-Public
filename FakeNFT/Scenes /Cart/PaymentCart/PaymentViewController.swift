@@ -33,7 +33,7 @@ final class PaymentViewController: UIViewController {
         label.textAlignment = .center
         label.font = UIFont.bodyBold
         label.text = NSLocalizedString("Select.Payment.Method", comment: "")
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -41,7 +41,7 @@ final class PaymentViewController: UIViewController {
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .clear
-        button.setImage(UIImage(named: "YPBackward"), for: .normal)
+        button.setImage(.ypBackward, for: .normal)
         button.addTarget(self, action: #selector(backButtonActions), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -61,7 +61,7 @@ final class PaymentViewController: UIViewController {
     private lazy var userAgreementLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.caption2
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         label.text = NSLocalizedString("User.agreement.info", comment: "")
         return label
     }()
@@ -73,7 +73,7 @@ final class PaymentViewController: UIViewController {
         label.isUserInteractionEnabled = true
         label.font = UIFont.caption2
         label.text = NSLocalizedString("User.agreement", comment: "")
-        label.textColor = UIColor(named: "YPBlue")
+        label.textColor = .ypBlueUniversal
         return label
     }()
 

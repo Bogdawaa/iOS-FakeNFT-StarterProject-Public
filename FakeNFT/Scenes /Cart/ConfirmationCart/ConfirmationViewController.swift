@@ -22,7 +22,7 @@ final class ConfirmationViewController: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.font = UIFont.headline4
-        label.textColor = UIColor(named: "YPBlack")
+        label.textColor = .ypBlack
         label.text = NSLocalizedString("Success.payment", comment: "")
         return label
     }()
@@ -53,9 +53,6 @@ final class ConfirmationViewController: UIViewController {
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl()
         )
-        //        let tabBarContoller = TabBarController(servicesAssembly: servicesAssembly)
-        //        tabBarContoller.modalPresentationStyle = .fullScreen
-        //        present(tabBarContoller, animated: true)
     }
 
     // MARK: - Private methods
