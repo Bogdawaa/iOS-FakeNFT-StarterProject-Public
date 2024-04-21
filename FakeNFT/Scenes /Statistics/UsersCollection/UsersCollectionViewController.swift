@@ -11,6 +11,7 @@ import Kingfisher
 final class UsersCollectionViewController: StatLoggedUIViewController {
 
     var presenter: UsersCollectionPresenterProtocol
+    internal lazy var activityIndicator = UIActivityIndicatorView()
 
     private lazy var nftCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -50,6 +51,9 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
     }
 
     private func applyConstraints() {
+        nftCollectionView.addSubview(activityIndicator)
+        activityIndicator.constraintCenters(to: nftCollectionView)
+
         view.addSubview(nftCollectionView)
         let nftCollectionViewConstraints = [
             nftCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -62,7 +66,15 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
 }
 
 extension UsersCollectionViewController: UsersCollectionViewProtocol {
-    func reloadCollectionView(indexPath: IndexPath) {
+    func loadingDataStarted() {
+        showLoading()
+    }
+
+    func loadingDataFinished() {
+        hideLoading()
+    }
+
+    func reloadCollectionView() {
         nftCollectionView.reloadData()
     }
 }
@@ -72,7 +84,10 @@ extension UsersCollectionViewController: UICollectionViewDataSource, UICollectio
         return presenter.nftsCount()
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UsersCollectionCell.defaultReuseIdentifier,
             for: indexPath

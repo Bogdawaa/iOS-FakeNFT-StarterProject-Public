@@ -7,9 +7,11 @@
 
 import UIKit
 
-protocol UsersCollectionViewProtocol: AnyObject {
+protocol UsersCollectionViewProtocol: AnyObject, ErrorView, LoadingView {
     var presenter: UsersCollectionPresenterProtocol { get set }
-    func reloadCollectionView(indexPath: IndexPath)
+    func reloadCollectionView()
+    func loadingDataStarted()
+    func loadingDataFinished()
 }
 
 protocol UsersCollectionPresenterProtocol {

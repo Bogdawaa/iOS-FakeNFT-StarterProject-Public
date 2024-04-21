@@ -16,8 +16,8 @@ protocol WebViewControllerProtocol: AnyObject {
 }
 
 protocol WebViewControllerDelegate: AnyObject {
-    func webViewController(_ vc: WebViewController, didAuthenticateWithCode code: String)
-    func webViewControllerDidCancel(_ vc: WebViewController)
+    func webViewController(_ viewController: WebViewController, didAuthenticateWithCode code: String)
+    func webViewControllerDidCancel(_ viewController: WebViewController)
 }
 
 class WebViewController: UIViewController {
