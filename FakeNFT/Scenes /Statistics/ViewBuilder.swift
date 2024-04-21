@@ -45,4 +45,11 @@ final class ViewBuilder: Builder {
         userCardViewController.presenter.view = userCardViewController
         return userCardViewController
     }
+
+    static func buildCollectionNft(with user: User) -> UIViewController {
+        let usersCollectionNftViewController = DIContainer().usersCollectionNftController()
+        usersCollectionNftViewController.presenter.view = usersCollectionNftViewController
+        usersCollectionNftViewController.presenter.setNftsId(nftsId: user.nfts)
+        return usersCollectionNftViewController
+    }
 }
