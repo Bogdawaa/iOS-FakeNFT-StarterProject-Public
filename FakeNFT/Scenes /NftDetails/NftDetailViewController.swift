@@ -5,7 +5,7 @@ protocol NftDetailView: AnyObject, ErrorView, LoadingView {
     func displayCells(_ cellModels: [NftDetailCellModel])
 }
 
-final class NftDetailViewController: UIViewController {
+final class NftDetailViewController: StatLoggedUIViewController {
 
     private let presenter: NftDetailPresenter
 
@@ -39,10 +39,10 @@ final class NftDetailViewController: UIViewController {
 
     // MARK: - Init
 
-    init(presenter: NftDetailPresenter) {
+    init(presenter: NftDetailPresenter, statLog: StatLog) {
         self.presenter = presenter
-        super.init(nibName: nil, bundle: nil)
-    }
+        super.init(statLog: statLog)
+   }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
