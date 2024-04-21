@@ -19,4 +19,5 @@ protocol UserCardPresenterProtocol {
     func setUser(with user: User)
     func countUserNFTS() -> Int
     func userWebsiteButtonTapped()
+    func presentNftCollectionTapped()
 }

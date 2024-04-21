@@ -14,14 +14,9 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
 
     private lazy var nftCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 108, height: 108) // TODO: ??
+        layout.itemSize = CGSize(width: 108, height: 192)
         let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
         object.register(UsersCollectionCell.self)
-        object.register(
-            UsersCollectionCellFooter.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: "Footer"
-        )
         object.translatesAutoresizingMaskIntoConstraints = false
         return object
     }()
@@ -44,8 +39,14 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
         nftCollectionView.dataSource = self
         nftCollectionView.delegate = self
 
-        navigationController?.title = "UserCard.collectionNFTTableTitle"~
+        setupUI()
         applyConstraints()
+        presenter.viewDidLoad()
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .ypWhite
+        title = "UserCard.collectionNFTTableTitle"~
     }
 
     private func applyConstraints() {
@@ -61,10 +62,12 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
 }
 
 extension UsersCollectionViewController: UsersCollectionViewProtocol {
-    // TODO:
+    func reloadCollectionView(indexPath: IndexPath) {
+        nftCollectionView.reloadData()
+    }
 }
 
-extension UsersCollectionViewController: UICollectionViewDataSource {
+extension UsersCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.nftsCount()
     }
@@ -72,31 +75,15 @@ extension UsersCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UsersCollectionCell.defaultReuseIdentifier,
-            for: indexPath) as? UsersCollectionCell else {
+            for: indexPath
+        ) as? UsersCollectionCell else {
             return UICollectionViewCell()
         }
-        // TODO: тут в массиве нфт хранятся айди нфт, нужно по ним получать массив объектов нфт.
         let nft = presenter.nftForIndex(indexPath: indexPath)
-//        let url = nft.images.first
-//        cell.nftImageView.kf.setImage(with: url)
+        let url = nft.images.first
+        cell.nftImageView.kf.setImage(with: url)
+        cell.setupData(with: nft)
         return cell
     }
-}
-
-extension UsersCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let view = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionFooter,
-            withReuseIdentifier: "Footer",
-            for: indexPath
-        ) as? UsersCollectionCellFooter else { return UICollectionReusableView() }
-
-        let nft = presenter.nftForIndex(indexPath: indexPath)
-//        view.setupFooterData(with: nft)
-        return view
-    }
-}
-
-extension UsersCollectionViewController: UICollectionViewDelegate {
 
 }
