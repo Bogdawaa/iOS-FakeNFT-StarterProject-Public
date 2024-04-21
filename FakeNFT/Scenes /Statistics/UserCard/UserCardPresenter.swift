@@ -34,8 +34,8 @@ final class UserCardPresenter: UserCardPresenterProtocol {
     }
 
     func presentNftCollectionTapped() {
-        let usersColletionViewController = diContainer.usersCollectionNftController()
-        usersColletionViewController.presenter.setNftsId(nftsId: user?.nfts ?? [])
+        guard let user else { return }
+        let usersColletionViewController = ViewBuilder.buildCollectionNft(with: user)
         view?.showView(viewController: usersColletionViewController)
     }
 
