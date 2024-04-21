@@ -49,7 +49,13 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
                     self.view?.displayUserCells(user)
                 }
             case .failure(let error):
-                self.view?.loadingDataFailed(message: error.localizedDescription)
+                let errorModel = ErrorModel(
+                    message: error.localizedDescription,
+                    actionText: "Повторить") { [weak self] in
+                        guard let self else { return }
+                        self.loadUsers(with: parametr)
+                }
+                self.view?.showError(errorModel)
             }
         }
     }

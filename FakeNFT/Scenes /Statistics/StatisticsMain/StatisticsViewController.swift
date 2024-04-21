@@ -94,10 +94,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.isUserInteractionEnabled = true
     }
 
-    func loadingDataFailed(message: String) {
-        // TODO: реализовать обработку ошибок в 3 эпике.
-    }
-
     // MARK: - private methods
     private func setupUI() {
         view.backgroundColor = .systemBackground

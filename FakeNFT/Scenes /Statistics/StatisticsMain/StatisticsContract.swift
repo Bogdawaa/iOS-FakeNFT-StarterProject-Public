@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol StatisticsViewProtocol: AnyObject {
+protocol StatisticsViewProtocol: AnyObject, ErrorView {
     var presenter: StatisticsPresenterProtocol { get set }
     func displayUserCells(_ users: [User])
     func loadingDataStarted()
     func loadingDataFinished()
-    func loadingDataFailed(message: String)
+    func showError(_ model: ErrorModel)
 }
 
 protocol StatisticsPresenterProtocol {
