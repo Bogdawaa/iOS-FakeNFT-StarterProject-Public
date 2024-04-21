@@ -57,8 +57,8 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
                 }
             case .failure(let error):
                 let errorModel = ErrorModel(
-                    message: error.localizedDescription,
-                    actionText: "Повторить") { [weak self] in
+                    message: "Error.network"~,
+                    actionText: "Error.repeat"~) { [weak self] in
                         guard let self else { return }
                         self.loadNft(with: id)
                 }

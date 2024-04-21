@@ -50,8 +50,8 @@ final class StatisticsPresenter: StatisticsPresenterProtocol {
                 }
             case .failure(let error):
                 let errorModel = ErrorModel(
-                    message: error.localizedDescription,
-                    actionText: "Повторить") { [weak self] in
+                    message: "Error.network"~,
+                    actionText: "Error.repeat"~) { [weak self] in
                         guard let self else { return }
                         self.loadUsers(with: parametr)
                 }
