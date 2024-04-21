@@ -24,27 +24,32 @@ extension SortPresenter: SortPresenterProtocol {
         let alert = UIAlertController(
             title: "Sort.Alert.Sorting"~,
             message: nil,
-            preferredStyle: .actionSheet)
+            preferredStyle: .actionSheet
+        )
         alert.view.accessibilityIdentifier = "Sort presenter"
 
         let priceAction = UIAlertAction(
             title: "Sort.Alert.Sorting"~,
-            style: .default) { _ in
+            style: .default
+        ) { _ in
                 model.completionPrice?()
         }
         let ratingAction = UIAlertAction(
             title: "Sort.Alert.Sorting"~,
-            style: .default) { _ in
+            style: .default
+        ) { _ in
                 model.completionRating?()
         }
         let nameAction = UIAlertAction(
             title: "Sort.Alert.Sorting"~,
-            style: .default) { _ in
+            style: .default
+        ) { _ in
                 model.completionName?()
         }
         let actionCancel = UIAlertAction(
             title: "Sort.Alert.Sorting"~,
-            style: .cancel) { _ in
+            style: .cancel
+        ) { _ in
                 alert.dismiss(animated: true)
         }
 

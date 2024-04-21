@@ -53,7 +53,8 @@ final class CartCell: UITableViewCell {
         return button
     }()
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override
+    func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.userInterfaceStyle == .dark {
             if let image = button.imageView?.image {
@@ -83,7 +84,8 @@ final class CartCell: UITableViewCell {
 
     // MARK: - Actions
 
-    @objc private func didDeleteButtonAction() {
+    @objc
+    private func didDeleteButtonAction() {
         guard let id = nftID, let image = imageNFTView.image else { return }
         delegate?.removingNFTsFromCart(id: id, image: image)
     }

@@ -27,9 +27,13 @@ final class CartServiceImpl: CartService {
     }
 
     func updateFromCart(id: String, nftsID: [String], completion: @escaping CartCompletion) {
-        let request = CartRequestPut(secretInjector: { request in
-            return request
-        }, id: id, nfts: nftsID)
+        let request = CartRequestPut(
+            secretInjector: { request in
+                return request
+            },
+            id: id,
+            nfts: nftsID
+        )
         networkClient.send(request: request, type: CartModel.self, onResponse: completion)
     }
 

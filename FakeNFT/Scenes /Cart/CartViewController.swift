@@ -48,7 +48,8 @@ final class CartViewController: UIViewController {
         return button
     }()
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override
+    func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.userInterfaceStyle == .dark {
             sortButton.tintColor = UIColor.white
@@ -220,7 +221,8 @@ final class CartViewController: UIViewController {
         configConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override
+    func viewWillAppear(_ animated: Bool) {
         viewModel.updateCart()
     }
 
@@ -243,7 +245,8 @@ final class CartViewController: UIViewController {
 // MARK: - Actions
 
 extension CartViewController {
-    @objc private func paymentButtonActions() {
+    @objc
+    private func paymentButtonActions() {
         let defaultNetworkClient = DefaultNetworkClient()
         let serviceCurrency = CurrencyServiceImpl(networkClient: defaultNetworkClient)
         let serviceOrder = OrderServiceImpl(networkClient: defaultNetworkClient)
@@ -258,24 +261,28 @@ extension CartViewController {
         present(paymentViewController, animated: true)
     }
 
-    @objc private func sortButtonActions() {
+    @objc
+    private func sortButtonActions() {
         showSortAlert()
     }
 
-    @objc private func refreshData(_ sender: Any) {
+    @objc
+    private func refreshData(_ sender: Any) {
         viewModel.updateCart()
         DispatchQueue.main.async {
             self.refreshControl.endRefreshing()
         }
     }
 
-    @objc private func deleteButtonAction() {
+    @objc
+    private func deleteButtonAction() {
         blurView.isHidden = true
         guard let id = idNFT else { return }
         viewModel.removeItemFromCart(idNFT: id)
     }
 
-    @objc private func cancelButtonAction() {
+    @objc
+    private func cancelButtonAction() {
         blurView.isHidden = true
     }
 }
@@ -309,7 +316,8 @@ extension CartViewController {
                 guard let self else { return }
                 ProgressHUD.show(interaction: false)
                 self.viewModel.updateCart()
-            })
+            }
+        )
         alertPresenter?.showAlert(with: alert)
     }
 

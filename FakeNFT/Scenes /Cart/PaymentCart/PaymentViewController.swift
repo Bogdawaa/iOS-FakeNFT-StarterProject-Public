@@ -162,18 +162,21 @@ final class PaymentViewController: UIViewController {
 
     // MARK: - Actions
 
-    @objc private func backButtonActions() {
+    @objc
+    private func backButtonActions() {
         dismiss(animated: true)
     }
 
-    @objc private func linkAction() {
+    @objc
+    private func linkAction() {
         guard let url = URL(string: link) else { return }
         let webView = WebViewController(link: url)
         webView.modalPresentationStyle = .fullScreen
         present(webView, animated: true)
     }
 
-    @objc private func payAction() {
+    @objc
+    private func payAction() {
         cartPaymentAction()
     }
 
@@ -201,7 +204,8 @@ final class PaymentViewController: UIViewController {
                 } else {
                     self.viewModel.loadCurrencies()
                 }
-            })
+            }
+        )
         alertPresenter?.showAlert(with: alert)
     }
 

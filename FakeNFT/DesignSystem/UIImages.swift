@@ -18,5 +18,6 @@ extension UIImage {
     static let ypEmptyStar = UIImage(named: "YPEmptyStar") ?? UIImage()
     static let ypMockImageСurrency = UIImage(named: "YPMockImageСurrency") ?? UIImage()
     static let ypSort = UIImage(named: "YPSort") ?? UIImage()
+    static let ypPaymentSuccess = UIImage(named: "YPPaymentSuccess") ?? UIImage()
 }
 // swiftlint:enable object_literal

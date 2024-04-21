@@ -52,7 +52,8 @@ final class WebViewController: UIViewController {
 
     // MARK: - Actions
 
-    @objc private func backButtonAction() {
+    @objc
+    private func backButtonAction() {
         ProgressHUD.dismiss()
         dismiss(animated: true)
     }

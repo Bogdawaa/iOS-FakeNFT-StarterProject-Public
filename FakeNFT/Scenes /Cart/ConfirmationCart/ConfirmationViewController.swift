@@ -12,7 +12,7 @@ final class ConfirmationViewController: UIViewController {
     // MARK: - UiElements
 
     private lazy var successImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "YPPaymentSuccess"))
+        let imageView = UIImageView(image: .ypPaymentSuccess)
         imageView.backgroundColor = .clear
         return imageView
     }()
@@ -48,7 +48,8 @@ final class ConfirmationViewController: UIViewController {
 
     // MARK: - Actions
 
-    @objc private func completedAction() {
+    @objc
+    private func completedAction() {
         let servicesAssembly = ServicesAssembly(
             networkClient: DefaultNetworkClient(),
             nftStorage: NftStorageImpl()

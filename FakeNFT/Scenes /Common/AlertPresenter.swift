@@ -24,7 +24,8 @@ extension AlertPresenter: AlertPresenterProtocol {
         let alert = UIAlertController(
             title: model.title,
             message: nil,
-            preferredStyle: .alert)
+            preferredStyle: .alert
+        )
         alert.view.accessibilityIdentifier = "Alert presenter"
 
         let actionCancel = UIAlertAction(title: model.buttonTextCancel, style: .default) { _ in
