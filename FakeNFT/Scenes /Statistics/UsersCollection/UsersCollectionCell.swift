@@ -8,9 +8,8 @@
 import UIKit
 
 final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
-//    static let identifier = "usersCollectionCellIdentifier"
 
-    private lazy var nftImageView: UIImageView = {
+    lazy var nftImageView: UIImageView = {
         let object = UIImageView()
         object.layer.masksToBounds = true
         object.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +34,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func applyConstaints() {
+    private func applyConstaints() {
         let nftImageViewConstraints = [
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             nftImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -50,30 +49,4 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         NSLayoutConstraint.activate(nftImageViewConstraints)
         NSLayoutConstraint.activate(nftFaVouriteButtonConstraints)
     }
-}
-
-class UsersCollectionCellFooter: UICollectionViewCell {
-    private lazy var nftRatingImageView: UIImageView = {
-        let object = UIImageView()
-        object.translatesAutoresizingMaskIntoConstraints = false
-        return object
-    }()
-
-    private lazy var nftNameLabel: UILabel = {
-        let object = UILabel()
-        object.translatesAutoresizingMaskIntoConstraints = false
-        return object
-    }()
-
-    private lazy var nftPriceLabel: UILabel = {
-        let object = UILabel()
-        object.translatesAutoresizingMaskIntoConstraints = false
-        return object
-    }()
-
-    private lazy var cartButton: UIButton = {
-        let object = UIButton()
-        object.translatesAutoresizingMaskIntoConstraints = false
-        return object
-    }()
 }

@@ -32,6 +32,13 @@ final class UserCardPresenter: UserCardPresenterProtocol {
         view?.showView(viewController: webView)
     }
 
+//    func presentNftCollectionTapped() {
+//        let usersColletionViewPresenter = UsersCollectionPresenter(nfts: user?.nfts ?? [])
+//        let usersColletionViewController = UsersCollectionViewController(
+//            presenter: <#T##any UsersCollectionPresenterProtocol#>,
+//            statlog: <#T##any StatLog#>)
+//    }
+
     private func setViewModel(user: User) -> User {
         let userViewModel = User(
             id: user.id,
