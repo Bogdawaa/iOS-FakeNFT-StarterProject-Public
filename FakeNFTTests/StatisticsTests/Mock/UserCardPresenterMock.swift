@@ -15,6 +15,7 @@ class UserCardPresenterMock: UserCardPresenterProtocol {
     var setUserCalled = false
     var countUserCalled = false
     var userWebsiteButtonTappedCalled = false
+    var presentNftCollectionTappedCalled = false
 
     
     func viewDidLoad() {
@@ -34,5 +35,8 @@ class UserCardPresenterMock: UserCardPresenterProtocol {
         userWebsiteButtonTappedCalled = true
     }
     
+    func presentNftCollectionTapped() {
+        presentNftCollectionTappedCalled
+    }
     
 }
