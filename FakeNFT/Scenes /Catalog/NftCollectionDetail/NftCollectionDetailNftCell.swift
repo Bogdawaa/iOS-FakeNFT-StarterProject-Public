@@ -54,9 +54,8 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         view.textColor = .ypBlack
-        view.textAlignment = .left
 
         return view
     }()
@@ -65,9 +64,8 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.font = UIFont.systemFont(ofSize: 10, weight: .medium)
         view.textColor = .ypBlack
-        view.textAlignment = .left
 
         return view
     }()
@@ -89,6 +87,8 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
 
         view.axis = .vertical
+        view.alignment = .leading
+        view.spacing = 4
 
         return view
     }()
@@ -135,6 +135,7 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
     func initData(nft: Nft) {
         image.kf.setImage(with: nft.imagesURL[0])
         likeImage.image = .ypLikeWhire
+        cartImage.image = .ypCartAdd
         stars.arrangedSubviews.enumerated().forEach { item in
             guard let view = item.element as? UIImageView else { return }
             view.image = Int(nft.price) > item.offset ? .ypStarYellow : .ypStarGray

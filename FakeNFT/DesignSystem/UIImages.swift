@@ -10,8 +10,10 @@ extension UIImage {
     static let ypClose = UIImage(named: "close") ?? UIImage()
 
     static let ypStar = UIImage(named: "star") ?? UIImage()
-    static let ypCartAdd = UIImage(named: "cartAdd") ?? UIImage()
-    static let ypCartRemove = UIImage(named: "cartRemove") ?? UIImage()
+    static let ypCartAdd = (UIImage(named: "cartAdd") ?? UIImage())
+        .withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+    static let ypCartRemove = (UIImage(named: "cartRemove") ?? UIImage())
+        .withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
     static let ypSort = UIImage(named: "sort") ?? UIImage()
 
     static let ypStarYellow = (UIImage(named: "star") ?? UIImage())
