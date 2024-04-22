@@ -6,8 +6,21 @@
 //
 import UIKit
 import Foundation
+import ProgressHUD
 
-final class MyNFTViewController: UIViewController {
+final class MyNFTViewController: StatLoggedUIViewController {
+    // MARK: - presenter
+    private let presenter: MyNFTPresenterProtocol
+    // MARK: - private properties
+    private var isLoadingSwitch = false {
+        didSet {
+            if isLoadingSwitch == true {
+                navigationController?.navigationItem.rightBarButtonItem?.isEnabled = false
+            } else {
+                navigationController?.navigationItem.rightBarButtonItem?.isEnabled = true
+            }
+        }
+    }
     // MARK: - UI
     private lazy var nftTableView: UITableView = {
         let tableView = UITableView()
@@ -25,9 +38,19 @@ final class MyNFTViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .bodyBold
         label.text = "Profile.MyNFT.Empty"~
+        label.isHidden = true
         view.addSubview(label)
         return label
     }()
+    // MARK: - INIT
+    init(statLog: StatLog, presenter: MyNFTPresenterProtocol) {
+        self.presenter = presenter
+        super.init(statLog: statLog)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +59,13 @@ final class MyNFTViewController: UIViewController {
         constraitsNftTableView()
         setupGestureRecognizers()
         constraitsNftEmptyLabel()
+        presenter.viewDidLoad()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
         nftEmptyLabel.isHidden = true
     }
     // MARK: - GESTURE SETTING
@@ -46,42 +76,34 @@ final class MyNFTViewController: UIViewController {
     }
     // MARK: - NAV BAR SETUP
     private func navBarSetup() {
-        if let navBar = navigationController?.navigationBar {
-
-            let leftButton = UIBarButtonItem(
-                image: UIImage(systemName: "chevron.left"),
-                style: .plain,
-                target: self,
-                action: #selector(self.dismissButtonClicked)
-            )
-            leftButton.tintColor = .ypBlack
-            navigationItem.leftBarButtonItem = leftButton
-
-            let test = UILabel()
-            test.text = "Profile.MyNFT.Title"~
-            test.font = .bodyBold
-            navBar.topItem?.titleView = test
-
-            let rightButton = UIBarButtonItem(
-                image: .ypSortButton,
-                style: .plain,
-                target: self,
-                action: #selector(self.sortButtonClicked)
-            )
-            rightButton.tintColor = .ypBlack
-            navigationItem.rightBarButtonItem = rightButton
-        }
+        let leftButton = UIBarButtonItem(
+            image: .ypChevronLeft,
+            style: .plain,
+            target: self,
+            action: #selector(self.dismissButtonClicked)
+        )
+        let rightButton = UIBarButtonItem(
+            image: .ypSortButton,
+            style: .plain,
+            target: self,
+            action: #selector(self.sortButtonClicked)
+        )
+        leftButton.tintColor = .ypBlack
+        rightButton.tintColor = .ypBlack
+        navigationItem.title = "Profile.MyNFT.Title"~
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
     }
     // MARK: - Configure Sort Menu
     func configureSortMenu() {
         let priceSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByPrice"~, style: .default) { _ in
-            // todo
+            self.presenter.sortByPrice()
         }
         let ratingSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByRating"~, style: .default) { _ in
-            // todo
+            self.presenter.sortByRating()
         }
         let namegSortItem = UIAlertAction(title: "Profile.MyNFT.Sort.ByName"~, style: .default) { _ in
-            // todo
+            self.presenter.sortByName()
         }
         let cancelAction = UIAlertAction(title: "Profile.MyNFT.Sort.Close"~, style: .cancel)
         let alert = UIAlertController(title: "Profile.MyNFT.Sort.Title"~, message: nil, preferredStyle: .actionSheet)
@@ -94,12 +116,16 @@ final class MyNFTViewController: UIViewController {
     // MARK: - OBJC
     @objc
     func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
+        presenter.delegate?.updateProfile()
     }
+
     @objc
     func dismissButtonClicked() {
-        self.dismiss(animated: true)
+        self.navigationController?.popViewController(animated: true)
+        presenter.delegate?.updateProfile()
     }
+
     @objc
     func sortButtonClicked() {
         configureSortMenu()
@@ -127,7 +153,8 @@ extension MyNFTViewController: UITableViewDelegate {
 // MARK: - UITableViewDataSource
 extension MyNFTViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        3
+        guard let myNftCount = presenter.getMyNft()?.count else { return 0 }
+        return myNftCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
@@ -137,6 +164,65 @@ extension MyNFTViewController: UITableViewDataSource {
         else {
             return UITableViewCell()
         }
+        guard let nftSetting = presenter.getMyNft()?[indexPath.row] else { return cell}
+        let isLiked = presenter.getLikedNftId().contains(where: {
+            $0 == nftSetting.id
+        })
+        cell.configure(
+            nftImageURL: nftSetting.images.first,
+            nftTitle: nftSetting.name,
+            nftPrice: nftSetting.price,
+            nftAuthor: nftSetting.author,
+            nftRatingStars: nftSetting.rating,
+            nftIsLiked: isLiked,
+            nftId: nftSetting.id
+        )
+        cell.delegate = self
         return cell
+    }
+}
+// MARK: - MyNFTViewProtocol
+extension MyNFTViewController: MyNFTViewProtocol {
+    func setProfileDelegate(delegate: ProfileViewControllerUpdateNftDelegate) {
+        presenter.setProfileDelegate(delegate: delegate)
+    }
+
+    func displayMyNft(_ nft: [Nft]) {
+        nftTableView.reloadData()
+    }
+
+    func loadingDataStarted() {
+        ProgressHUD.show()
+        isLoadingSwitch = true
+    }
+
+    func loadingDataFinished() {
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
+
+    func setNftId(nftId: [String]) {
+        presenter.setNftId(nftId: nftId)
+    }
+
+    func setLikedNftId(nftId: [String]) {
+        presenter.setLikedNftId(nftId: nftId)
+    }
+}
+// MARK: - MyNFTTableCellDelegate
+extension MyNFTViewController: MyNFTTableCellDelegate {
+    func setLike(nftId: String) {
+        var likedNft = presenter.getLikedNftId()
+        likedNft.append(nftId)
+        presenter.updateFavoriteNft(nftIds: likedNft)
+
+    }
+
+    func removeLike(nftId: String) {
+        var likedNft = presenter.getLikedNftId()
+        likedNft.removeAll(where: {
+            $0 == nftId
+        })
+        presenter.updateFavoriteNft(nftIds: likedNft)
     }
 }

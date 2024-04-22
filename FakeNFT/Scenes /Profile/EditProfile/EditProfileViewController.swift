@@ -7,12 +7,19 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
-final class EditProfileViewController: UIViewController {
+protocol EditProfileViewControllerDelegate: AnyObject, ProfileViewControllerUpdateNftDelegate {
+    func getEditProfileModel() -> EditProfile?
+}
+
+final class EditProfileViewController: StatLoggedUIViewController {
+    // MARK: - PRESENTER
+    private var presenter: EditProfilePresenterProtocol
     // MARK: - UI
     private lazy var editProfilecloseButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.setImage(.ypXmark, for: .normal)
         button.tintColor = .ypBlack
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(closeButtonDidClicked), for: .touchUpInside)
@@ -37,7 +44,13 @@ final class EditProfileViewController: UIViewController {
         label.numberOfLines = 2
         label.text = "Profile.Edit.Change.Avatar.Title"~
         label.translatesAutoresizingMaskIntoConstraints = false
-        editProfileImageView.addSubview(label)
+        let action = UITapGestureRecognizer(
+            target: self,
+            action: #selector(changeImageDidTap(_:))
+        )
+        label.addGestureRecognizer(action)
+        label.isUserInteractionEnabled = true
+        view.addSubview(label)
         return label
     }()
     private lazy var editProfileNameLabel: UILabel = {
@@ -45,6 +58,15 @@ final class EditProfileViewController: UIViewController {
         label.font = .headline3
         label.text = "Profile.Edit.NameTitle"~
         label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
+        return label
+    }()
+    private lazy var editProfileLoadAvatarLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bodyRegular
+        label.text = "Profile.Edit.ChangeImageLabel"~
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
         view.addSubview(label)
         return label
     }()
@@ -105,6 +127,11 @@ final class EditProfileViewController: UIViewController {
     }()
     // MARK: - PRIVATE
     private var activeTextField: UITextField?
+    // MARK: - INIT
+    init(statLog: StatLog, presenter: EditProfilePresenter) {
+        self.presenter = presenter
+        super.init(statLog: statLog)
+    }
     // MARK: - LIFECYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,12 +139,12 @@ final class EditProfileViewController: UIViewController {
         constraitsEditProfilecloseButton()
         constraitsEditProfileImageView()
         constraitsEditProfileNameLabel()
+        constraitsEditProfileLoadAvatarLabel()
         constraitsEditProfileNameTextField()
         constraitsEditProfileCaptionLabel()
         constraitsEditProfileCaptionTextView()
         constraitsEditProfileWebsiteLabel()
         cosntraitsEditProfileWebsiteTextField()
-        mockSetup()
         NotificationCenter
             .default
             .addObserver(
@@ -135,41 +162,37 @@ final class EditProfileViewController: UIViewController {
                 object: nil
             )
         cancelKeyboardGestureSetup()
+        setData()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        let test = EditProfile(
+            name: editProfileNameTextField.text ?? "",
+            avatar: presenter.getAvatarUrl(),
+            description: editProfileCaptionTextView.text ?? "",
+            website: editProfileWebsiteTextField.text ?? ""
+        )
+        presenter.updateProfile(editProfileModel: test)
+        super.viewWillDisappear(animated)
+    }
+    // MARK: - private
+    private func setData() {
+        if let editProfileModel = presenter.delegate?.getEditProfileModel() {
+            let url = URL(string: editProfileModel.avatar)
+            presenter.setAvatarUrl(avatarUrl: editProfileModel.avatar)
+            editProfileImageView.kf.setImage(
+                with: url
+            )
+            editProfileNameTextField.text = editProfileModel.name
+            editProfileCaptionTextView.text = editProfileModel.description
+            editProfileWebsiteTextField.text = editProfileModel.website
+        }
     }
     // MARK: - OBJC
-    @objc
-    func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (
-            notification
-                .userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
-            as? NSValue
-        )?.cgRectValue else {
-            return
-        }
-        var shouldMoveViewUp = false
-        if let activeTextField {
-
-            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
-            let topOfKeyboard = self.view.frame.height - keyboardSize.height
-            if bottomOfTextField > topOfKeyboard {
-                shouldMoveViewUp = true
-            }
-        }
-        if shouldMoveViewUp {
-            self.view.frame.origin.y = 0 - keyboardSize.height
-        }
-    }
     @objc
     func keyboardWillHide(notification: NSNotification) {
         self.view.frame.origin.y = 0
     }
     // MARK: - PRIVATE
-    private func mockSetup() {
-        editProfileImageView.image = .ypProfileImage
-        editProfileNameTextField.text = "Joaquin Phoenix"
-        editProfileCaptionTextView.text = "Дизайнер из Казани, люблю цифровое искусство и бейглы. В моей коллекции уже 100+ NFT, и еще больше — на моём сайте. Открыт к коллаборациям."
-        editProfileWebsiteTextField.text = "Joaquin Phoenix.com"
-    }
     private func cancelKeyboardGestureSetup() {
         let tapGesture = UITapGestureRecognizer(
             target: self,
@@ -183,12 +206,6 @@ final class EditProfileViewController: UIViewController {
     private func closeButtonDidClicked(_ sender: UIButton) {
         self.dismiss(animated: true)
     }
-    @objc
-    private func hideKeyboard() {
-        self.editProfileNameTextField.endEditing(true)
-        self.editProfileWebsiteTextField.endEditing(true)
-        self.editProfileCaptionTextView.endEditing(true)
-    }
     // MARK: - CONSTRAITS
     private func constraitsEditProfilecloseButton() {
         NSLayoutConstraint.activate([
@@ -201,6 +218,7 @@ final class EditProfileViewController: UIViewController {
             editProfilecloseButton.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
+
     private func constraitsEditProfileImageView() {
         NSLayoutConstraint.activate([
             editProfileImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -211,6 +229,7 @@ final class EditProfileViewController: UIViewController {
             editProfileChangeAvatarLabel.centerYAnchor.constraint(equalTo: editProfileImageView.centerYAnchor)
         ])
     }
+
     private func constraitsEditProfileNameLabel() {
         NSLayoutConstraint.activate([
             editProfileNameLabel.leadingAnchor.constraint(
@@ -220,6 +239,14 @@ final class EditProfileViewController: UIViewController {
             editProfileNameLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 28)
         ])
     }
+
+    private func constraitsEditProfileLoadAvatarLabel() {
+        NSLayoutConstraint.activate([
+            editProfileLoadAvatarLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            editProfileLoadAvatarLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 15)
+        ])
+    }
+
     private func constraitsEditProfileNameTextField() {
         NSLayoutConstraint.activate([
             editProfileNameTextField.leadingAnchor.constraint(equalTo: editProfileNameLabel.leadingAnchor),
@@ -231,12 +258,14 @@ final class EditProfileViewController: UIViewController {
             editProfileNameTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
     private func constraitsEditProfileCaptionLabel() {
         NSLayoutConstraint.activate([
             editProfileCaptionLabel.leadingAnchor.constraint(equalTo: editProfileNameTextField.leadingAnchor),
             editProfileCaptionLabel.topAnchor.constraint(equalTo: editProfileNameTextField.bottomAnchor, constant: 24)
         ])
     }
+
     private func constraitsEditProfileCaptionTextView() {
         NSLayoutConstraint.activate([
             editProfileCaptionTextView.leadingAnchor.constraint(equalTo: editProfileCaptionLabel.leadingAnchor),
@@ -248,12 +277,14 @@ final class EditProfileViewController: UIViewController {
             editProfileCaptionTextView.heightAnchor.constraint(equalToConstant: 132)
         ])
     }
+
     private func constraitsEditProfileWebsiteLabel() {
         NSLayoutConstraint.activate([
             editProfileWebsiteLabel.leadingAnchor.constraint(equalTo: editProfileCaptionTextView.leadingAnchor),
             editProfileWebsiteLabel.topAnchor.constraint(equalTo: editProfileCaptionTextView.bottomAnchor, constant: 28)
         ])
     }
+
     private func cosntraitsEditProfileWebsiteTextField() {
         NSLayoutConstraint.activate([
             editProfileWebsiteTextField.leadingAnchor.constraint(equalTo: editProfileWebsiteLabel.leadingAnchor),
@@ -282,6 +313,7 @@ final class EditProfileViewController: UIViewController {
             editProfileWebsiteTextField.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
+
     private func constraitsEditProfileWebsiteLabelInEditing() {
         editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
         editProfileWebsiteLabel.removeConstraints(editProfileWebsiteLabel.constraints)
@@ -299,7 +331,6 @@ final class EditProfileViewController: UIViewController {
             ),
             editProfileWebsiteLabel.topAnchor.constraint(equalTo: editProfileImageView.bottomAnchor, constant: 28)
         ])
-
     }
 }
 // MARK: - UITextFieldDelegate
@@ -309,18 +340,22 @@ extension EditProfileViewController: UITextFieldDelegate {
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        if (textField.text?.count ?? 0) + (string.count - range.length) >= 38 {
+        if (textField.text?.count ?? 0) + (string.count - range.length) >= 50 {
             return false
         }
         return true
     }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.activeTextField = textField
+
     }
+
     func textFieldDidEndEditing(_ textField: UITextField) {
         self.activeTextField = nil
     }
@@ -329,6 +364,16 @@ extension EditProfileViewController: UITextFieldDelegate {
 extension EditProfileViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         return textView.text.count + (text.count - range.length) <= 200
+    }
+}
+// MARK: - EditProfileViewProtocol
+extension EditProfileViewController: EditProfileViewProtocol {
+    func setDelegate(delegate: EditProfileViewControllerDelegate) {
+        presenter.delegate = delegate
+    }
+
+    func setProfile() {
+        presenter.delegate?.updateProfile()
     }
 }
 // MARK: - UIView extension
@@ -341,5 +386,97 @@ extension UIView {
         overlay.backgroundColor = color
         overlay.alpha = alpha
         addSubview(overlay)
+    }
+}
+// MARK: - change avatar alert
+extension EditProfileViewController {
+    private func validateURLFormat(urlString: String?) -> Bool {
+        guard
+            let urlString,
+            let url = NSURL(string: urlString) else { return false }
+        return UIApplication.shared.canOpenURL(url as URL)
+    }
+
+    @objc
+    func changeImageDidTap(_ sender: UITapGestureRecognizer) {
+      //  loadAvatarLabel.isHidden = false
+        editProfileLoadAvatarLabel.isHidden = false
+        let alert = UIAlertController(
+            title: "Profile.Edit.ChangeImageAlert.title"~,
+            message: "Profile.Edit.ChangeImageAlert.message"~,
+            preferredStyle: .alert
+        )
+        alert.addTextField { textField in
+            textField.placeholder = "Profile.Edit.ChangeImageAlert.placeholder"~
+        }
+        alert.addAction(
+            UIAlertAction(
+                title: "Profile.Edit.ChangeImageAlert.ok"~,
+                style: .default
+            ) { [weak self] _ in
+                    guard
+                    let self,
+                    let textField = alert.textFields?[0],
+                    let urlString = textField.text
+                else { return }
+                if validateURLFormat(urlString: urlString) {
+                    presenter.setAvatarUrl(avatarUrl: urlString)
+                    let url = URL(string: urlString)
+                    editProfileImageView.kf.setImage(
+                        with: url
+                    )
+                } else {
+                    let wrongURL = UIAlertController(
+                        title: "Profile.Edit.ChangeImageAlert.Error"~,
+                        message: "Profile.Edit.ChangeImageAlert.Error.Message"~,
+                        preferredStyle: .alert
+                    )
+                    wrongURL.addAction(
+                        UIAlertAction(
+                            title: "Profile.Edit.ChangeImageAlert.ok"~,
+                            style: .cancel
+                        ) { _ in
+                            wrongURL.dismiss(animated: true)
+                        }
+                    )
+                    self.present(wrongURL, animated: true)
+                }
+                alert.dismiss(animated: true)
+                editProfileLoadAvatarLabel.isHidden = true
+            }
+        )
+        self.present(alert, animated: true)
+    }
+}
+// MARK: - KEYBOARD SETUP
+extension EditProfileViewController {
+    @objc
+    private func hideKeyboard() {
+        self.editProfileNameTextField.endEditing(true)
+        self.editProfileWebsiteTextField.endEditing(true)
+        self.editProfileCaptionTextView.endEditing(true)
+    }
+
+    @objc
+    func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (
+            notification
+                .userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+            as? NSValue
+        )?.cgRectValue else {
+            return
+        }
+        var shouldMoveViewUp = false
+        if let activeTextField {
+
+            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY
+            let topOfKeyboard = self.view.frame.height - keyboardSize.height
+            if bottomOfTextField > topOfKeyboard {
+                shouldMoveViewUp = true
+            }
+        }
+        if shouldMoveViewUp {
+            self.view.frame.origin.y = 0 - keyboardSize.height
+        }
     }
 }

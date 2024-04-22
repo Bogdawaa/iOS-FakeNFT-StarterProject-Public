@@ -18,3 +18,21 @@ final class ServicesAssembly {
         self.nftStorage = nftStorage
     }
 }
+
+final class ProfileServicesAssembly {
+    private let networkClient: NetworkClient
+    private let profileStorage: ProfileStorage
+
+    var profileService: ProfileService {
+        ProfileServiceImpl(
+            networkClient: networkClient,
+            storage: profileStorage)
+    }
+    init(
+        networkClient: NetworkClient,
+        profileStorage: ProfileStorage
+    ) {
+        self.networkClient = networkClient
+        self.profileStorage = profileStorage
+    }
+}

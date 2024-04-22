@@ -22,11 +22,19 @@
 "Profile.MyNFT.Sort.ByName" = "По названию";
 "Profile.MyNFT.Sort.Close" = "Закрыть";
 "Profile.MyNFT.Empty" = "У вас ещё нет NFT";
+"Profile.MyNFT.From" = "От ";
 "Profile.Favorites.Title" = "Избранные NFT";
 "Profile.Edit.Change.Avatar.Title" = "Сменить \nфото";
 "Profile.Edit.NameTitle" = "Имя";
 "Profile.Edit.CaptionTitle" = "Описание";
 "Profile.Edit.WebsiteTitle" = "Сайт";
+"Profile.Edit.ChangeImageLabel" = "Загрузить изображение";
+"Profile.Edit.ChangeImageAlert.title" = "Замена Аватарки";
+"Profile.Edit.ChangeImageAlert.message" = "Введите ссылку на картинку";
+"Profile.Edit.ChangeImageAlert.placeholder" = "Ссылка на картинку";
+"Profile.Edit.ChangeImageAlert.ok" = "Ок";
+"Profile.Edit.ChangeImageAlert.Error" = "Ошибка";
+"Profile.Edit.ChangeImageAlert.Error.Message" = "Ссылка введена неверно";
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
 

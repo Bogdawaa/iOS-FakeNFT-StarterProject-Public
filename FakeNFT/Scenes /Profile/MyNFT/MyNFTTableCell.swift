@@ -7,10 +7,17 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
+protocol MyNFTTableCellDelegate: AnyObject {
+    func setLike(nftId: String)
+    func removeLike(nftId: String)
+}
 final class MyNFTTableCell: UITableViewCell {
     // MARK: - IDENTIFIER
     static let identifier = "myNftTableCell"
+    // MARK: - DELEGATE
+    weak var delegate: MyNFTTableCellDelegate?
     // MARK: - UI
     private lazy var nftImageView: UIImageView = {
         let imageView = UIImageView()
@@ -54,21 +61,27 @@ final class MyNFTTableCell: UITableViewCell {
         contentView.addSubview(imageView)
         return imageView
     }()
-    private lazy var nftHeartImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "suit.heart.fill")
-        imageView.tintColor = .ypWhiteUniversal
-        nftImageView.addSubview(imageView)
-        return imageView
+    private lazy var nftHeartButton: UIButton = {
+        let button = UIButton.systemButton(
+            with: .ypSuitHeartFill,
+            target: self,
+            action: #selector(didTapHeartButton)
+        )
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .ypWhiteUniversal
+        contentView.addSubview(button)
+        return button
     }()
+    // MARK: - private
+    private var isLiked = false
+    private var nftId: String = ""
     // MARK: - INITIALIZERS
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         NSLayoutConstraint.activate([contentView.heightAnchor.constraint(equalToConstant: 140)])
         contentView.backgroundColor = .ypWhite
         constraitsNftImageView()
-        constraitsNftHeartImageView()
+        constraitsNftHeartButton()
         constraitsNftTitleLabel()
         constraitsNftRatingImageView()
         constraitsNftAuthorLabel()
@@ -79,6 +92,44 @@ final class MyNFTTableCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    // MARK: - public configure
+    func configure(
+        nftImageURL: URL?,
+        nftTitle: String,
+        nftPrice: Float,
+        nftAuthor: String,
+        nftRatingStars: Int,
+        nftIsLiked: Bool,
+        nftId: String
+    ) {
+        self.nftId = nftId
+        self.isLiked = nftIsLiked
+        nftHeartButton.tintColor = nftIsLiked ? .ypRedUniversal : .ypWhiteUniversal
+        self.nftTitleLabel.text = nftTitle
+        self.nftPriceLabel.text = String(nftPrice).replacingOccurrences(of: ".", with: ",") + " ETH"
+        self.nftAuthorLabel.text = "Profile.MyNFT.From"~ + nftAuthor
+        if let url = nftImageURL {
+            nftImageView.kf.setImage(
+                with: url
+            )
+        }
+        switch nftRatingStars {
+        case 0:
+            nftRatingImageView.image = .ypProfileNftRatingImage0
+        case 1:
+            nftRatingImageView.image = .ypProfileNftRatingImage1
+        case 2:
+            nftRatingImageView.image = .ypProfileNftRatingImage2
+        case 3:
+            nftRatingImageView.image = .ypProfileNftRatingImage3
+        case 4:
+            nftRatingImageView.image = .ypProfileNftRatingImage4
+        case 5:
+            nftRatingImageView.image = .ypProfileNftRatingImage5
+        default:
+            break
+        }
+    }
     // MARK: - MOCK SETUP
     private func mockSetup() {
         nftPriceLabel.text = "1,78 ETH"
@@ -86,7 +137,19 @@ final class MyNFTTableCell: UITableViewCell {
         nftTitleLabel.text = "Amogus"
         nftAuthorLabel.text = "от John Doe"
         nftImageView.image = .ypProfileNftMockImage
-        nftRatingImageView.image = .ypProfileNftMockRatingImage
+        nftRatingImageView.image = .ypProfileNftRatingImage3
+    }
+    // MARK: - OBJC
+    @objc
+    private func didTapHeartButton(_ sender: UIButton) {
+        isLiked.toggle()
+        if isLiked {
+            nftHeartButton.tintColor = .ypRedUniversal
+            delegate?.setLike(nftId: nftId)
+        } else {
+            nftHeartButton.tintColor = .ypWhiteUniversal
+            delegate?.removeLike(nftId: nftId)
+        }
     }
     // MARK: - CONSTRAITS
     private func constraitsNftImageView() {
@@ -97,10 +160,10 @@ final class MyNFTTableCell: UITableViewCell {
             nftImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16)
         ])
     }
-    private func constraitsNftHeartImageView() {
+    private func constraitsNftHeartButton() {
         NSLayoutConstraint.activate([
-            nftHeartImageView.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12),
-            nftHeartImageView.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12)
+            nftHeartButton.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 12),
+            nftHeartButton.trailingAnchor.constraint(equalTo: nftImageView.trailingAnchor, constant: -12)
         ])
     }
     private func constraitsNftTitleLabel() {
@@ -125,7 +188,7 @@ final class MyNFTTableCell: UITableViewCell {
     }
     private func constraitsNftPriceTitleLabel() {
         NSLayoutConstraint.activate([
-            nftPriceTitleLabel.leadingAnchor.constraint(equalTo: nftRatingImageView.trailingAnchor, constant: 39),
+            nftPriceTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -81),
             nftPriceTitleLabel.topAnchor.constraint(equalTo: nftImageView.topAnchor, constant: 33)
         ])
     }

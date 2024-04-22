@@ -7,16 +7,38 @@
 
 import Foundation
 import UIKit
+import ProgressHUD
+import Kingfisher
+
+protocol ProfileViewControllerUpdateNftDelegate: AnyObject {
+    func updateProfile()
+}
 
 final class ProfileViewController: StatLoggedUIViewController {
+    // MARK: - presenter
+    var presenter: ProfilePresenterProtocol
+    // MARK: - private properties
+    private var isLoadingSwitch = false {
+        didSet {
+            if isLoadingSwitch == true {
+                profileTableView.allowsSelection = false
+                profileEditButton.isEnabled = false
+            } else {
+                profileTableView.allowsSelection = true
+                profileEditButton.isEnabled = true
+            }
+        }
+    }
+    private let diContainer = DIContainer()
     // MARK: - UI
-    private lazy var profileEditButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var profileEditButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            image: .ypSquareAndPencil,
+            style: .plain,
+            target: self,
+            action: #selector(profileEditButtonClicked)
+        )
         button.tintColor = .ypBlack
-        button.addTarget(self, action: #selector(profileEditButtonClicked), for: .touchDown)
-        self.view.addSubview(button)
         return button
     }()
     private lazy var profileImage: UIImageView = {
@@ -32,7 +54,6 @@ final class ProfileViewController: StatLoggedUIViewController {
     private lazy var profileNameLabel: UILabel = {
         let label = UILabel()
         label.font = .headline3
-        label.text = "Joaquin Phoenix"
         label.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(label)
         return label
@@ -42,14 +63,12 @@ final class ProfileViewController: StatLoggedUIViewController {
         textView.font = .caption1
         textView.isEditable = false
         textView.backgroundColor = .ypWhite
-        textView.text = "Дизайнер из Казани, люблю цифровое искусство  и бейглы. В моей коллекции уже 100+ NFT,  и еще больше — на моём сайте. Открыт к коллаборациям."
         textView.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(textView)
         return textView
     }()
     private lazy var profileHyperlink: UILabel = {
         let label = UILabel()
-        label.text = "Joaquin Phoenix.com"
         label.textColor = .ypBlueUniversal
         label.font = .caption2
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -69,38 +88,53 @@ final class ProfileViewController: StatLoggedUIViewController {
         self.view.addSubview(tableView)
         return tableView
     }()
+    // MARK: - init
+    init(
+        presenter: ProfilePresenterProtocol,
+        statlog: StatLog
+    ) {
+        self.presenter = presenter
+        super.init(statLog: statlog)
+    }
     // MARK: - lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .ypWhite
-        constraitsProfileEditButton()
+        setupNavigation()
         constraitsProfileImage()
         constraitsProfileNameLabel()
         constraitsProfileTextView()
         constraitsProfileHyperlink()
         constraitsProfileTableView()
+        presenter.view = self
+        presenter.viewDidLoad()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
+    func setupNavigation() {
+        navigationItem.rightBarButtonItem = profileEditButton
     }
     // MARK: - OBJC
     @objc
     private func profileEditButtonClicked(_ sender: UIButton) {
-        let view = EditProfileViewController()
-        self.present(view, animated: true)
+        guard let editProfileViewController = diContainer.editProfileViewController() as? EditProfileViewController
+        else {
+            assertionFailure("cant resolve myNftViewController")
+            return
+        }
+        editProfileViewController.setDelegate(delegate: self)
+        self.present(editProfileViewController, animated: true)
     }
     // MARK: - constraits
-    private func constraitsProfileEditButton() {
-        NSLayoutConstraint.activate([
-            profileEditButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            profileEditButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
-            profileEditButton.widthAnchor.constraint(equalToConstant: 42),
-            profileEditButton.heightAnchor.constraint(equalToConstant: 42)
-        ])
-    }
     private func constraitsProfileImage() {
         NSLayoutConstraint.activate([
             profileImage.widthAnchor.constraint(equalToConstant: 70),
             profileImage.heightAnchor.constraint(equalToConstant: 70),
             profileImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            profileImage.topAnchor.constraint(equalTo: profileEditButton.bottomAnchor, constant: 20)
+            profileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
         ])
     }
     private func constraitsProfileNameLabel() {
@@ -113,7 +147,7 @@ final class ProfileViewController: StatLoggedUIViewController {
         NSLayoutConstraint.activate([
             profileTextView.leadingAnchor.constraint(equalTo: profileImage.leadingAnchor),
             profileTextView.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 20),
-            profileTextView.trailingAnchor.constraint(equalTo: profileEditButton.trailingAnchor),
+            profileTextView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -9),
             profileTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
@@ -131,32 +165,50 @@ final class ProfileViewController: StatLoggedUIViewController {
             profileTableView.heightAnchor.constraint(equalToConstant: 162)
         ])
     }
+    private func navigateMyNftViewController() {
+        guard let myNftViewController = diContainer.myNftViewController() as? MyNFTViewController
+        else {
+            assertionFailure("cant resolve myNftViewController")
+            return
+        }
+        myNftViewController.setProfileDelegate(delegate: self)
+        myNftViewController.setNftId(nftId: presenter.getMyNftId())
+        myNftViewController.setLikedNftId(nftId: presenter.getLikedNftId())
+        myNftViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(
+            myNftViewController,
+            animated: true
+        )
 
+    }
+    private func navigateFavoritesNFTViewController() {
+        guard let favoriteNftController = diContainer.favoritesNFTViewController() as? FavoritesNFTViewController
+        else {
+            assertionFailure("cant resolve favoriteNftController")
+            return
+        }
+        favoriteNftController.setProfileDelegate(delegate: self)
+        favoriteNftController.setNftId(nftId: presenter.getLikedNftId())
+        favoriteNftController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(
+            favoriteNftController,
+            animated: true
+        )
+    }
 }
-func createProfileViewController() -> UINavigationController {
-    let myNFTViewController = MyNFTViewController()
-    return UINavigationController(rootViewController: myNFTViewController)
-}
-func createFavoritesNFTViewController() -> UINavigationController {
-    let myNFTViewController = FavoritesNFTViewController()
-    return UINavigationController(rootViewController: myNFTViewController)
-
-}
-
 // MARK: - UITableViewDelegate
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let view = createProfileViewController()
-            view.modalPresentationStyle = .fullScreen
-
-            present(view, animated: true)
+            navigateMyNftViewController()
         }
         if indexPath.row == 1 {
-            let view = createFavoritesNFTViewController()
-            view.modalPresentationStyle = .fullScreen
-
-            present(view, animated: true)
+            navigateFavoritesNFTViewController()
+        }
+        if indexPath.row == 2 {
+            let viewController = AboutDeveloperViewController()
+            viewController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -191,5 +243,43 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         3
     }
+}
+// MARK: - ProfileViewProtocol
+extension ProfileViewController: ProfileViewProtocol {
+    func displayProfile(_ profile: Profile) {
+        profileNameLabel.text = profile.name
+        profileTextView.text = profile.description
+        profileHyperlink.text = profile.website
+        let url = URL(string: profile.avatar)
+        profileImage.kf.setImage(
+            with: url
+        )
+        let indexPathMyNftCell = IndexPath(row: 0, section: 0)
+        let myNftCell = profileTableView.cellForRow(at: indexPathMyNftCell)
+        myNftCell?.textLabel?.text = "Profile.myNFT"~ + " (\(profile.nfts.count))"
 
+        let indexPathFavCell = IndexPath(row: 1, section: 0)
+        let favCell = profileTableView.cellForRow(at: indexPathFavCell)
+        favCell?.textLabel?.text = "Profile.favoritesNFT"~ + " (\(profile.likes.count))"
+    }
+    func loadingDataStarted() {
+        ProgressHUD.show()
+        isLoadingSwitch = true
+    }
+    func loadingDataFinished() {
+        ProgressHUD.dismiss()
+        isLoadingSwitch = false
+    }
+}
+// MARK: - ProfileViewControllerUpdateNftDelegate
+extension ProfileViewController: ProfileViewControllerUpdateNftDelegate {
+    func updateProfile() {
+        presenter.loadProfile()
+    }
+}
+// MARK: - EditProfileViewControllerDelegate
+extension ProfileViewController: EditProfileViewControllerDelegate {
+    func getEditProfileModel() -> EditProfile? {
+        presenter.getEditProfileModel()
+    }
 }
