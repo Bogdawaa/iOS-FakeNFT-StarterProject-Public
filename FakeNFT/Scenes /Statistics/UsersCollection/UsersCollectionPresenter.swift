@@ -14,6 +14,8 @@ class UsersCollectionPresenter {
     private(set) var nfts: [Nft] = []
     private let service: NftService
 
+    private var cart: [Nft] = []
+
     init(service: NftService) {
         self.service = service
     }
@@ -29,8 +31,8 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
     }
 
     private func loadNfts() {
-        if !nftsId.isEmpty && (nftsId.count != nftsCount()) {
-            for id in nftsId {
+        if !nftsId.isEmpty {
+            for id in nftsId where !nfts.contains(where: { $0.id == id }) {
                 loadNft(with: id)
             }
         }
@@ -55,17 +57,27 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
                     self.nfts.append(nft)
                     self.view?.reloadCollectionView()
                 }
-            case .failure(let error):
+            case .failure:
                 let errorModel = ErrorModel(
                     message: "Error.network"~,
-                    actionText: "Error.repeat"~) { [weak self] in
-                        guard let self else { return }
-                        self.loadNft(with: id)
+                    actionText: "Error.repeat"~
+                ) { [weak self] in
+                    guard let self else { return }
+                    self.loadNft(with: id)
                 }
                 DispatchQueue.main.async {
                     self.view?.showError(errorModel)
                 }
             }
+        }
+    }
+
+    func addToCart(nft: Nft) {
+        // TODO: добавить переход в корзину в 4 спринте
+        if !cart.contains(where: { $0.id == nft.id }) {
+            self.cart.append(nft)
+        } else {
+            self.cart.removeAll(where: { $0.id == nft.id })
         }
     }
 }

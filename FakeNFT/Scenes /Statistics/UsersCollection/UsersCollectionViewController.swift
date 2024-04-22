@@ -107,4 +107,11 @@ extension UsersCollectionViewController: UsersCollectionCellDelegate {
     func favouriteButtonTapped(_ cell: UsersCollectionCell) {
         cell.changeFavouriteButton()
     }
+
+    func addToCartButtonTapped(_ cell: UsersCollectionCell) {
+        guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
+        let nft = presenter.nftForIndex(indexPath: indexPath)
+        presenter.addToCart(nft: nft)
+        cell.changeCartButton()
+    }
 }
