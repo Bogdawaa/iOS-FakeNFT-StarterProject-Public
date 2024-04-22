@@ -1,26 +1,24 @@
 import UIKit
 
-protocol NftCollectionPresenter: NftCollectionViewDelegate {
-    var delegate: NftCollectionPresenterDelegate? { get set }
-    var view: NftCollectionView? { get set }
+protocol NftCardPresenter: NftCardViewDelegate {
+    var delegate: NftCardPresenterDelegate? { get set }
+    var view: NftCardView? { get set }
     func viewDidLoad()
+    func initData(nft: Nft)
 }
 
-protocol NftCollectionPresenterDelegate: AnyObject {
-    func didSelectRow(rowData: NftCollection)
-}
-
-enum NftCollectioViewState {
+enum NftCardViewState {
     case initial, loading, failed(Error), data(result: ListServiceResult)
 }
 
-final class NftCollectionPresenterImpl: NftCollectionPresenter {
-    weak var delegate: NftCollectionPresenterDelegate?
-    weak var view: NftCollectionView?
+final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
+    weak var delegate: NftCardPresenterDelegate?
+    weak var view: NftCardView?
 
-    private var listService: ListService<NftCollection>
+    private var listService: ListService<Currency>
+    private var nft: Nft?
 
-    private var state = NftCollectioViewState.initial {
+    private var state = NftCardViewState.initial {
         didSet {
             stateDidChanged()
         }
@@ -32,6 +30,10 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
 
     func viewDidLoad() {
         state = .loading
+    }
+
+    func initData(nft: Nft) {
+        self.nft = nft
     }
 
     private func stateDidChanged() {
@@ -73,17 +75,17 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     }
 }
 
-extension NftCollectionPresenterImpl: NftCollectionViewDelegate {
+extension NftCardPresenterImpl: NftCardViewDelegate {
     var numberOfRows: Int {
         listService.itemsCount
     }
 
-    func rowData(at indexPath: IndexPath) -> NftCollection? {
+    func rowData(at indexPath: IndexPath) -> Curency? {
         listService.item(at: indexPath.row)
     }
 
     func didSelectRow(at indexPath: IndexPath) {
         guard let rowData = rowData(at: indexPath) else { return }
-        delegate?.didSelectRow(rowData: rowData)
+        print(rowData)
     }
 }

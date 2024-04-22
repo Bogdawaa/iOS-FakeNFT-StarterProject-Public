@@ -1,7 +1,7 @@
 import UIKit
 
 protocol NftCollectionViewControllerDepsFactory {
-    func nftCollectionViewController() -> UIViewController?
+    func nftCollectionDetailController() -> NftCollectionDetailController?
 }
 
 final class NftCollectionViewController: StatLoggedUIViewController {
@@ -24,6 +24,8 @@ final class NftCollectionViewController: StatLoggedUIViewController {
         self.presenter.delegate = self
         self.presenter.view = contentView
         self.contentView.delegate = self.presenter
+
+        navigationItem.title = ""
     }
 
     override func loadView() {
@@ -39,10 +41,10 @@ final class NftCollectionViewController: StatLoggedUIViewController {
 
 extension NftCollectionViewController: NftCollectionPresenterDelegate {
     func didSelectRow(rowData: NftCollection) {
-        let nftCollectionViewController = depsFactory.nftCollectionViewController()
-        guard let nftCollectionViewController else { return }
-//        nftCollectionViewController.delegate = self
-//        nftCollectionViewController.initData(category: editTrackerViewModel.category)
-        navigationController?.pushViewController(nftCollectionViewController, animated: true)
+        let nftCollectionDetailController = depsFactory.nftCollectionDetailController()
+        guard let nftCollectionDetailController else { return }
+        nftCollectionDetailController.initData(nftCollection: rowData)
+        nftCollectionDetailController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nftCollectionDetailController, animated: true)
     }
 }

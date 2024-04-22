@@ -50,3 +50,17 @@ enum ListServiceResult {
     case reload
     case update(newIndexes: Range<Int>)
 }
+
+final class EntityService<ItemModel: Decodable> {
+    private let networkClient: AsyncNetworkClient
+
+    init(networkClient: AsyncNetworkClient) {
+        self.networkClient = networkClient
+    }
+
+    func fetch(nftApiPath: NftEntityApiPath) async throws -> ItemModel {
+        let request = nftApiPath.buildGetRequest()
+        let item = try await self.networkClient.fetch(from: request, as: ItemModel.self)
+        return item
+    }
+}

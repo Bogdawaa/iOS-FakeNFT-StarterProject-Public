@@ -9,6 +9,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         let configuration = AppMetricaConfiguration(apiKey: "a063da2e-0229-4194-9193-ddd1310cbed5")
         AppMetrica.activate(with: configuration!)
+
+        UINavigationBar.appearance().tintColor = .ypBlack
+
         return true
     }
 
