@@ -13,12 +13,14 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
+    let diContainer = DIContainer()
 
     private var isShowing = false
 
     private lazy var sortButton: UIButton = {
         let btn = UIButton()
         let btnImage = UIImage.ypSort
+        btn.tintColor = .ypBlack
         btn.setImage(btnImage, for: .normal)
         btn.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
         btn.translatesAutoresizingMaskIntoConstraints = false
@@ -38,17 +40,18 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     private lazy var refreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
-        control.attributedTitle = NSAttributedString(string: "Обновить данные")
+        control.attributedTitle = NSAttributedString(string: "Statistics.refreshData"~)
         control.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         return control
     }()
 
-    private var users: [User] = []
+    private(set) var users: [User] = []
 
     // MARK: - init
     init(presenter: StatisticsPresenterProtocol, statlog: StatLog) {
         self.presenter = presenter
         super.init(statLog: statlog)
+        self.presenter.view = self
     }
 
     required init?(coder: NSCoder) {
@@ -63,9 +66,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.dataSource = self
 
         setupUI()
-
-
-        presenter.view = self
         presenter.viewDidLoad()
     }
 
@@ -94,41 +94,45 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         statisticsTableView.isUserInteractionEnabled = true
     }
 
+    func loadingDataFailed(message: String) {
+        // TODO: реализовать обработку ошибок в 3 эпике.
+    }
+
     // MARK: - private methods
     private func setupUI() {
         view.backgroundColor = .systemBackground
-        view.addSubview(sortButton)
         view.addSubview(statisticsTableView)
         statisticsTableView.addSubview(refreshControl)
         statisticsTableView.sendSubviewToBack(refreshControl)
+
+        self.navigationController?.navigationBar.tintColor = UIColor.ypBlack
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: sortButton)
+
         applyConstraints()
     }
 
     private func applyConstraints() {
-        let sortButtonConstraints = [
-            sortButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            sortButton.widthAnchor.constraint(equalToConstant: 42),
-            sortButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -9)
-        ]
         let statisticsTableViewConstraints = [
-            statisticsTableView.topAnchor.constraint(equalTo: sortButton.bottomAnchor, constant: 20),
+            statisticsTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             statisticsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             statisticsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             statisticsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8)
         ]
-        NSLayoutConstraint.activate(sortButtonConstraints)
         NSLayoutConstraint.activate(statisticsTableViewConstraints)
     }
 
-    @objc private func sortButtonTapped() {
+    // MARK: - actions
+    @objc
+    private func sortButtonTapped() {
         let alert = UIAlertController(
-            title: "Сортировка",
+            title: "Statistics.sortAllertTitle"~,
             message: nil,
             preferredStyle: .actionSheet
         )
         alert.addAction(
             UIAlertAction(
-                title: "По имени",
+                title: "Statistics.sortButton.byName"~,
                 style: .default,
                 handler: { [weak self] _ in
                     guard let self else { return }
@@ -138,7 +142,7 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         )
         alert.addAction(
             UIAlertAction(
-                title: "По рейтингу",
+                title: "Statistics.sortButton.byRating"~,
                 style: .default,
                 handler: { [weak self] _ in
                     guard let self else { return }
@@ -148,14 +152,15 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
         )
         alert.addAction(
             UIAlertAction(
-                title: "Закрыть",
+                title: "Statistics.sortButton.close"~,
                 style: .cancel
             )
         )
         self.present(alert, animated: true)
     }
 
-    @objc func refreshData() {
+    @objc
+    func refreshData() {
         DispatchQueue.main.async {
             self.users.removeAll()
             self.statisticsTableView.reloadData()
@@ -196,5 +201,8 @@ extension StatisticsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let userCardViewController = ViewBuilder.buildUserCardViewController(with: users[indexPath.row])
+        userCardViewController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(userCardViewController, animated: true)
     }
 }

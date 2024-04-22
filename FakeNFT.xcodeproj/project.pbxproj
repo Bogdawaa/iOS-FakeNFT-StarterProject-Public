@@ -58,8 +58,24 @@
 		F00DF4BB2BB338A900825462 /* UsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BA2BB338A900825462 /* UsersStorage.swift */; };
 		F00DF4BD2BB33A8C00825462 /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4BC2BB33A8C00825462 /* UsersService.swift */; };
 		F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */; };
+		F02852A32BCED7DC00688074 /* StatisticsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */; };
+		F02852A52BCED82800688074 /* StatisticsViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */; };
+		F02852A72BCEDC4A00688074 /* ServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A62BCEDC4A00688074 /* ServiceMock.swift */; };
+		F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */; };
+		F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */; };
+		F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852AD2BD065A200688074 /* StatlogMock.swift */; };
+		F02852B22BD072C700688074 /* UserCardPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B12BD072C700688074 /* UserCardPresenterTests.swift */; };
+		F02852B42BD073C400688074 /* UserCardViewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B32BD073C400688074 /* UserCardViewMock.swift */; };
+		F02852B62BD185DD00688074 /* UserCardViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B52BD185DD00688074 /* UserCardViewTests.swift */; };
+		F02852B82BD186F000688074 /* UserCardPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B72BD186F000688074 /* UserCardPresenterMock.swift */; };
+		F02852BA2BD1B41A00688074 /* ViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02852B92BD1B40E00688074 /* ViewBuilder.swift */; };
+		F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195052BC72F9700FEAFCA /* WebViewController.swift */; };
+		F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */; };
 		F0E68FBB2BC086960032AD69 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBA2BC086960032AD69 /* ProgressHUD */; };
 		F0E68FBE2BC086EC0032AD69 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F0E68FBD2BC086EC0032AD69 /* Kingfisher */; };
+		F0E68FC02BC2F1320032AD69 /* UserCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */; };
+		F0E68FC22BC3093F0032AD69 /* UserCardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */; };
+		F0E68FC42BC31D710032AD69 /* UserCardContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0E68FC32BC31D710032AD69 /* UserCardContract.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,7 +157,23 @@
 		F00DF4BA2BB338A900825462 /* UsersStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorage.swift; sourceTree = "<group>"; };
 		F00DF4BC2BB33A8C00825462 /* UsersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
 		F00DF4C62BBF094A00825462 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenterTests.swift; sourceTree = "<group>"; };
+		F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewControllerMock.swift; sourceTree = "<group>"; };
+		F02852A62BCEDC4A00688074 /* ServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceMock.swift; sourceTree = "<group>"; };
+		F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewTests.swift; sourceTree = "<group>"; };
+		F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsPresenterMock.swift; sourceTree = "<group>"; };
+		F02852AD2BD065A200688074 /* StatlogMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatlogMock.swift; sourceTree = "<group>"; };
+		F02852B12BD072C700688074 /* UserCardPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenterTests.swift; sourceTree = "<group>"; };
+		F02852B32BD073C400688074 /* UserCardViewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewMock.swift; sourceTree = "<group>"; };
+		F02852B52BD185DD00688074 /* UserCardViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewTests.swift; sourceTree = "<group>"; };
+		F02852B72BD186F000688074 /* UserCardPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenterMock.swift; sourceTree = "<group>"; };
+		F02852B92BD1B40E00688074 /* ViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBuilder.swift; sourceTree = "<group>"; };
+		F0D195052BC72F9700FEAFCA /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenter.swift; sourceTree = "<group>"; };
 		F0DC7C331BC929C07CCBCEDF /* Pods-FakeNFT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.debug.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.debug.xcconfig"; sourceTree = "<group>"; };
+		F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardViewController.swift; sourceTree = "<group>"; };
+		F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardPresenter.swift; sourceTree = "<group>"; };
+		F0E68FC32BC31D710032AD69 /* UserCardContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardContract.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +326,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806AD29CBBAF200B4F915 /* ExampleUnitTests.swift */,
+				F02852A12BCED73B00688074 /* StatisticsTests */,
 			);
 			path = FakeNFTTests;
 			sourceTree = "<group>";
@@ -450,12 +483,83 @@
 		F00DF4AD2BB06BFC00825462 /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				F02852B92BD1B40E00688074 /* ViewBuilder.swift */,
+				F028529F2BCDB6B600688074 /* UserCard */,
+				F028529E2BCDB68A00688074 /* StatisticsMain */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		F028529E2BCDB68A00688074 /* StatisticsMain */ = {
+			isa = PBXGroup;
+			children = (
 				F00DF4AE2BB06C2900825462 /* StatisticsViewController.swift */,
 				F00DF4B02BB0726D00825462 /* StatisticsTableViewCell.swift */,
 				F00DF4B22BB0806A00825462 /* StatisticsPresenter.swift */,
 				F00DF4B42BB0822400825462 /* StatisticsContract.swift */,
 			);
-			path = Statistics;
+			path = StatisticsMain;
+			sourceTree = "<group>";
+		};
+		F028529F2BCDB6B600688074 /* UserCard */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A02BCDB6C900688074 /* WebView */,
+				F0E68FBF2BC2F1310032AD69 /* UserCardViewController.swift */,
+				F0E68FC12BC3093F0032AD69 /* UserCardPresenter.swift */,
+				F0E68FC32BC31D710032AD69 /* UserCardContract.swift */,
+			);
+			path = UserCard;
+			sourceTree = "<group>";
+		};
+		F02852A02BCDB6C900688074 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				F0D195052BC72F9700FEAFCA /* WebViewController.swift */,
+				F0D195072BC7307100FEAFCA /* WebViewPresenter.swift */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		F02852A12BCED73B00688074 /* StatisticsTests */ = {
+			isa = PBXGroup;
+			children = (
+				F02852B02BD072A200688074 /* UserCard */,
+				F02852A82BD05CF000688074 /* Mock */,
+				F02852AF2BD0726E00688074 /* StatisticsMain */,
+			);
+			path = StatisticsTests;
+			sourceTree = "<group>";
+		};
+		F02852A82BD05CF000688074 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A62BCEDC4A00688074 /* ServiceMock.swift */,
+				F02852A42BCED82800688074 /* StatisticsViewControllerMock.swift */,
+				F02852AB2BD05F7B00688074 /* StatisticsPresenterMock.swift */,
+				F02852AD2BD065A200688074 /* StatlogMock.swift */,
+				F02852B32BD073C400688074 /* UserCardViewMock.swift */,
+				F02852B72BD186F000688074 /* UserCardPresenterMock.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		F02852AF2BD0726E00688074 /* StatisticsMain */ = {
+			isa = PBXGroup;
+			children = (
+				F02852A22BCED7DC00688074 /* StatisticsPresenterTests.swift */,
+				F02852A92BD05D6A00688074 /* StatisticsViewTests.swift */,
+			);
+			path = StatisticsMain;
+			sourceTree = "<group>";
+		};
+		F02852B02BD072A200688074 /* UserCard */ = {
+			isa = PBXGroup;
+			children = (
+				F02852B12BD072C700688074 /* UserCardPresenterTests.swift */,
+				F02852B52BD185DD00688074 /* UserCardViewTests.swift */,
+			);
+			path = UserCard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -730,6 +834,7 @@
 				F00DF4BB2BB338A900825462 /* UsersStorage.swift in Sources */,
 				3FC8C38B29D242E90081F015 /* ProductDetailsTableViewCell.swift in Sources */,
 				3F478ECF29DB474E00F6D39E /* Colors.swift in Sources */,
+				F0E68FC02BC2F1320032AD69 /* UserCardViewController.swift in Sources */,
 				0C79EE662A76DDFF00EE90EA /* NftDetailViewController.swift in Sources */,
 				E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */,
 				F00DF4B52BB0822400825462 /* StatisticsContract.swift in Sources */,
@@ -750,6 +855,7 @@
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
 				7943632D2BB830B900F3F527 /* UIImages.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
+				F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */,
 				3F68069729CBBAF100B4F915 /* AppDelegate.swift in Sources */,
 				3F68069929CBBAF100B4F915 /* SceneDelegate.swift in Sources */,
 				0C79EE6C2A76DE2E00EE90EA /* ServicesAssemly.swift in Sources */,
@@ -759,12 +865,16 @@
 				F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */,
 				79143C772BB9479E007E2AAB /* BaseNftRequest.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
+				F0D195082BC7307100FEAFCA /* WebViewPresenter.swift in Sources */,
 				3F6806D729CBC50A00B4F915 /* CellsReusingUtils.swift in Sources */,
 				0C79EE612A76DCD600EE90EA /* NftByIdRequest.swift in Sources */,
 				E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */,
+				F02852BA2BD1B41A00688074 /* ViewBuilder.swift in Sources */,
 				F00DF4B92BB3351600825462 /* UsersRequest.swift in Sources */,
 				0CF2C2E12A784C7000FDC837 /* LinePageControl.swift in Sources */,
 				3F6806D329CBBE9600B4F915 /* NetworkRequest.swift in Sources */,
+				F0E68FC22BC3093F0032AD69 /* UserCardPresenter.swift in Sources */,
+				F0E68FC42BC31D710032AD69 /* UserCardContract.swift in Sources */,
 				0CFCB7492A7808900009A829 /* TestCatalogController.swift in Sources */,
 				F00DF4B72BB21DE000825462 /* User.swift in Sources */,
 				3F6806D129CBBE6B00B4F915 /* NetworkClient.swift in Sources */,
@@ -777,7 +887,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02852AA2BD05D6A00688074 /* StatisticsViewTests.swift in Sources */,
 				3F6806AE29CBBAF200B4F915 /* ExampleUnitTests.swift in Sources */,
+				F02852AE2BD065A200688074 /* StatlogMock.swift in Sources */,
+				F02852B22BD072C700688074 /* UserCardPresenterTests.swift in Sources */,
+				F02852A52BCED82800688074 /* StatisticsViewControllerMock.swift in Sources */,
+				F02852A32BCED7DC00688074 /* StatisticsPresenterTests.swift in Sources */,
+				F02852A72BCEDC4A00688074 /* ServiceMock.swift in Sources */,
+				F02852B82BD186F000688074 /* UserCardPresenterMock.swift in Sources */,
+				F02852B62BD185DD00688074 /* UserCardViewTests.swift in Sources */,
+				F02852AC2BD05F7B00688074 /* StatisticsPresenterMock.swift in Sources */,
+				F02852B42BD073C400688074 /* UserCardViewMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
