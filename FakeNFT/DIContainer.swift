@@ -76,7 +76,7 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
-
+      
         container.register(StatisticsViewController.self) { diResolver in
             StatisticsViewController(
                 presenter: diResolver.resolve(StatisticsPresenter.self)!,
