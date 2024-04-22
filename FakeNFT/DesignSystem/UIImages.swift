@@ -14,6 +14,7 @@ extension UIImage {
     static let ypFavouriteButtonActive = UIImage(named: "favouriteButtonActive") ?? UIImage()
     static let ypFavouriteButtonInactive = UIImage(named: "favouriteButtonInactive") ?? UIImage()
     static let ypCartButton = UIImage(named: "cartButton") ?? UIImage()
+    static let ypCartNonEmptyButton = UIImage(named: "cartNonEmptyButton") ?? UIImage()
     static let ypRatingZero = UIImage(named: "ratingZero") ?? UIImage()
     static let ypRatingOne = UIImage(named: "ratingOne") ?? UIImage()
     static let ypRatingTwo = UIImage(named: "ratingTwo") ?? UIImage()

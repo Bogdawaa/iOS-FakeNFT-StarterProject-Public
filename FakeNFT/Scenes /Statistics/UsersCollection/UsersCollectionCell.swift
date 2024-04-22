@@ -9,6 +9,7 @@ import UIKit
 
 protocol UsersCollectionCellDelegate: AnyObject {
     func favouriteButtonTapped(_ cell: UsersCollectionCell)
+    func addToCartButtonTapped(_ cell: UsersCollectionCell)
 }
 
 final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
@@ -16,6 +17,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - properties
     weak var delegate: UsersCollectionCellDelegate?
     var isFavourite = false
+    var isInCart = false
 
     lazy var nftImageView: UIImageView = {
         let object = UIImageView()
@@ -78,6 +80,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         let object = UIButton()
         let image = UIImage.ypCartButton
         object.setImage(image, for: .normal)
+        object.addTarget(self, action: #selector(addToCartButtonTapped), for: .touchUpInside)
         object.translatesAutoresizingMaskIntoConstraints = false
         return object
     }()
@@ -133,6 +136,16 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
             nftFaVouriteButton.setImage(.ypFavouriteButtonActive, for: .normal)
         case false:
             nftFaVouriteButton.setImage(.ypFavouriteButtonInactive, for: .normal)
+        }
+    }
+
+    func changeCartButton() {
+        self.isInCart = !isInCart
+        switch isInCart {
+        case true:
+            cartButton.setImage(.ypCartNonEmptyButton, for: .normal)
+        case false:
+            cartButton.setImage(.ypCartButton, for: .normal)
         }
     }
 
@@ -194,7 +207,12 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
 
     // MARK: - actions
     @objc
-    func favouriteButtonTapped(_ sender: Any) {
+    private func favouriteButtonTapped(_ sender: Any) {
         delegate?.favouriteButtonTapped(self)
+    }
+
+    @objc
+    private func addToCartButtonTapped(_ sender: Any) {
+        delegate?.addToCartButtonTapped(self)
     }
 }
