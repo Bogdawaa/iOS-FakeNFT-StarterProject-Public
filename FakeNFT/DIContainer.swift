@@ -1,3 +1,4 @@
+import Foundation
 import Swinject
 
 final class DIContainer {

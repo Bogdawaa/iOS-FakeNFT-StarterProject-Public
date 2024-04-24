@@ -1,0 +1,42 @@
+"Error.network" = "Произошла ошибка сети";
+"Error.unknown" = "Произошла неизвестная ошибка";
+"Error.repeat" = "Повторить";
+"Error.title" = "Ошибка";
+
+// Tabs
+"Tab.profile" = "Профиль";
+"Tab.catalog" = "Каталог";
+"Tab.cart" = "Корзина";
+"Tab.statistics" = "Статистика";
+
+// Profile
+
+// Catalog
+"Catalog.openNft" = "Открыть Nft";
+
+// Cart
+"Tab.catalog" = "Каталог";
+"Сart.isEmpty" = "Корзина пуста";
+"Cart.Button.toPay" = "К оплате";
+"Price" = "Цена";
+"Cart.Button.Delete" = "Удалить";
+"Cart.Button.Return" = "Вернуться";
+"Cart.Button.Pay" = "Оплатить";
+"Cart.Alert.Cancel" = "Отмена";
+"Alert.Repeat" = "Повторить";
+"Sort.Alert.Close" = "Закрыть";
+"Sort.Alert.Sorting" = "Сортировка";
+"Sort.Alert.Price" = "По цене";
+"Sort.Alert.Rating" = "По рейтингу";
+"Sort.Alert.Name" = "По названию";
+"Failed.toLoad.cart" = "Не удалось загрузить корзину";
+"Failed.Payment" = "Не удалось произвести оплату";
+"Error.Currencies" = "Не удалось загрузить валюту";
+"Remove.trash" = "Вы уверены, что хотите\nудалить объект из корзины?";
+"User.agreement.info" = "Совершая покупку, вы соглашаетесь с условиями";
+"Success.payment" = "Успех! Оплата прошла, поздравляем с покупкой!";
+"Return.toCatalog" = "Вернуться в каталог";
+"User.agreement" = "Пользовательского соглашения";
+"Select.Payment.Method" = "Выберите способ оплаты";
+
+// Statistics

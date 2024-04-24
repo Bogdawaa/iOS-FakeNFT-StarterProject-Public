@@ -32,8 +32,8 @@ final class TabBarController: UITabBarController {
                 selectedImage: nil
             ),
             UITabBarItem(
-                title: "Tab.basket"~,
-                image: UIImage.ypBasketTab,
+                title: "Tab.cart"~,
+                image: UIImage.ypCartTab,
                 selectedImage: nil
             ),
             UITabBarItem(
