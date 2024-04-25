@@ -96,12 +96,16 @@ extension UsersCollectionViewController: UICollectionViewDataSource, UICollectio
             return UICollectionViewCell()
         }
         let nft = presenter.nftForIndex(indexPath: indexPath)
-        let url = nft.images.first
+//        let url = nft.images.first
         cell.delegate = self
-        cell.nftImageView.kf.setImage(with: url)
-        cell.setupData(with: nft)
-        cell.changeCartButton(isInCart: presenter.cartContainsNft(nft: nft))
-        cell.changeFavouriteButton(isInFavourites: presenter.isInFavourites(nft: nft))
+//        cell.nftImageView.kf.setImage(with: url)
+        cell.setupData(
+            with: nft,
+            isInCart: presenter.cartContainsNft(nft: nft),
+            isInFavourites: presenter.isInFavourites(nft: nft)
+        )
+//        cell.changeCartButton(isInCart: presenter.cartContainsNft(nft: nft))
+//        cell.changeFavouriteButton(isInFavourites: presenter.isInFavourites(nft: nft))
         return cell
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol UsersCollectionCellDelegate: AnyObject {
     func favouriteButtonTapped(_ cell: UsersCollectionCell)
@@ -17,7 +18,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
     // MARK: - properties
     weak var delegate: UsersCollectionCellDelegate?
 
-    lazy var nftImageView: UIImageView = {
+    private lazy var nftImageView: UIImageView = {
         let object = UIImageView()
         object.layer.masksToBounds = true
         object.clipsToBounds = true
@@ -77,6 +78,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
     private lazy var cartButton: UIButton = {
         let object = UIButton()
         let image = UIImage.ypCartButton
+        object.tintColor = .ypBlack
         object.setImage(image, for: .normal)
         object.addTarget(self, action: #selector(addToCartButtonTapped), for: .touchUpInside)
         object.translatesAutoresizingMaskIntoConstraints = false
@@ -105,9 +107,12 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
     }
 
     // MARK: - setup data
-    func setupData(with nft: Nft) {
+    func setupData(with nft: Nft, isInCart: Bool, isInFavourites: Bool) {
         self.nftNameLabel.text = nft.name
         self.nftPriceLabel.text = String(nft.price) + " ETH"
+
+        let url = nft.images.first
+        nftImageView.kf.setImage(with: url)
 
         switch nft.rating {
         case 0:
@@ -125,6 +130,8 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         default:
             self.nftRatingImageView.image = .ypRatingZero
         }
+        self.changeFavouriteButton(isInFavourites: isInFavourites)
+        self.changeCartButton(isInCart: isInCart)
     }
 
     func changeFavouriteButton(isInFavourites: Bool) {
