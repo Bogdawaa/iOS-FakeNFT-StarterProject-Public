@@ -17,6 +17,7 @@ final class UsersCollectionViewController: StatLoggedUIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 108, height: 192)
         let object = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        object.backgroundColor = .ypWhite
         object.register(UsersCollectionCell.self)
         object.translatesAutoresizingMaskIntoConstraints = false
         return object
@@ -109,7 +110,7 @@ extension UsersCollectionViewController: UsersCollectionCellDelegate {
     func favouriteButtonTapped(_ cell: UsersCollectionCell) {
         guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
         let nft = presenter.nftForIndex(indexPath: indexPath)
-        presenter.updateFavoriteNft(nftId: nft.id) // TODO: добавить отправку лайков на сервер
+        presenter.updateFavoriteNft(nftId: nft.id)
         cell.changeFavouriteButton(isInFavourites: presenter.isInFavourites(nft: nft))
     }
 
