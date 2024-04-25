@@ -14,11 +14,3 @@ protocol StatisticsViewProtocol: AnyObject, ErrorView {
     func loadingDataFinished()
     func showError(_ model: ErrorModel)
 }
-
-protocol StatisticsPresenterProtocol {
-    var view: StatisticsViewProtocol? { get set }
-    func viewDidLoad()
-    func setUsersSortingParametr(_ parametr: SortParametr)
-    func loadUsers(with parametr: SortParametr)
-    func getSortParametr() -> SortParametr
-}
