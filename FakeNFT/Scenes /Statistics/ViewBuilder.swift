@@ -21,16 +21,28 @@ final class ViewBuilder: Builder {
     }
 
     static func buildUserCardViewController(with user: User) -> UIViewController {
-        let userCardViewController = DIContainer().userCard()
+        let userCardViewController = UserCardViewController(
+            presenter: DIContainer().userCardPresenter(),
+            statlog: DIContainer().statlog()
+        )
         userCardViewController.presenter.setUser(with: user)
-        userCardViewController.presenter.view = userCardViewController
         return userCardViewController
     }
 
     static func buildCollectionNft(with user: User) -> UIViewController {
-        let usersCollectionNftViewController = DIContainer().usersCollectionNftController()
-        usersCollectionNftViewController.presenter.view = usersCollectionNftViewController
+        let usersCollectionNftViewController = UsersCollectionViewController(
+            presenter: DIContainer().usersCollectionPresenter(),
+            statlog: DIContainer().statlog()
+        )
         usersCollectionNftViewController.presenter.setNftsId(nftsId: user.nfts)
         return usersCollectionNftViewController
+    }
+
+    static func buildStatisticsViewController() -> UIViewController {
+        let statisticsViewController = StatisticsViewController(
+            presenter: DIContainer().statisticsPresenter(),
+            statlog: DIContainer().statlog()
+        )
+        return statisticsViewController
     }
 }
