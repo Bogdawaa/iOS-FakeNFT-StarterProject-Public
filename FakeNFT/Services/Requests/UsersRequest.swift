@@ -12,7 +12,7 @@ enum SortParametr: String {
     case byRating = "by_Rating"
 }
 
-struct UsersRequest: BaseNftRequest {
+struct UsersRequest: /*BaseNftRequest*/ NetworkRequest {
 
     private var parametr = SortParametr.byRating
     private var parametrSortBy: String = ""

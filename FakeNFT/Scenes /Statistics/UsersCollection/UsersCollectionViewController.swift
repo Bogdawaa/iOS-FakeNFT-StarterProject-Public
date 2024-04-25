@@ -99,6 +99,7 @@ extension UsersCollectionViewController: UICollectionViewDataSource, UICollectio
         cell.delegate = self
         cell.nftImageView.kf.setImage(with: url)
         cell.setupData(with: nft)
+        cell.changeCartButton(isInCart: presenter.cartContainsNft(nft: nft))
         return cell
     }
 }
@@ -111,7 +112,7 @@ extension UsersCollectionViewController: UsersCollectionCellDelegate {
     func addToCartButtonTapped(_ cell: UsersCollectionCell) {
         guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
         let nft = presenter.nftForIndex(indexPath: indexPath)
-        presenter.addToCart(nft: nft)
-        cell.changeCartButton()
+        presenter.addOrDeleteFromCart(nft: nft)
+        cell.changeCartButton(isInCart: presenter.cartContainsNft(nft: nft))
     }
 }

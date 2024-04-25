@@ -201,6 +201,9 @@ final class DIContainer {
                 service: NftServiceImpl(
                     networkClient: diResolver.resolve(NetworkClient.self)!,
                     storage: NftStorageImpl()
+                ),
+                serviceCart: CartServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!
                 )
             )
         }

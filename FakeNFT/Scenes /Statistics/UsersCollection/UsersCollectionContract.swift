@@ -20,5 +20,7 @@ protocol UsersCollectionPresenterProtocol {
     func nftsCount() -> Int
     func nftForIndex(indexPath: IndexPath) -> Nft
     func setNftsId(nftsId: [String])
-    func addToCart(nft: Nft)
+    func addOrDeleteFromCart(nft: Nft)
+
+    func cartContainsNft(nft: Nft) -> Bool
 }
