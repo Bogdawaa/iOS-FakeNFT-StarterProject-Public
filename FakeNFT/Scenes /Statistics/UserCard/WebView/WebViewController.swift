@@ -25,7 +25,12 @@ class WebViewController: UIViewController {
     var presenter: WebViewPresenterProtocol
 
     private var estimatedProgressObservation: NSKeyValueObservation?
-    private var webView = WKWebView()
+
+    private var webView: WKWebView = {
+        let object = WKWebView(frame: .zero)
+        object.translatesAutoresizingMaskIntoConstraints = false
+        return object
+    }()
 
     private var progressView: UIProgressView = {
         let view = UIProgressView()
@@ -64,15 +69,24 @@ class WebViewController: UIViewController {
 
     // MARK: - private methods
     private func setupUI() {
-        view = webView
+        view.backgroundColor = .ypWhite
+
+        view.addSubview(webView)
         view.addSubview(progressView)
 
+        let webViewConstraint = [
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            webView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            webView.rightAnchor.constraint(equalTo: view.rightAnchor)
+        ]
         let progressView = [
             progressView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             progressView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             progressView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ]
         NSLayoutConstraint.activate(progressView)
+        NSLayoutConstraint.activate(webViewConstraint)
     }
 }
 
