@@ -100,13 +100,17 @@ extension UsersCollectionViewController: UICollectionViewDataSource, UICollectio
         cell.nftImageView.kf.setImage(with: url)
         cell.setupData(with: nft)
         cell.changeCartButton(isInCart: presenter.cartContainsNft(nft: nft))
+        cell.changeFavouriteButton(isInFavourites: presenter.isInFavourites(nft: nft))
         return cell
     }
 }
 
 extension UsersCollectionViewController: UsersCollectionCellDelegate {
     func favouriteButtonTapped(_ cell: UsersCollectionCell) {
-        cell.changeFavouriteButton()
+        guard let indexPath = nftCollectionView.indexPath(for: cell) else { return }
+        let nft = presenter.nftForIndex(indexPath: indexPath)
+        presenter.updateFavoriteNft(nftId: nft.id) // TODO: добавить отправку лайков на сервер
+        cell.changeFavouriteButton(isInFavourites: presenter.isInFavourites(nft: nft))
     }
 
     func addToCartButtonTapped(_ cell: UsersCollectionCell) {

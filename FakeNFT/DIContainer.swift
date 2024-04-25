@@ -111,6 +111,10 @@ final class DIContainer {
                 ),
                 serviceCart: CartServiceImpl(
                     networkClient: diResolver.resolve(NetworkClient.self)!
+                ),
+                serviceProfile: ProfileServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: ProfileStorageImpl()
                 )
             )
         }

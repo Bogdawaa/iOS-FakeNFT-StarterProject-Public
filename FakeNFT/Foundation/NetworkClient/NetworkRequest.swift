@@ -11,8 +11,8 @@ protocol NetworkRequest {
     var endpoint: URL? { get }
     var httpMethod: HttpMethod { get }
     var dto: Encodable? { get }
+    var httpBody: String? { get }
     var parametrs: [String: String]? { get }
-//    var secretInjector: (_ request: URLRequest) -> URLRequest { get } TODO:
 }
 
 // default values
