@@ -15,8 +15,8 @@ final class DIContainer {
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
                 catalogViewController: diResolver.resolve(CatalogViewController.self)!,
                 statisticsController: UINavigationController(
-                    rootViewController: diResolver.resolve(StatisticsViewController.self)!
-                    )
+                    rootViewController: ViewBuilder.buildStatisticsViewController()
+                )
             )
         }
     }
@@ -25,16 +25,17 @@ final class DIContainer {
         container.resolve(TabBarController.self)!
     }
 
-    func userCard() -> UserCardViewController {
-        container.resolve(UserCardViewController.self)!
+    func userCardPresenter() -> UserCardPresenter {
+        container.resolve(UserCardPresenter.self)!
     }
-
-    func statisticsViewController() -> StatisticsViewController {
-        container.resolve(StatisticsViewController.self)!
+    func usersCollectionPresenter() -> UsersCollectionPresenter {
+        container.resolve(UsersCollectionPresenter.self)!
     }
-
-    func usersCollectionNftController() -> UsersCollectionViewController {
-        container.resolve(UsersCollectionViewController.self)!
+    func statisticsPresenter() -> StatisticsPresenter {
+        container.resolve(StatisticsPresenter.self)!
+    }
+    func statlog() -> StatLog {
+        container.resolve(StatLog.self)!
     }
 
     private func registerCatalog() {
@@ -81,25 +82,11 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
-
-        container.register(StatisticsViewController.self) { diResolver in
-            StatisticsViewController(
-                presenter: diResolver.resolve(StatisticsPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!
-            )
-        }
     }
 
     private func registerUserCard() {
         container.register(UserCardPresenter.self) { _ in UserCardPresenter() }
             .inObjectScope(.container)
-
-        container.register(UserCardViewController.self) { diResolver in
-            UserCardViewController(
-                presenter: diResolver.resolve(UserCardPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!
-            )
-        }
     }
 
     private func registerUsersCollectionNft() {
@@ -119,12 +106,5 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
-
-        container.register(UsersCollectionViewController.self) { diResolver in
-            UsersCollectionViewController(
-                presenter: diResolver.resolve(UsersCollectionPresenter.self)!,
-                statlog: diResolver.resolve(StatLog.self)!
-            )
-        }
     }
 }
