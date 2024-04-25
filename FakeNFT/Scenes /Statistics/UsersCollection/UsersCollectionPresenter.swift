@@ -10,18 +10,21 @@ import Foundation
 class UsersCollectionPresenter {
     weak var view: UsersCollectionViewProtocol?
 
-    private(set) var nftsId: [String] = []
-    private(set) var nfts: [Nft] = []
-    private(set) var nftsInCart: [Nft] = []
+    private var nftsId: [String] = []
+    private var nfts: [Nft] = []
+    private var nftsInCart: [Nft] = []
+    private var nftsInFavourites: [String] = []
 
     private let service: NftService
     private let serviceCart: CartService
+    private let serviceProfile: ProfileService
 
     private let id = "1"
 
-    init(service: NftService, serviceCart: CartService) {
+    init(service: NftService, serviceCart: CartService, serviceProfile: ProfileService) {
         self.service = service
         self.serviceCart = serviceCart
+        self.serviceProfile = serviceProfile
     }
 }
 
@@ -29,6 +32,7 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
     func viewDidLoad() {
         loadNfts()
         updateCart()
+        loadProfile()
     }
 
     func setNftsId(nftsId: [String]) {
@@ -45,6 +49,10 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
 
     func cartContainsNft(nft: Nft) -> Bool {
         nftsInCart.contains(where: { $0.id == nft.id })
+    }
+
+    func isInFavourites(nft: Nft) -> Bool {
+        nftsInFavourites.contains(where: { $0 == nft.id })
     }
 
     private func loadNfts() {
@@ -108,8 +116,8 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
         serviceCart.downloadServiceNFTs(with: id) { result in
             switch result {
             case .success(let nftsInCart):
-                self.nftsInCart = nftsInCart
                 DispatchQueue.main.async {
+                    self.nftsInCart = nftsInCart
                     self.view?.reloadCollectionView()
                 }
             case .failure:
@@ -125,5 +133,29 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
                 }
             }
         }
+    }
+
+    private func loadProfile() {
+        serviceProfile.loadProfile(id: id) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let profile):
+                DispatchQueue.main.async {
+                    self.nftsInFavourites = profile.likes
+                    self.view?.reloadCollectionView()
+                }
+            case .failure(let error):
+                assertionFailure("\(error)")
+            }
+        }
+    }
+
+    func updateFavoriteNft(nftId: String) {
+        if nftsInFavourites.contains(where: { $0 == nftId }) {
+            nftsInFavourites.removeAll(where: { $0 == nftId })
+        } else {
+            nftsInFavourites.append(nftId)
+        }
+        service.updateFavoritesNft(likedNftIds: nftsInFavourites)
     }
 }

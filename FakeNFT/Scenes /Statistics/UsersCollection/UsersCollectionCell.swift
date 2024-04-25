@@ -16,8 +16,6 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
 
     // MARK: - properties
     weak var delegate: UsersCollectionCellDelegate?
-    var isFavourite = false
-    var isInCart = false
 
     lazy var nftImageView: UIImageView = {
         let object = UIImageView()
@@ -129,24 +127,20 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
-    func changeFavouriteButton() {
-        self.isFavourite = !isFavourite
-        switch isFavourite {
-        case true:
+    func changeFavouriteButton(isInFavourites: Bool) {
+        if isInFavourites {
             nftFaVouriteButton.setImage(.ypFavouriteButtonActive, for: .normal)
-        case false:
+        } else {
             nftFaVouriteButton.setImage(.ypFavouriteButtonInactive, for: .normal)
         }
     }
 
     func changeCartButton(isInCart: Bool) {
-//        self.isInCart = !isInCart
-//        switch isInCart {
-//        case true:
-        isInCart ? cartButton.setImage(.ypCartNonEmptyButton, for: .normal) : cartButton.setImage(.ypCartButton, for: .normal)
-
-//        case false:
-//        }
+        if isInCart {
+            cartButton.setImage(.ypCartNonEmptyButton, for: .normal)
+        } else {
+            cartButton.setImage(.ypCartButton, for: .normal)
+        }
     }
 
     private func applyConstaints() {

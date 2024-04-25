@@ -8,6 +8,8 @@
 import Foundation
 
 struct CartRequestPut: NetworkRequest {
+    var httpBody: String?
+
     let id: String
     let nfts: [String]
     var endpoint: URL? {
