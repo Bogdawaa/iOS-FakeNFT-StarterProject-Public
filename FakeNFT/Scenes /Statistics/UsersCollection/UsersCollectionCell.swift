@@ -139,14 +139,14 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         }
     }
 
-    func changeCartButton() {
-        self.isInCart = !isInCart
-        switch isInCart {
-        case true:
-            cartButton.setImage(.ypCartNonEmptyButton, for: .normal)
-        case false:
-            cartButton.setImage(.ypCartButton, for: .normal)
-        }
+    func changeCartButton(isInCart: Bool) {
+//        self.isInCart = !isInCart
+//        switch isInCart {
+//        case true:
+        isInCart ? cartButton.setImage(.ypCartNonEmptyButton, for: .normal) : cartButton.setImage(.ypCartButton, for: .normal)
+
+//        case false:
+//        }
     }
 
     private func applyConstaints() {

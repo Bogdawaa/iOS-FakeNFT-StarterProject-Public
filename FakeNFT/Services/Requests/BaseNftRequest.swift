@@ -6,7 +6,7 @@ extension BaseNftRequest {
     var secretInjector: (_ request: URLRequest) -> URLRequest {
         return { request in
             var request = request
-            request.setValue(RequestConstants.nftToken, forHTTPHeaderField: RequestConstants.nftHeader)
+            request.setValue(RequestConstants.authToken, forHTTPHeaderField: RequestConstants.authTokenHeader)
             return request
         }
     }

@@ -12,30 +12,27 @@ class UsersCollectionPresenter {
 
     private(set) var nftsId: [String] = []
     private(set) var nfts: [Nft] = []
+    private(set) var nftsInCart: [Nft] = []
+
     private let service: NftService
+    private let serviceCart: CartService
 
-    private var cart: [Nft] = []
+    private let id = "1"
 
-    init(service: NftService) {
+    init(service: NftService, serviceCart: CartService) {
         self.service = service
+        self.serviceCart = serviceCart
     }
 }
 
 extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
     func viewDidLoad() {
         loadNfts()
+        updateCart()
     }
 
     func setNftsId(nftsId: [String]) {
         self.nftsId = nftsId
-    }
-
-    private func loadNfts() {
-        if !nftsId.isEmpty {
-            for id in nftsId where !nfts.contains(where: { $0.id == id }) {
-                loadNft(with: id)
-            }
-        }
     }
 
     func nftsCount() -> Int {
@@ -46,7 +43,19 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
         return nfts[indexPath.row]
     }
 
-    func loadNft(with id: String) {
+    func cartContainsNft(nft: Nft) -> Bool {
+        nftsInCart.contains(where: { $0.id == nft.id })
+    }
+
+    private func loadNfts() {
+        if !nftsId.isEmpty {
+            for id in nftsId where !nfts.contains(where: { $0.id == id }) {
+                loadNft(with: id)
+            }
+        }
+    }
+
+    private func loadNft(with id: String) {
         view?.loadingDataStarted()
         service.loadNft(id: id) { [weak self] result in
             guard let self else { return }
@@ -72,12 +81,49 @@ extension UsersCollectionPresenter: UsersCollectionPresenterProtocol {
         }
     }
 
-    func addToCart(nft: Nft) {
-        // TODO: добавить переход в корзину в 4 спринте
-        if !cart.contains(where: { $0.id == nft.id }) {
-            self.cart.append(nft)
+    func addOrDeleteFromCart(nft: Nft) {
+        if nftsInCart.contains(where: { $0.id == nft.id }) {
+            self.deleteFromCart(nft: nft)
         } else {
-            self.cart.removeAll(where: { $0.id == nft.id })
+            addToCart(nft: nft)
+        }
+    }
+
+    private func addToCart(nft: Nft) {
+        if nftsInCart.isEmpty {
+            nftsInCart.append(nft)
+        }
+        nftsInCart.append(nft)
+        let nftsID = nftsInCart.map { $0.id }
+        serviceCart.updateFromCart(id: id, nftsID: nftsID) { _ in }
+    }
+
+    private func deleteFromCart(nft: Nft) {
+        nftsInCart.removeAll(where: { $0.id == nft.id })
+        let nftsID = nftsInCart.map { $0.id }
+        serviceCart.updateFromCart(id: id, nftsID: nftsID) { _ in }
+    }
+
+    private func updateCart() {
+        serviceCart.downloadServiceNFTs(with: id) { result in
+            switch result {
+            case .success(let nftsInCart):
+                self.nftsInCart = nftsInCart
+                DispatchQueue.main.async {
+                    self.view?.reloadCollectionView()
+                }
+            case .failure:
+                let errorModel = ErrorModel(
+                    message: "Error.network"~,
+                    actionText: "Error.repeat"~
+                ) { [weak self] in
+                    guard let self else { return }
+                    self.updateCart()
+                }
+                DispatchQueue.main.async {
+                    self.view?.showError(errorModel)
+                }
+            }
         }
     }
 }
