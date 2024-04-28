@@ -3,7 +3,7 @@ import Foundation
 struct NFTRequest: BaseNftRequest {
     var httpBody: String?
 
-    var httpMethod: HttpMethod
+    var httpMethod: HttpMethod?
 
     var dto: Encodable?
 

@@ -8,11 +8,16 @@ final class DIContainer {
         registerFoundation()
         registerProfile()
         registerCatalog()
+        registerStatistics()
+        registerUserCard()
+        registerUsersCollectionNft()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
                 catalogViewController: diResolver.resolve(CatalogViewController.self)!,
+                statisticsController: UINavigationController(
+                    rootViewController: ViewBuilder.buildStatisticsViewController()
                 profileViewController: UINavigationController(
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
                 )
@@ -23,6 +28,23 @@ final class DIContainer {
     func tabBarController() -> TabBarController {
         container.resolve(TabBarController.self)!
     }
+
+    func userCardPresenter() -> UserCardPresenter {
+        container.resolve(UserCardPresenter.self)!
+    }
+      
+    func usersCollectionPresenter() -> UsersCollectionPresenter {
+        container.resolve(UsersCollectionPresenter.self)!
+    }
+      
+    func statisticsPresenter() -> StatisticsPresenter {
+        container.resolve(StatisticsPresenter.self)!
+    }
+      
+    func statlog() -> StatLog {
+        container.resolve(StatLog.self)!
+    }
+
     func myNftViewController() -> MyNFTViewProtocol {
         container.resolve(MyNFTViewController.self)!
     }
@@ -32,6 +54,7 @@ final class DIContainer {
     func editProfileViewController() -> EditProfileViewProtocol {
         container.resolve(EditProfileViewController.self)!
     }
+
     private func registerCatalog() {
         container.register(CatalogViewController.self) { diResolver in
             TestCatalogViewController(
@@ -140,6 +163,42 @@ final class DIContainer {
 
         container.register(StatLog.self) { _ in
             StatLogImpl()
+        }
+        .inObjectScope(.container)
+    }
+
+    private func registerStatistics() {
+        container.register(StatisticsPresenter.self) { diResolver in
+            StatisticsPresenter(
+                service: UsersServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: UsersStorageImpl()
+                )
+            )
+        }
+        .inObjectScope(.container)
+    }
+
+    private func registerUserCard() {
+        container.register(UserCardPresenter.self) { _ in UserCardPresenter() }
+            .inObjectScope(.container)
+    }
+
+    private func registerUsersCollectionNft() {
+        container.register(UsersCollectionPresenter.self) { diResolver in
+            UsersCollectionPresenter(
+                service: NftServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: NftStorageImpl()
+                ),
+                serviceCart: CartServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!
+                ),
+                serviceProfile: ProfileServiceImpl(
+                    networkClient: diResolver.resolve(NetworkClient.self)!,
+                    storage: ProfileStorageImpl()
+                )
+            )
         }
         .inObjectScope(.container)
     }
