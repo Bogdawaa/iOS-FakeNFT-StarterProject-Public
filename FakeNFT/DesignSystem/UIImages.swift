@@ -21,18 +21,5 @@ extension UIImage {
     static let ypSuitHeartFill = UIImage(systemName: "suit.heart.fill") ?? UIImage()
     static let ypSortButton = UIImage(named: "sortButton") ?? UIImage()
     static let ypClose = UIImage(named: "close") ?? UIImage()
-
-    static let ypSort = UIImage(named: "sortButton") ?? UIImage()
-    static let ypUserPlaceholder = UIImage(named: "userPlaceholder") ?? UIImage()
-    static let ypFavouriteButtonActive = UIImage(named: "favouriteButtonActive") ?? UIImage()
-    static let ypFavouriteButtonInactive = UIImage(named: "favouriteButtonInactive") ?? UIImage()
-    static let ypCartButton = UIImage(named: "cartButton") ?? UIImage()
-    static let ypCartNonEmptyButton = UIImage(named: "cartNonEmptyButton") ?? UIImage()
-    static let ypRatingZero = UIImage(named: "ratingZero") ?? UIImage()
-    static let ypRatingOne = UIImage(named: "ratingOne") ?? UIImage()
-    static let ypRatingTwo = UIImage(named: "ratingTwo") ?? UIImage()
-    static let ypRatingThree = UIImage(named: "ratingThree") ?? UIImage()
-    static let ypRatingFour = UIImage(named: "ratingFour") ?? UIImage()
-    static let ypRatingFive = UIImage(named: "ratingFive") ?? UIImage()
 }
 // swiftlint:enable object_literal

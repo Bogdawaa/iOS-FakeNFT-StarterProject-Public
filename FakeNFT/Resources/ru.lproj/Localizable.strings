@@ -43,14 +43,3 @@
 
 
 // Statistics
-"Statistics.sortAllertTitle" = "Сортировка";
-"Statistics.sortButton.byName" = "По имени";
-"Statistics.sortButton.byRating" = "По рейтингу";
-"Statistics.sortButton.close" = "Закрыть";
-"Statistics.refreshData" = "Обновить данные";
-"UserCard.goToWebsiteButtonTitle" = "Перейти на сайт пользователя";
-"UserCard.collectionNFTTableTitle" = "Коллекция NFT";
-
-
-
-
