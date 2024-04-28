@@ -7,25 +7,6 @@
 
 import UIKit
 
-// final class UserCardRouter {
-//    private var user: User
-//    private var userCardViewController: UserCardViewProtocol
-//    private var webViewPresenter: WebViewPresenter
-//    private var webViewController: WebViewController
-//
-//    init(userCardViewController: UserCardViewProtocol, user: User) {
-//        self.user = user
-//        self.userCardViewController = userCardViewController
-//        self.webViewPresenter = WebViewPresenter(user: user)
-//        self.webViewController = WebViewController(presenter: webViewPresenter)
-//        self.webViewPresenter.view = webViewController
-//    }
-//
-//    func showNextController() {
-//        userCardViewController.showView(viewController: webViewController)
-//    }
-// }
-
 protocol Builder {
     static func buildWebViewController(with user: User) -> UIViewController
 }
@@ -40,9 +21,28 @@ final class ViewBuilder: Builder {
     }
 
     static func buildUserCardViewController(with user: User) -> UIViewController {
-        let userCardViewController = DIContainer().userCard()
+        let userCardViewController = UserCardViewController(
+            presenter: DIContainer().userCardPresenter(),
+            statlog: DIContainer().statlog()
+        )
         userCardViewController.presenter.setUser(with: user)
-        userCardViewController.presenter.view = userCardViewController
         return userCardViewController
+    }
+
+    static func buildCollectionNft(with user: User) -> UIViewController {
+        let usersCollectionNftViewController = UsersCollectionViewController(
+            presenter: DIContainer().usersCollectionPresenter(),
+            statlog: DIContainer().statlog()
+        )
+        usersCollectionNftViewController.presenter.setNftsId(nftsId: user.nfts)
+        return usersCollectionNftViewController
+    }
+
+    static func buildStatisticsViewController() -> UIViewController {
+        let statisticsViewController = StatisticsViewController(
+            presenter: DIContainer().statisticsPresenter(),
+            statlog: DIContainer().statlog()
+        )
+        return statisticsViewController
     }
 }
