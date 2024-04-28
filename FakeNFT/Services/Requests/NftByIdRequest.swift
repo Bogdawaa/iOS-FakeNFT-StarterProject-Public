@@ -1,7 +1,11 @@
 import Foundation
 
-struct NFTRequest: /*BaseNftRequest*/ NetworkRequest {
+struct NFTRequest: BaseNftRequest {
     var httpBody: String?
+
+    var httpMethod: HttpMethod
+
+    var dto: Encodable?
 
     let id: String
 

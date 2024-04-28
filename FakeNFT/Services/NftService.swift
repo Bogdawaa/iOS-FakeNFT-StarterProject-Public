@@ -22,8 +22,7 @@ final class NftServiceImpl: NftService {
             completion(.success(nft))
             return
         }
-
-        let request = NFTRequest(id: id)
+        let request = NFTRequest(httpMethod: .get, id: id)
         networkClient.send(request: request, type: Nft.self) { [weak storage] result in
             switch result {
             case .success(let nft):
@@ -34,19 +33,19 @@ final class NftServiceImpl: NftService {
             }
         }
     }
-
     func updateFavoritesNft(likedNftIds: [String]) {
-            var request = ProfileByRequest(httpMethod: .put, id: "1")
-            let joined = likedNftIds.isEmpty ? "null" : likedNftIds.joined(separator: ",")
-            let profileData = "likes=\(joined)"
-            request.httpBody = profileData
-            networkClient.send(request: request) {result in
-                switch result {
-                case .success:
-                    return
-                case .failure(let error):
-                    assertionFailure("\(error)")
-                }
+        var request = ProfileByRequest(httpMethod: .put, id: "1")
+        let joined = likedNftIds.isEmpty ? "null" : likedNftIds.joined(separator: ",")
+        let profileData = "likes=\(joined)"
+        print(profileData)
+        request.httpBody = profileData
+        networkClient.send(request: request) {result in
+            switch result {
+            case .success:
+                print("success")
+            case .failure(let error):
+                assertionFailure("\(error)")
             }
         }
+    }
 }

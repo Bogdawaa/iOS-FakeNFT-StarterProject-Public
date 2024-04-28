@@ -19,23 +19,20 @@ final class ServicesAssembly {
     }
 }
 
-final class UserServicesAssembly {
-
+final class ProfileServicesAssembly {
     private let networkClient: NetworkClient
-    private let usersStorage: UsersStorage
+    private let profileStorage: ProfileStorage
 
-    var usersService: UsersService {
-        UsersServiceImpl(
+    var profileService: ProfileService {
+        ProfileServiceImpl(
             networkClient: networkClient,
-            storage: usersStorage
-        )
+            storage: profileStorage)
     }
-
     init(
         networkClient: NetworkClient,
-        usersStorage: UsersStorage
+        profileStorage: ProfileStorage
     ) {
         self.networkClient = networkClient
-        self.usersStorage = usersStorage
+        self.profileStorage = profileStorage
     }
 }
