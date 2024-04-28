@@ -11,6 +11,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
 
     weak var view: UserCardViewProtocol?
     private(set) var user: User?
+    private let diContainer = DIContainer()
 
     func viewDidLoad() {
         guard let user else { return }
@@ -30,6 +31,12 @@ final class UserCardPresenter: UserCardPresenterProtocol {
         guard let user else { return }
         let webView = ViewBuilder.buildWebViewController(with: user)
         view?.showView(viewController: webView)
+    }
+
+    func presentNftCollectionTapped() {
+        guard let user else { return }
+        let usersColletionViewController = ViewBuilder.buildCollectionNft(with: user)
+        view?.showView(viewController: usersColletionViewController)
     }
 
     private func setViewModel(user: User) -> User {

@@ -18,7 +18,7 @@ final class UserCardPresenterTests: XCTestCase {
         avatar: "Avatar",
         rating: "1",
         website: "website",
-        nfts: [],
+        nfts: ["nft"],
         description: "zerocoder"
     )
     
@@ -57,10 +57,10 @@ final class UserCardPresenterTests: XCTestCase {
         instance.view = viewMock
         
         // when
-        let countUsers = instance.countUserNFTS()
+        let countUserNFT = instance.countUserNFTS()
         
         // then
-        XCTAssertEqual(countUsers, 1)
+        XCTAssertEqual(countUserNFT, 1)
     }
     
 }

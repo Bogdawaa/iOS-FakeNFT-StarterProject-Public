@@ -34,7 +34,7 @@ class StatisticsViewControllerMock: StatisticsViewProtocol {
         loadingDataFinishedCalled = true
     }
     
-    func loadingDataFailed(message: String) {
+    func showError(_ model: FakeNFT.ErrorModel) {
         loadingDataFailedCalled = true
     }
 }
