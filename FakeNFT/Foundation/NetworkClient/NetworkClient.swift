@@ -127,13 +127,7 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
-        urlRequest.setValue(request.authToken, forHTTPHeaderField: RequestConstants.authTokenHeader)
-
-        if let httpBody = request.httpBody {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
-            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-            urlRequest.httpBody = httpBody.data(using: .utf8)
-        }
+        urlRequest = request.secretInjector(urlRequest)
 
         if let httpBody = request.httpBody {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -143,11 +137,10 @@ struct DefaultNetworkClient: NetworkClient {
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue(request.application, forHTTPHeaderField: RequestConstants.contentType)
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.httpBody = dtoEncoded
         }
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-        urlRequest.addValue("20a4069e-6e51-4477-894a-e6fdc9a4bb95", forHTTPHeaderField: "X-Practicum-Mobile-Token")
+
         return urlRequest
     }
 

@@ -36,11 +36,11 @@ enum LogEvent {
     var name: String {
         switch self {
         case .open:
-            return "Open"
+            "Open"
         case .close:
-            return "Close"
+            "Close"
         case .click:
-            return "Click"
+            "Click"
         }
     }
 }
