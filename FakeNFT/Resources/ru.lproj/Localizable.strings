@@ -11,7 +11,30 @@
 
 
 // Profile
-
+"Profile.myNFT" = "Мои NFT";
+"Profile.favoritesNFT" = "Избранные NFT";
+"Profile.favoritesNFT.Empty" = "У Вас ещё нет избранных NFT";
+"Profile.aboutDeveloper" = "О разработчике";
+"Profile.MyNFT.Title" = "Мои NFT";
+"Profile.MyNFT.Sort.Title" = "Сортировка";
+"Profile.MyNFT.Sort.ByPrice" = "По цене";
+"Profile.MyNFT.Sort.ByRating" = "По рейтингу";
+"Profile.MyNFT.Sort.ByName" = "По названию";
+"Profile.MyNFT.Sort.Close" = "Закрыть";
+"Profile.MyNFT.Empty" = "У вас ещё нет NFT";
+"Profile.MyNFT.From" = "От ";
+"Profile.Favorites.Title" = "Избранные NFT";
+"Profile.Edit.Change.Avatar.Title" = "Сменить \nфото";
+"Profile.Edit.NameTitle" = "Имя";
+"Profile.Edit.CaptionTitle" = "Описание";
+"Profile.Edit.WebsiteTitle" = "Сайт";
+"Profile.Edit.ChangeImageLabel" = "Загрузить изображение";
+"Profile.Edit.ChangeImageAlert.title" = "Замена Аватарки";
+"Profile.Edit.ChangeImageAlert.message" = "Введите ссылку на картинку";
+"Profile.Edit.ChangeImageAlert.placeholder" = "Ссылка на картинку";
+"Profile.Edit.ChangeImageAlert.ok" = "Ок";
+"Profile.Edit.ChangeImageAlert.Error" = "Ошибка";
+"Profile.Edit.ChangeImageAlert.Error.Message" = "Ссылка введена неверно";
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
 
