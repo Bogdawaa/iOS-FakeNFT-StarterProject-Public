@@ -1,7 +1,6 @@
 import UIKit
 
 extension UIFont {
-    // Ниже приведены примеры шрифтов, настоящие шрифты надо взять из фигмы
 
     // Headline Fonts
     static var headline1 = UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -16,6 +15,7 @@ extension UIFont {
     // Caption Fonts
     static var caption1 = UIFont.systemFont(ofSize: 15, weight: .regular)
     static var caption2 = UIFont.systemFont(ofSize: 13, weight: .regular)
+    static var caption3 = UIFont.systemFont(ofSize: 10, weight: .regular)
 
     // Fav Nft Fonts
     static var favNftTitle = UIFont.boldSystemFont(ofSize: 15)
