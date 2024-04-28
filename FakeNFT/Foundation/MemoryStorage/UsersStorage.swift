@@ -21,7 +21,7 @@ final class UsersStorageImpl: UsersStorage {
 
     func saveUsers(_ users: [User]) {
         syncQueue.async { [weak self] in
-            self?.storage.append(contentsOf: users)
+            self?.storage = users
         }
     }
 
