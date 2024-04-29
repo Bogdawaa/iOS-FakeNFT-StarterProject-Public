@@ -1,7 +1,6 @@
 import Foundation
 
-struct NFTRequest: NetworkRequest {
-
+struct NFTRequest: BaseNftRequest {
     let id: String
 
     var endpoint: URL? {

@@ -1,13 +1,15 @@
 import UIKit
 
-final class TestCatalogViewController: UIViewController {
+protocol CatalogViewController: UIViewController {}
+
+final class TestCatalogViewController: StatLoggedUIViewController, CatalogViewController {
 
     let servicesAssembly: ServicesAssembly
     let testNftButton = UIButton()
 
-    init(servicesAssembly: ServicesAssembly) {
+    init(servicesAssembly: ServicesAssembly, statLog: StatLog) {
         self.servicesAssembly = servicesAssembly
-        super.init(nibName: nil, bundle: nil)
+        super.init(statLog: statLog)
     }
 
     required init?(coder: NSCoder) {
@@ -36,6 +38,6 @@ final class TestCatalogViewController: UIViewController {
 }
 
 private enum Constants {
-    static let openNftTitle = NSLocalizedString("Catalog.openNft", comment: "")
-    static let testNftId = "22"
+    static let openNftTitle = "Catalog.openNft"~
+    static let testNftId = "c14cf3bc-7470-4eec-8a42-5eaa65f4053c"
 }
