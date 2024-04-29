@@ -1,8 +1,8 @@
 import Foundation
 
-final class ListService<ItemModel: Decodable> {
+final class ListService<ItemModel: ApiDto> {
     private let networkClient: AsyncNetworkClient
-    private let nftApiPath: NftListApiPath
+    private var pathIds: PathIds = .empty
     private var sortBy: String?
     private var items: [ItemModel] = []
     private var nextPage = 0
@@ -10,19 +10,25 @@ final class ListService<ItemModel: Decodable> {
 
     var itemsCount: Int { items.count }
 
-    init(networkClient: AsyncNetworkClient, nftApiPath: NftListApiPath) {
+    init(networkClient: AsyncNetworkClient) {
         self.networkClient = networkClient
-        self.nftApiPath = nftApiPath
     }
 
-    func fetchNextPage(sortBy: String?) async throws -> ListServiceResult {
+    func fetchNextPage(sortBy: String?, pathIds: PathIds = .empty) async throws -> ListServiceResult {
+        if self.pathIds != pathIds {
+            nextPage = 0
+            self.pathIds = pathIds
+            needReload = true
+        }
+
         if self.sortBy != sortBy {
             nextPage = 0
             self.sortBy = sortBy
             needReload = true
         }
 
-        let request = nftApiPath.buildRequest(page: nextPage, sortBy: sortBy)
+        let request = ItemModel.listRequest(pathIds: pathIds, page: nextPage, sortBy: sortBy)
+
         let newItems = try await self.networkClient.fetch(from: request, as: [ItemModel].self)
         return addPageData(data: newItems)
     }
