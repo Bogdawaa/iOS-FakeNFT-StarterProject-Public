@@ -47,7 +47,7 @@ final class UserCardPresenter: UserCardPresenterProtocol {
             rating: user.rating,
             website: user.website,
             nfts: user.nfts,
-            description: user.description.trimmingCharacters(in: .whitespacesAndNewlines)
+            description: user.description?.trimmingCharacters(in: .whitespacesAndNewlines)
         )
         return userViewModel
     }
