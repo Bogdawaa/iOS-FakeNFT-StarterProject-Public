@@ -62,8 +62,6 @@
 		91995DEE2BBE74AB007F51C7 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DED2BBE74AB007F51C7 /* EditProfileViewController.swift */; };
 		91995DF02BC3B09E007F51C7 /* PofilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DEF2BC3B09E007F51C7 /* PofilePresenter.swift */; };
 		91995DF22BC3B1F2007F51C7 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DF12BC3B1F2007F51C7 /* Profile.swift */; };
-		91995DF42BC3BBAF007F51C7 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DF32BC3BBAF007F51C7 /* ProfileService.swift */; };
-		91995DF62BC3BC45007F51C7 /* ProfileByRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DF52BC3BC45007F51C7 /* ProfileByRequest.swift */; };
 		91995DF82BC3BE1B007F51C7 /* ProfileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DF72BC3BE1B007F51C7 /* ProfileStorage.swift */; };
 		91995DFA2BC3E7B0007F51C7 /* ProfileContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DF92BC3E7B0007F51C7 /* ProfileContract.swift */; };
 		91995DFD2BC51277007F51C7 /* MyNFTPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91995DFC2BC51277007F51C7 /* MyNFTPresenter.swift */; };
@@ -1076,7 +1074,6 @@
 				91995DFD2BC51277007F51C7 /* MyNFTPresenter.swift in Sources */,
 				F0CAACA22BDAC4E30042C2C4 /* ProfileService.swift in Sources */,
 				3F6806D529CBBEC700B4F915 /* NetworkTask.swift in Sources */,
-				91995DF42BC3BBAF007F51C7 /* ProfileService.swift in Sources */,
 				7943632D2BB830B900F3F527 /* UIImages.swift in Sources */,
 				0CF2C2DB2A783C1B00FDC837 /* LoadingView.swift in Sources */,
 				F0D195062BC72F9700FEAFCA /* WebViewController.swift in Sources */,
@@ -1091,7 +1088,6 @@
 				91995DFF2BC5128C007F51C7 /* MyNFTContract.swift in Sources */,
 				91013CD52BCFC6F000105D5E /* EditProfile.swift in Sources */,
 				0CFCB7462A78064B0009A829 /* NftDetailCellModel.swift in Sources */,
-				91995DF62BC3BC45007F51C7 /* ProfileByRequest.swift in Sources */,
 				F00DF4C72BBF094A00825462 /* UserDefaultsKeys.swift in Sources */,
 				79143C772BB9479E007E2AAB /* BaseNftRequest.swift in Sources */,
 				0CFCB74B2A780EA80009A829 /* UIView+Constraints.swift in Sources */,
