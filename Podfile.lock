@@ -64,9 +64,11 @@ PODS:
   - KSCrash/Recording (1.16.1):
     - KSCrash/Recording/Tools (= 1.16.1)
   - KSCrash/Recording/Tools (1.16.1)
+  - Swinject (2.8.4)
 
 DEPENDENCIES:
   - AppMetricaAnalytics (~> 5.0.0)
+  - Swinject
 
 SPEC REPOS:
   trunk:
@@ -87,6 +89,7 @@ SPEC REPOS:
     - AppMetricaStorageUtils
     - AppMetricaWebKit
     - KSCrash
+    - Swinject
 
 SPEC CHECKSUMS:
   AppMetrica_FMDB: 9d0237e2d8a2d14f579c4754f9aa2b69705d7b07
@@ -106,7 +109,8 @@ SPEC CHECKSUMS:
   AppMetricaStorageUtils: fc77707294080500ef3d03c624c47b7acf1270d8
   AppMetricaWebKit: 46ab34c8a0973786ed0df7a80ea702a4aeba49fa
   KSCrash: fa10d2b42aa3e38f5697ef1124504c3fab6c6e6b
+  Swinject: 6ba81f58fd769c9fd4b8ceced9e25a9cb137cb3c
 
-PODFILE CHECKSUM: a635b15ba1da7f98687d3e12e5d75433943a3315
+PODFILE CHECKSUM: 445de81fa1c0b83ad7dd523e3595f707ace2c797
 
 COCOAPODS: 1.15.2

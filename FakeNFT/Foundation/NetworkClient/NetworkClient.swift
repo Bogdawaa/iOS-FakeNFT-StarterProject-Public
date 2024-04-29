@@ -127,7 +127,13 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
-        urlRequest = request.secretInjector(urlRequest)
+        urlRequest.setValue(request.authToken, forHTTPHeaderField: RequestConstants.authTokenHeader)
+
+        if let httpBody = request.httpBody {
+            urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+            urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+            urlRequest.httpBody = httpBody.data(using: .utf8)
+        }
 
         if let httpBody = request.httpBody {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -137,10 +143,9 @@ struct DefaultNetworkClient: NetworkClient {
 
         if let dto = request.dto,
            let dtoEncoded = try? encoder.encode(dto) {
-            urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue(request.application, forHTTPHeaderField: RequestConstants.contentType)
             urlRequest.httpBody = dtoEncoded
         }
-
         return urlRequest
     }
 
