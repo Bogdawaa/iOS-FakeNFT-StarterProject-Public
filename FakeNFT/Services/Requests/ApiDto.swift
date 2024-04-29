@@ -7,12 +7,6 @@ protocol ApiDto: Codable {
     static func entityRequest(pathIds: PathIds) -> URLRequest
 }
 
-enum PathIds {
-    case empty
-    case one(first: String)
-    case two(first: String, second: String)
-}
-
 extension ApiDto {
     static func listRequest(pathIds: PathIds, page: Int, sortBy: String?) -> URLRequest {
         var queryItems = [URLQueryItem(name: "page", value: String(page))]
@@ -45,21 +39,4 @@ extension ApiDto {
         request.httpMethod = method.rawValue
         return request
     }
-}
-
-func == (lhs: PathIds, rhs: PathIds) -> Bool {
-    switch (lhs, rhs) {
-    case (.empty, .empty):
-        return true
-    case let (.one(lFirst), .one(rFirst)):
-        return lFirst == rFirst
-    case let (.two(lFirst, lSecond), .two(rFirst, rSecond)):
-      return lFirst == rFirst && lSecond == rSecond
-    default:
-      return false
-    }
-}
-
-func != (lhs: PathIds, rhs: PathIds) -> Bool {
-    return !(lhs == rhs)
 }
