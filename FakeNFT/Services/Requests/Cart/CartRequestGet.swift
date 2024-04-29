@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CartRequest: NetworkRequest {
+struct CartRequest: BaseNftRequest {
     var httpBody: String?
 
     let id: String

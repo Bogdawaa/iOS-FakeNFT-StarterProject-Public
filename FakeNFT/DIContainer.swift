@@ -30,7 +30,6 @@ final class DIContainer {
         container.resolve(TabBarController.self)!
     }
 
-
     func myNftViewController() -> MyNFTViewProtocol {
         container.resolve(MyNFTViewController.self)!
     }
@@ -48,15 +47,15 @@ final class DIContainer {
     func userCardPresenter() -> UserCardPresenter {
         container.resolve(UserCardPresenter.self)!
     }
-    
+
     func usersCollectionPresenter() -> UsersCollectionPresenter {
         container.resolve(UsersCollectionPresenter.self)!
     }
-    
+
     func statisticsPresenter() -> StatisticsPresenter {
         container.resolve(StatisticsPresenter.self)!
     }
-    
+
     func statlog() -> StatLog {
         container.resolve(StatLog.self)!
     }

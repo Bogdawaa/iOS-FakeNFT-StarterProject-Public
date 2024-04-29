@@ -1,8 +1,7 @@
 import Foundation
 
-struct NFTRequest: NetworkRequest {
+struct NFTRequest: BaseNftRequest {
     var httpBody: String?
-    var secretInjector: (URLRequest) -> URLRequest
 
     let id: String
 

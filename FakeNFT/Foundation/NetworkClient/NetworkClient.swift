@@ -127,7 +127,7 @@ struct DefaultNetworkClient: NetworkClient {
 
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = request.httpMethod.rawValue
-        urlRequest.setValue(request.authToken, forHTTPHeaderField: RequestConstants.authTokenHeader)
+        urlRequest = request.secretInjector(urlRequest)
 
         if let httpBody = request.httpBody {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Accept")

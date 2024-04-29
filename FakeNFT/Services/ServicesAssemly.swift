@@ -22,11 +22,12 @@ final class ServicesAssembly {
 final class ProfileServicesAssembly {
     private let networkClient: NetworkClient
     private let profileStorage: ProfileStorage
-    
+
     var profileService: ProfileService {
         ProfileServiceImpl(
             networkClient: networkClient,
-            storage: profileStorage)
+            storage: profileStorage
+        )
     }
     init(
         networkClient: NetworkClient,
