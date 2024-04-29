@@ -19,5 +19,5 @@
     - Реализовать обработку ошибок при получении данных (план 0,5ч, фактич: 1,5ч)
 
 
-
+![Statistics screencast](https://github.com/Bogdawaa/iOS-FakeNFT-StarterProject-Public/blob/aafa676fc14665dd8c16d3ce05dcb3616e18ff80/Docs/statistics_screencast.gif)
 
