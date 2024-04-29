@@ -2,7 +2,7 @@ import Swinject
 import UIKit
 
 final class DIContainer {
-    private var container = Container()
+    private let container = Container()
 
     init() {
         registerFoundation()
