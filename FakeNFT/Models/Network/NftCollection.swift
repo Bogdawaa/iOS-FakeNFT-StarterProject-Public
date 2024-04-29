@@ -19,3 +19,25 @@ typealias NftCollectionList = [NftCollection]
 enum NftCollectionOrder: String {
     case name, nfts
 }
+
+extension NftCollection: ApiDto {
+    static func listPath(ids: PathIds) -> String {
+        switch ids {
+        case .empty:
+            return "collections"
+        default:
+            assertionFailure()
+            return ""
+        }
+    }
+
+    static func entityPath(ids: PathIds) -> String {
+        switch ids {
+        case let .one(first):
+            return "\(listPath(ids: .empty))/\(first)"
+        default:
+            assertionFailure()
+            return ""
+        }
+    }
+}

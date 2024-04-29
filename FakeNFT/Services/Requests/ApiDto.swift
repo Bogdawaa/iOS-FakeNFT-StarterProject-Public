@@ -1,0 +1,65 @@
+import Foundation
+
+protocol ApiDto: Codable {
+    static func listPath(ids: PathIds) -> String
+    static func entityPath(ids: PathIds) -> String
+    static func listRequest(pathIds: PathIds, page: Int, sortBy: String?) -> URLRequest
+    static func entityRequest(pathIds: PathIds) -> URLRequest
+}
+
+enum PathIds {
+    case empty
+    case one(first: String)
+    case two(first: String, second: String)
+}
+
+extension ApiDto {
+    static func listRequest(pathIds: PathIds, page: Int, sortBy: String?) -> URLRequest {
+        var queryItems = [URLQueryItem(name: "page", value: String(page))]
+
+        if let sortBy {
+            queryItems.append(URLQueryItem(name: "sortBy", value: sortBy))
+        }
+
+        let path = "\(RequestConstants.baseApiPath)/\(listPath(ids: pathIds))"
+
+        return urlRequest(method: .get, path: path, queryItems: queryItems)
+    }
+
+    static func entityRequest(pathIds: PathIds) -> URLRequest {
+        let path = "\(RequestConstants.baseApiPath)/\(entityPath(ids: pathIds))"
+        return urlRequest(method: .get, path: path, queryItems: nil)
+    }
+
+    private static func urlRequest(
+        method: HttpMethod,
+        path: String,
+        queryItems: [URLQueryItem]?
+    ) -> URLRequest {
+        var components = URLComponents(string: RequestConstants.baseURL)!
+        components.path = path
+        components.queryItems = queryItems
+        var request = URLRequest(url: components.url!)
+        request.setValue(RequestConstants.nftToken, forHTTPHeaderField: RequestConstants.nftHeader)
+        request.timeoutInterval = RequestConstants.timeoutInterval
+        request.httpMethod = method.rawValue
+        return request
+    }
+}
+
+func == (lhs: PathIds, rhs: PathIds) -> Bool {
+    switch (lhs, rhs) {
+    case (.empty, .empty):
+        return true
+    case let (.one(lFirst), .one(rFirst)):
+        return lFirst == rFirst
+    case let (.two(lFirst, lSecond), .two(rFirst, rSecond)):
+      return lFirst == rFirst && lSecond == rSecond
+    default:
+      return false
+    }
+}
+
+func != (lhs: PathIds, rhs: PathIds) -> Bool {
+    return !(lhs == rhs)
+}

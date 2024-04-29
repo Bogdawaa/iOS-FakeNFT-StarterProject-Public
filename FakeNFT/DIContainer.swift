@@ -62,8 +62,7 @@ final class DIContainer {
         container.register(NftCollectionPresenter.self) { diResolver in
             NftCollectionPresenterImpl(
                 listService: ListService<NftCollection>(
-                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!,
-                    nftApiPath: .collectionList
+                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!
                 )
             )
         }
