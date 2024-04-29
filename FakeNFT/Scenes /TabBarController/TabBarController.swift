@@ -4,21 +4,26 @@ final class TabBarController: UITabBarController {
     private let catalogViewController: CatalogViewController
     private let servicesAssembly: ServicesAssembly
     private let profileViewController: UINavigationController
+    private let statisticsController: UINavigationController
+
     init(
         servicesAssembly: ServicesAssembly,
         catalogViewController: CatalogViewController,
-        profileViewController: UINavigationController
+        profileViewController: UINavigationController,
+        statisticsController: UINavigationController
     ) {
         self.servicesAssembly = servicesAssembly
         self.catalogViewController = catalogViewController
         self.profileViewController = profileViewController
+        self.statisticsController = statisticsController
+
         super.init(nibName: nil, bundle: nil)
 
         viewControllers = [
             self.profileViewController,
             self.catalogViewController,
             UIViewController(),
-            UIViewController()
+            self.statisticsController
         ]
 
         let items = [
