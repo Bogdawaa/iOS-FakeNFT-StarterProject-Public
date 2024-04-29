@@ -23,3 +23,4 @@ extension NetworkRequest {
     var application: String? { RequestConstants.application }
     var parametrs: [String: String]? { nil }
 }
+
