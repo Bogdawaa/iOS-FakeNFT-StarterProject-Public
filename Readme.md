@@ -1,5 +1,7 @@
 # ТЗ мобильного приложения FakeNFT
 
+![Screencast](https://github.com/Bogdawaa/iOS-FakeNFT-StarterProject-Public/blob/61a4f45f8604539015efc8166d039dcd43f117e0/Docs/screencast.gif)
+
 # Ссылки
 
 [Дизайн Figma](https://www.figma.com/file/k1LcgXHGTHIeiCv4XuPbND/FakeNFT-(YP)?node-id=96-5542&t=YdNbOI8EcqdYmDeg-0)
