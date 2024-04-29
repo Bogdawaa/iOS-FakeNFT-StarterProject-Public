@@ -7,20 +7,16 @@
 
 import UIKit
 
-protocol Builder {
-    static func buildWebViewController(with user: User) -> UIViewController
-}
+final class ViewBuilder {
 
-final class ViewBuilder: Builder {
-
-    static func buildWebViewController(with user: User) -> UIViewController {
+    static func buildWebViewController(with user: User) -> WebViewController {
         let webViewPresenter = WebViewPresenter(user: user)
         let webViewController = WebViewController(presenter: webViewPresenter)
         webViewPresenter.view = webViewController
         return webViewController
     }
 
-    static func buildUserCardViewController(with user: User) -> UIViewController {
+    static func buildUserCardViewController(with user: User) -> UserCardViewController {
         let userCardViewController = UserCardViewController(
             presenter: DIContainer().userCardPresenter(),
             statlog: DIContainer().statlog()
@@ -29,7 +25,7 @@ final class ViewBuilder: Builder {
         return userCardViewController
     }
 
-    static func buildCollectionNft(with user: User) -> UIViewController {
+    static func buildCollectionNft(with user: User) -> UsersCollectionViewController {
         let usersCollectionNftViewController = UsersCollectionViewController(
             presenter: DIContainer().usersCollectionPresenter(),
             statlog: DIContainer().statlog()
@@ -38,7 +34,7 @@ final class ViewBuilder: Builder {
         return usersCollectionNftViewController
     }
 
-    static func buildStatisticsViewController() -> UIViewController {
+    static func buildStatisticsViewController() -> StatisticsViewController {
         let statisticsViewController = StatisticsViewController(
             presenter: DIContainer().statisticsPresenter(),
             statlog: DIContainer().statlog()

@@ -12,7 +12,6 @@ protocol UsersStorage: AnyObject {
     func getUsers() -> [User]?
 }
 
-// Пример простого класса, который сохраняет данные из сети
 final class UsersStorageImpl: UsersStorage {
 
     private var storage: [User] = []

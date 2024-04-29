@@ -13,7 +13,6 @@ final class StatisticsViewController: StatLoggedUIViewController, StatisticsView
 
     // MARK: - properties
     var presenter: StatisticsPresenterProtocol
-    let diContainer = DIContainer()
 
     private var isShowing = false
 
@@ -178,14 +177,8 @@ extension StatisticsViewController: UITableViewDataSource {
             withIdentifier: StatisticsTableViewCell.statisticsTableViewCellIdentifier,
             for: indexPath
         ) as? StatisticsTableViewCell else { return UITableViewCell() }
-
+        
         cell.setupCell(with: users[indexPath.row])
-
-        let url = URL(string: users[indexPath.row].avatar)
-        cell.userImage.kf.setImage(
-            with: url,
-            placeholder: UIImage.ypUserPlaceholder
-        )
         return cell
     }
 }

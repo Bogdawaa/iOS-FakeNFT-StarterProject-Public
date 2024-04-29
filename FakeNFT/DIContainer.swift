@@ -19,9 +19,7 @@ final class DIContainer {
                 profileViewController: UINavigationController(
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
                 ),
-                statisticsController: UINavigationController(
-                    rootViewController: ViewBuilder.buildStatisticsViewController()
-                )
+                statisticsController: ViewBuilder.buildStatisticsViewController()
             )
         }
     }

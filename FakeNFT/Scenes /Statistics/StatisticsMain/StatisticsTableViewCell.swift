@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class StatisticsTableViewCell: UITableViewCell {
 
     // MARK: - properties
     static let statisticsTableViewCellIdentifier = "statisticsCellIdentifier"
 
-    lazy var userImage: UIImageView = {
+    private lazy var userImage: UIImageView = {
         let imgView = UIImageView()
         imgView.clipsToBounds = true
         imgView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,6 +68,12 @@ final class StatisticsTableViewCell: UITableViewCell {
         userRating.text = model.rating
         userName.text = model.name
         userNFTs.text = String(model.nfts.count)
+
+        let url = URL(string: model.avatar)
+        userImage.kf.setImage(
+            with: url,
+            placeholder: UIImage.ypUserPlaceholder
+        )
     }
 
     // MARK: - private methods
