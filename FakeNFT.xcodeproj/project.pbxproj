@@ -231,7 +231,7 @@
 		F02852C22BD4766700688074 /* UsersCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionCell.swift; sourceTree = "<group>"; };
 		F02852C42BD4767A00688074 /* UsersCollectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionPresenter.swift; sourceTree = "<group>"; };
 		F02852C62BD5110200688074 /* UsersCollectionViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersCollectionViewProtocol.swift; sourceTree = "<group>"; };
-		F03DCBA12BDFE64B004D8C62 /* statistics_screencast.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = statistics_screencast.gif; sourceTree = "<group>"; };
+		F03DCBA22BE00A17004D8C62 /* screencast.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = screencast.gif; sourceTree = "<group>"; };
 		F0CAAC922BD985F60042C2C4 /* CartRequestGet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRequestGet.swift; sourceTree = "<group>"; };
 		F0CAAC932BD985F60042C2C4 /* CartRequestPut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartRequestPut.swift; sourceTree = "<group>"; };
 		F0CAAC9A2BD988D10042C2C4 /* CartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartModel.swift; sourceTree = "<group>"; };
@@ -634,7 +634,7 @@
 		F00DF4AB2BAF6D8200825462 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
-				F03DCBA12BDFE64B004D8C62 /* statistics_screencast.gif */,
+				F03DCBA22BE00A17004D8C62 /* screencast.gif */,
 				F00DF4AC2BAF6F7400825462 /* Statistics.md */,
 			);
 			path = Docs;
