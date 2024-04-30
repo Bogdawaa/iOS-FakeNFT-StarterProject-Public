@@ -16,17 +16,12 @@ final class ListService<ItemModel: ApiDto> {
 
     func fetchNextPage(sortBy: String?, pathIds: PathIds = .empty) async throws -> ListServiceResult {
         if self.pathIds != pathIds {
-            nextPage = 0
-            items = []
             self.pathIds = pathIds
-            needReload = true
+            reset()
         }
-
         if self.sortBy != sortBy {
-            nextPage = 0
-            items = []
             self.sortBy = sortBy
-            needReload = true
+            reset()
         }
 
         let request = ItemModel.listRequest(pathIds: pathIds, page: nextPage, sortBy: sortBy)
@@ -35,11 +30,20 @@ final class ListService<ItemModel: ApiDto> {
         return addPageData(data: newItems)
     }
 
+    private func reset() {
+        nextPage = 0
+        items = []
+        needReload = true
+    }
+
     private func addPageData(data: [ItemModel]) -> ListServiceResult {
         let oldCount = itemsCount
         items.append(contentsOf: data)
-        nextPage += 1
         let newCount = itemsCount
+
+        if oldCount != newCount {
+            nextPage += 1
+        }
 
         if needReload {
             needReload = false

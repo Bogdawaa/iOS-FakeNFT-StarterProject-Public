@@ -13,7 +13,7 @@ protocol NftCollectionPresenterDelegate: AnyObject, SortableView, ErrorView {
 
 enum NftViewState {
     case initial,
-         loading,
+         loading(more: Bool),
          failed(NetworkError),
          data(result: ListServiceResult),
          selectOrder,
@@ -39,7 +39,7 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     }
 
     func viewDidLoad() {
-        state = .loading
+        state = .loading(more: false)
     }
 
     func selectOrder() {
@@ -50,9 +50,9 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
         switch state {
         case .initial:
             assertionFailure("can't move to initial state")
-        case .loading:
+        case .loading(let more):
             view?.showLoading()
-            loadCollections()
+            loadCollections(cancelTask: !more)
         case .data(let result):
             switch result {
             case .reload:
@@ -74,24 +74,28 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
             delegate.selectOrder(sortOptions: sortOptions)
         case .orderSelected(let order):
             self.order = order
-            self.state = .loading
+            self.state = .loading(more: false)
         case .failed(let error):
             view?.hideLoading()
             delegate?.showError(
                 ErrorModel(
                     message: error.description,
                     action: { [weak self] in
-                        self?.state = .loading
+                        self?.state = .loading(more: false)
                     }
                 )
             )
         }
     }
 
-    private func loadCollections() {
+    private func loadCollections(cancelTask: Bool) {
         if loadingTask != nil {
-            loadingTask?.cancel()
-            loadingTask = nil
+            if cancelTask {
+                loadingTask?.cancel()
+                loadingTask = nil
+            } else {
+                return
+            }
         }
 
         loadingTask = Task { [weak self] in
@@ -126,5 +130,9 @@ extension NftCollectionPresenterImpl: NftCollectionViewDelegate {
     func didSelectRow(at indexPath: IndexPath) {
         guard let rowData = rowData(at: indexPath) else { return }
         delegate?.didSelectRow(rowData: rowData)
+    }
+
+    func loadMoreRows() {
+        state = .loading(more: true)
     }
 }

@@ -24,7 +24,7 @@ final class NftCollectionCell: UITableViewCell {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
 
-        view.font = UIFont.boldSystemFont(ofSize: 17)
+        view.font = .bodyBold
         view.textColor = .ypBlack
         view.textAlignment = .left
 

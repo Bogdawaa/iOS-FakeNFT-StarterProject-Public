@@ -5,6 +5,7 @@ protocol NftCollectionViewDelegate: AnyObject {
 
     func rowData(at indexPath: IndexPath) -> NftCollection?
     func didSelectRow(at indexPath: IndexPath)
+    func loadMoreRows()
 }
 
 final class NftCollectionView: UIView, LoadingView, ViewWithTable {
@@ -52,7 +53,6 @@ final class NftCollectionView: UIView, LoadingView, ViewWithTable {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
 }
 
 extension NftCollectionView: UITableViewDataSource {
@@ -87,5 +87,11 @@ extension NftCollectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? NftCollectionCell else { return }
         cell.resizeImage()
+
+        guard let delegate else { return }
+
+        if indexPath.row == delegate.numberOfRows - 1 {
+            delegate.loadMoreRows()
+        }
     }
 }

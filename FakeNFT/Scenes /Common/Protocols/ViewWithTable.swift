@@ -18,6 +18,7 @@ extension ViewWithTable {
                 IndexPath(row: index, section: 0)
             }
             tableView.insertRows(at: indexPaths, with: .automatic)
-        } completion: { _ in }
+        } completion: { _ in
+        }
     }
 }
