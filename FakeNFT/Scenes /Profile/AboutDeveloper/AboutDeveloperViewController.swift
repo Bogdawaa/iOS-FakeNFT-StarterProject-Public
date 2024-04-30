@@ -25,7 +25,15 @@ private extension AboutDeveloperViewController {
     // MARK: - Setup Views
     func setupViews() {
         self.view.addSubview(webView)
-        webView.frame = self.view.bounds
+        view.backgroundColor = .ypWhite
+        webView.backgroundColor = .ypWhite
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         webView.uiDelegate = self
         webView.navigationDelegate = self
     }
