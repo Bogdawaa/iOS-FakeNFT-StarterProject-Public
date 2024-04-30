@@ -9,6 +9,7 @@ protocol ViewWithTable {
 extension ViewWithTable {
     func reload() {
         tableView.reloadData()
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
 
     func update(newIndexes: Range<Int>) {
