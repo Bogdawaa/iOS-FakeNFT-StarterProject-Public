@@ -55,6 +55,7 @@
 		7943632F2BB8364500F3F527 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943632E2BB8364500F3F527 /* DIContainer.swift */; };
 		7958A7392BE0189F00B421C4 /* ApiDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A7382BE0189F00B421C4 /* ApiDto.swift */; };
 		7958A73B2BE02A0400B421C4 /* PathIds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A73A2BE02A0400B421C4 /* PathIds.swift */; };
+		7958A73D2BE0E0A300B421C4 /* SortableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A73C2BE0E0A300B421C4 /* SortableView.swift */; };
 		7972F6122BD5705C0094B69E /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7972F6112BD5705C0094B69E /* ListService.swift */; };
 		79F2E7E52BE8221000354BD7 /* ProfileByRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7E42BE8221000354BD7 /* ProfileByRequest.swift */; };
 		91013CC72BC7D26800105D5E /* FavoritesNFTPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91013CC62BC7D26800105D5E /* FavoritesNFTPresenter.swift */; };
@@ -196,6 +197,7 @@
 		7943632E2BB8364500F3F527 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7958A7382BE0189F00B421C4 /* ApiDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiDto.swift; sourceTree = "<group>"; };
 		7958A73A2BE02A0400B421C4 /* PathIds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathIds.swift; sourceTree = "<group>"; };
+		7958A73C2BE0E0A300B421C4 /* SortableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortableView.swift; sourceTree = "<group>"; };
 		7972F6112BD5705C0094B69E /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
 		79F2E7E42BE8221000354BD7 /* ProfileByRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileByRequest.swift; sourceTree = "<group>"; };
 		90FAC42DA72245C005D5FEE5 /* Pods_FakeNFTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -324,6 +326,7 @@
 			children = (
 				0CF2C2DA2A783C1B00FDC837 /* LoadingView.swift */,
 				0CF2C2DC2A783CE600FDC837 /* ErrorView.swift */,
+				7958A73C2BE0E0A300B421C4 /* SortableView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1111,6 +1114,7 @@
 				7958A7392BE0189F00B421C4 /* ApiDto.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
 				91995DFA2BC3E7B0007F51C7 /* ProfileContract.swift in Sources */,
+				7958A73D2BE0E0A300B421C4 /* SortableView.swift in Sources */,
 				794363292BB7FB3D00F3F527 /* String+Extension.swift in Sources */,
 				91995DF22BC3B1F2007F51C7 /* Profile.swift in Sources */,
 				91013CC92BC7D28000105D5E /* FavoritesNFTContract.swift in Sources */,

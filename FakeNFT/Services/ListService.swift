@@ -17,12 +17,14 @@ final class ListService<ItemModel: ApiDto> {
     func fetchNextPage(sortBy: String?, pathIds: PathIds = .empty) async throws -> ListServiceResult {
         if self.pathIds != pathIds {
             nextPage = 0
+            items = []
             self.pathIds = pathIds
             needReload = true
         }
 
         if self.sortBy != sortBy {
             nextPage = 0
+            items = []
             self.sortBy = sortBy
             needReload = true
         }
