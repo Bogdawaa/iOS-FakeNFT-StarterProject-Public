@@ -15,7 +15,7 @@ enum NetworkError: Error {
     var description: String {
         switch self {
         case let .connectingError(error):
-            return "Ошибка соединения: \(error.localizedDescription), \(error.code)"
+            return "Ошибка соединения: \(error.localizedDescription)"
         case let .codeError(code):
             return "Сервер ответил ошибкой: \(code)"
         case .parseError:

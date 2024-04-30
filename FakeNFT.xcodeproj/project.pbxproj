@@ -57,6 +57,7 @@
 		7943632F2BB8364500F3F527 /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7943632E2BB8364500F3F527 /* DIContainer.swift */; };
 		7958A7392BE0189F00B421C4 /* ApiDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A7382BE0189F00B421C4 /* ApiDto.swift */; };
 		7958A73B2BE02A0400B421C4 /* PathIds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A73A2BE02A0400B421C4 /* PathIds.swift */; };
+		7958A73D2BE0E0A300B421C4 /* SortableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7958A73C2BE0E0A300B421C4 /* SortableView.swift */; };
 		7972F6122BD5705C0094B69E /* ListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7972F6112BD5705C0094B69E /* ListService.swift */; };
 		79BC4FC82BB8379E007005F7 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC72BB8379E007005F7 /* Swinject */; };
 		79BC4FCA2BB8379E007005F7 /* Swinject-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 79BC4FC92BB8379E007005F7 /* Swinject-Dynamic */; };
@@ -142,6 +143,7 @@
 		7943632E2BB8364500F3F527 /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7958A7382BE0189F00B421C4 /* ApiDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiDto.swift; sourceTree = "<group>"; };
 		7958A73A2BE02A0400B421C4 /* PathIds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathIds.swift; sourceTree = "<group>"; };
+		7958A73C2BE0E0A300B421C4 /* SortableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortableView.swift; sourceTree = "<group>"; };
 		7972F6112BD5705C0094B69E /* ListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListService.swift; sourceTree = "<group>"; };
 		7BB5CA1EE6C806649EDD875B /* Pods-FakeNFT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.release.xcconfig"; sourceTree = "<group>"; };
 		90FAC42DA72245C005D5FEE5 /* Pods_FakeNFTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +208,7 @@
 			children = (
 				0CF2C2DA2A783C1B00FDC837 /* LoadingView.swift */,
 				0CF2C2DC2A783CE600FDC837 /* ErrorView.swift */,
+				7958A73C2BE0E0A300B421C4 /* SortableView.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -756,6 +759,7 @@
 				7943632B2BB7FBB400F3F527 /* StatLog.swift in Sources */,
 				7958A7392BE0189F00B421C4 /* ApiDto.swift in Sources */,
 				3FC8C39329D246BA0081F015 /* DateFormatters+Presets.swift in Sources */,
+				7958A73D2BE0E0A300B421C4 /* SortableView.swift in Sources */,
 				794363292BB7FB3D00F3F527 /* String+Extension.swift in Sources */,
 				79143C6F2BB88A19007E2AAB /* NftCollectionView.swift in Sources */,
 				79143C7D2BB9D2B4007E2AAB /* Currency.swift in Sources */,

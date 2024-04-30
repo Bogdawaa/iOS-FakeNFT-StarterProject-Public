@@ -4,7 +4,7 @@ protocol NftCollectionViewControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController?
 }
 
-final class NftCollectionViewController: StatLoggedUIViewController {
+final class NftCollectionViewController: StatLoggedUIViewController, SortableView, ErrorView {
     private let contentView: NftCollectionView
     private var presenter: NftCollectionPresenter
     private let depsFactory: NftCollectionViewControllerDepsFactory
@@ -24,6 +24,11 @@ final class NftCollectionViewController: StatLoggedUIViewController {
         self.presenter.delegate = self
         self.presenter.view = contentView
         self.contentView.delegate = self.presenter
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .ypSort, style: .plain, target: self, action: #selector(sort)
+        )
+        navigationItem.rightBarButtonItem?.tintColor = .ypBlack
     }
 
     override func loadView() {
@@ -35,6 +40,10 @@ final class NftCollectionViewController: StatLoggedUIViewController {
         self.presenter.viewDidLoad()
     }
 
+    @objc
+    func sort() {
+        presenter.selectOrder()
+    }
 }
 
 extension NftCollectionViewController: NftCollectionPresenterDelegate {

@@ -4,14 +4,20 @@ protocol NftCollectionPresenter: NftCollectionViewDelegate {
     var delegate: NftCollectionPresenterDelegate? { get set }
     var view: NftCollectionView? { get set }
     func viewDidLoad()
+    func selectOrder()
 }
 
-protocol NftCollectionPresenterDelegate: AnyObject {
+protocol NftCollectionPresenterDelegate: AnyObject, SortableView, ErrorView {
     func didSelectRow(rowData: NftCollection)
 }
 
 enum NftViewState {
-    case initial, loading, failed(Error), data(result: ListServiceResult)
+    case initial,
+         loading,
+         failed(NetworkError),
+         data(result: ListServiceResult),
+         selectOrder,
+         orderSelected(order: NftCollectionOrder)
 }
 
 final class NftCollectionPresenterImpl: NftCollectionPresenter {
@@ -19,6 +25,8 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     weak var view: NftCollectionView?
 
     private var listService: ListService<NftCollection>
+    private var order: NftCollectionOrder = .name
+    private var loadingTask: Task<(), Never>?
 
     private var state = NftViewState.initial {
         didSet {
@@ -32,6 +40,10 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
 
     func viewDidLoad() {
         state = .loading
+    }
+
+    func selectOrder() {
+        state = .selectOrder
     }
 
     private func stateDidChanged() {
@@ -49,26 +61,55 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
                 view?.update(newIndexes: newIndexes)
             }
             view?.hideLoading()
+        case .selectOrder:
+            guard let delegate else { return }
+            let sortOptions = [
+                SortOption(title: "Catalog.SortByName"~, handler: { [weak self] in
+                    self?.state = .orderSelected(order: .name)
+                }),
+                SortOption(title: "Catalog.SortByCount"~, handler: { [weak self] in
+                    self?.state = .orderSelected(order: .nfts)
+                })
+            ]
+            delegate.selectOrder(sortOptions: sortOptions)
+        case .orderSelected(let order):
+            self.order = order
+            self.state = .loading
         case .failed(let error):
-            print(error.localizedDescription)
-//            let errorModel = makeErrorModel(error)
             view?.hideLoading()
-//            view?.showError(errorModel)
+            delegate?.showError(
+                ErrorModel(
+                    message: error.description,
+                    action: { [weak self] in
+                        self?.state = .loading
+                    }
+                )
+            )
         }
     }
 
     private func loadCollections() {
-        Task {
+        if loadingTask != nil {
+            loadingTask?.cancel()
+            loadingTask = nil
+        }
+
+        loadingTask = Task { [weak self] in
+            guard let self else { return }
+
             do {
-                let result = try await listService.fetchNextPage(sortBy: nil)
-                await MainActor.run {
-                    self.state = .data(result: result)
+                let result = try await self.listService.fetchNextPage(sortBy: order.rawValue)
+                await MainActor.run { [weak self] in
+                    self?.state = .data(result: result)
                 }
             } catch {
-                await MainActor.run {
-                    self.state = .failed(error)
+                let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
+
+                await MainActor.run { [weak self] in
+                    self?.state = .failed(error)
                 }
             }
+            self.loadingTask = nil
         }
     }
 }
