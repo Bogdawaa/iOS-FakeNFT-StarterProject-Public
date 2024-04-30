@@ -50,6 +50,10 @@ final class TabBarController: UITabBarController {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithDefaultBackground()
         tabBarAppearance.backgroundColor = .ypWhite
+        setTabBarItemColors(tabBarAppearance.stackedLayoutAppearance)
+        setTabBarItemColors(tabBarAppearance.inlineLayoutAppearance)
+        setTabBarItemColors(tabBarAppearance.compactInlineLayoutAppearance)
+
         UITabBar.appearance().standardAppearance = tabBarAppearance
 
         if #available(iOS 15.0, *) {
@@ -60,5 +64,10 @@ final class TabBarController: UITabBarController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setTabBarItemColors(_ itemAppearance: UITabBarItemAppearance) {
+        itemAppearance.normal.iconColor = .ypBlack
+        itemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ypBlack]
     }
 }
