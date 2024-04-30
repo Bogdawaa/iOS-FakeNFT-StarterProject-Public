@@ -50,8 +50,6 @@ extension NftCollectionViewController: NftCollectionPresenterDelegate {
     func didSelectRow(rowData: NftCollection) {
         let nftCollectionViewController = depsFactory.nftCollectionViewController()
         guard let nftCollectionViewController else { return }
-//        nftCollectionViewController.delegate = self
-//        nftCollectionViewController.initData(category: editTrackerViewModel.category)
         navigationController?.pushViewController(nftCollectionViewController, animated: true)
     }
 }
