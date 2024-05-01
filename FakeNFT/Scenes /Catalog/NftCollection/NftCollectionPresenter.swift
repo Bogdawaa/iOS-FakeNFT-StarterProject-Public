@@ -122,7 +122,9 @@ extension NftCollectionPresenterImpl: NftCollectionViewDelegate {
         delegate?.didSelectRow(rowData: rowData)
     }
 
-    func loadMoreRows() {
-        state = .loading
+    func willDisplayCell(at indexPath: IndexPath) {
+        if indexPath.row == numberOfRows - 1 {
+            state = .loading
+        }
     }
 }

@@ -5,7 +5,7 @@ protocol NftCollectionViewDelegate: AnyObject {
 
     func rowData(at indexPath: IndexPath) -> NftCollection?
     func didSelectRow(at indexPath: IndexPath)
-    func loadMoreRows()
+    func willDisplayCell(at indexPath: IndexPath)
 }
 
 final class NftCollectionView: UIView, LoadingView, ViewWithTable {
@@ -90,8 +90,6 @@ extension NftCollectionView: UITableViewDelegate {
 
         guard let delegate else { return }
 
-        if indexPath.row == delegate.numberOfRows - 1 {
-            delegate.loadMoreRows()
-        }
+        delegate.willDisplayCell(at: indexPath)
     }
 }
