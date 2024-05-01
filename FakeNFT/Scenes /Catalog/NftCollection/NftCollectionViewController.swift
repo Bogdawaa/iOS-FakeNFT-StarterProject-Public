@@ -21,10 +21,6 @@ final class NftCollectionViewController: StatLoggedUIViewController {
 
         super.init(statLog: statlog)
 
-        self.presenter.delegate = self
-        self.presenter.view = contentView
-        self.contentView.delegate = self.presenter
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: .ypSort, style: .plain, target: self, action: #selector(sort)
         )
