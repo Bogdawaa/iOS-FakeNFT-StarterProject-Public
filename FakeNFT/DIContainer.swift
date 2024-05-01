@@ -83,6 +83,23 @@ final class DIContainer {
 
             return controller
         }
+
+        container.register(NftCollectionDetailPresenter.self) { diResolver in
+            NftCollectionDetailPresenterImpl(
+                entityService: EntityService<Nft>(
+                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!
+                )
+            )
+        }
+
+        container.register(NftCollectionDetailController.self) { diResolver in
+            NftCollectionDetailController(
+                contentView: NftCollectionDetailView(),
+                presenter: diResolver.resolve(NftCollectionDetailPresenter.self)!,
+                depsFactory: self,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+        }
     }
 
     private func registerProfile() {
@@ -231,6 +248,12 @@ final class DIContainer {
 }
 
 extension DIContainer: NftCollectionViewControllerDepsFactory {
+    func nftCollectionDetailController() -> NftCollectionDetailController? {
+        container.resolve(NftCollectionDetailController.self)
+    }
+}
+
+extension DIContainer: NftCollectionDetailControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController? {
         UIViewController()
     }
