@@ -42,7 +42,7 @@ final class NftDetailViewController: StatLoggedUIViewController {
     init(presenter: NftDetailPresenter, statLog: StatLog) {
         self.presenter = presenter
         super.init(statLog: statLog)
-   }
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

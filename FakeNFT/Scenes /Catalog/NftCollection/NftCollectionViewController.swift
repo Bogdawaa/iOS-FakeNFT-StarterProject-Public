@@ -3,7 +3,7 @@ import UIKit
 protocol NftCollectionViewController: UIViewController {}
 
 protocol NftCollectionViewControllerDepsFactory {
-    func nftCollectionViewController() -> UIViewController?
+    func nftCollectionDetailController() -> NftCollectionDetailController?
 }
 
 final class NftCollectionViewControllerImpl: StatLoggedUIViewController {
@@ -27,6 +27,7 @@ final class NftCollectionViewControllerImpl: StatLoggedUIViewController {
             image: .ypSort, style: .plain, target: self, action: #selector(sort)
         )
         navigationItem.rightBarButtonItem?.tintColor = .ypBlack
+        navigationItem.title = ""
     }
 
     override func loadView() {
@@ -49,8 +50,10 @@ extension NftCollectionViewControllerImpl: NftCollectionViewController, Sortable
 
 extension NftCollectionViewControllerImpl: NftCollectionPresenterDelegate {
     func didSelectRow(rowData: NftCollection) {
-        let nftCollectionViewController = depsFactory.nftCollectionViewController()
-        guard let nftCollectionViewController else { return }
-        navigationController?.pushViewController(nftCollectionViewController, animated: true)
+        let nftCollectionDetailController = depsFactory.nftCollectionDetailController()
+        guard let nftCollectionDetailController else { return }
+        nftCollectionDetailController.initData(nftCollection: rowData)
+        nftCollectionDetailController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nftCollectionDetailController, animated: true)
     }
 }

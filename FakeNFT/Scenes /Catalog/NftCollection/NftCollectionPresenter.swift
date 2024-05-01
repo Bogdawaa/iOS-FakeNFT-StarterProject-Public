@@ -11,7 +11,7 @@ protocol NftCollectionPresenterDelegate: AnyObject, SortableView, ErrorView {
     func didSelectRow(rowData: NftCollection)
 }
 
-enum NftViewState {
+enum NftCollectioViewState {
     case initial,
          loading,
          failed(NetworkError),
@@ -27,7 +27,7 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     private var listService: ListService<NftCollection>
     private var order: NftCollectionOrder = .name
 
-    private var state = NftViewState.initial {
+    private var state = NftCollectioViewState.initial {
         didSet {
             stateDidChanged()
         }
