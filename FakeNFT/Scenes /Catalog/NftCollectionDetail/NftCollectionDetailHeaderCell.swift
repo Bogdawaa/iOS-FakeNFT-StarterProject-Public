@@ -19,19 +19,22 @@ class NftCollectionDetailHeaderCell: UICollectionReusableView {
     private lazy var headerLable: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = .headline3
         return view
     }()
 
     private lazy var authonLink: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.font = .caption1
         return view
     }()
 
     private lazy var author: UIStackView = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Authon:"
+        label.text = "Catalog.CollectionDetail.AuthorLable"~
+        label.font = .caption2
         label.setContentHuggingPriority(.init(.infinity), for: .horizontal)
 
         let view = UIStackView(arrangedSubviews: [label, authonLink])
@@ -47,6 +50,7 @@ class NftCollectionDetailHeaderCell: UICollectionReusableView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.numberOfLines = 0
         view.lineBreakMode = .byWordWrapping
+        view.font = .caption2
 
         return view
     }()
@@ -59,7 +63,6 @@ class NftCollectionDetailHeaderCell: UICollectionReusableView {
         ])
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
-//        view.distribution = .fillProportionally
         view.spacing = 8
         return view
     }()
@@ -77,8 +80,8 @@ class NftCollectionDetailHeaderCell: UICollectionReusableView {
 
             stack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            stack.topAnchor.constraint(equalTo: headImage.bottomAnchor),
-            stack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            stack.topAnchor.constraint(equalTo: headImage.bottomAnchor, constant: 16),
+            stack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -24)
         ])
     }
 

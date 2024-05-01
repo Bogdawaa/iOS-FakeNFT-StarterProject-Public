@@ -19,6 +19,7 @@
 "Catalog.openNft" = "Открыть Nft";
 "Catalog.SortByName" = "По названию";
 "Catalog.SortByCount" = "По количеству NFT";
+"Catalog.CollectionDetail.AuthorLable" = "Автор коллекции:";
 
 // Basket
 
