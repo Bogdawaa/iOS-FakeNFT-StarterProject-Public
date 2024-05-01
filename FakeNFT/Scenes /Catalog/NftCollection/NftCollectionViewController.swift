@@ -38,6 +38,7 @@ final class NftCollectionViewController: StatLoggedUIViewController {
 
     @objc
     func sort() {
+        statLog.report(from: Self.self, event: .click(item: "sort"))
         presenter.selectOrder()
     }
 }
