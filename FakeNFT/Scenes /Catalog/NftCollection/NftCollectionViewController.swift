@@ -6,7 +6,7 @@ protocol NftCollectionViewControllerDepsFactory {
 
 final class NftCollectionViewController: StatLoggedUIViewController, SortableView, ErrorView {
     private let contentView: NftCollectionView
-    private var presenter: NftCollectionPresenter
+    private let presenter: NftCollectionPresenter
     private let depsFactory: NftCollectionViewControllerDepsFactory
 
     init(
