@@ -43,11 +43,11 @@ final class NftCollectionCell: UITableViewCell {
         NSLayoutConstraint.activate([
             rowImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             rowImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            rowImage.topAnchor.constraint(equalTo: self.topAnchor),
+            rowImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
 
             rowLable.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             rowLable.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            rowLable.topAnchor.constraint(equalTo: rowImage.bottomAnchor),
+            rowLable.topAnchor.constraint(equalTo: rowImage.bottomAnchor, constant: 4),
             rowLable.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
