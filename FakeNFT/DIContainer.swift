@@ -30,12 +30,20 @@ final class DIContainer {
         }
 
         container.register(NftCollectionViewController.self) { diResolver in
-            NftCollectionViewController(
-                contentView: NftCollectionView(),
-                presenter: diResolver.resolve(NftCollectionPresenter.self)!,
+            let presenter = diResolver.resolve(NftCollectionPresenter.self)!
+            let view = NftCollectionView()
+            let controller = NftCollectionViewController(
+                contentView: view,
+                presenter: presenter,
                 depsFactory: self,
                 statlog: diResolver.resolve(StatLog.self)!
             )
+            
+            presenter.delegate = controller
+            presenter.view = view
+            view.delegate = presenter
+
+            return controller
         }
     }
 
