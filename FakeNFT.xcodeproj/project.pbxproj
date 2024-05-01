@@ -351,6 +351,7 @@
 			isa = PBXGroup;
 			children = (
 				0CF2C2E02A784C7000FDC837 /* LinePageControl.swift */,
+				7972F61D2BD5B8C70094B69E /* SceletonCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -574,7 +575,6 @@
 				79143C782BB95281007E2AAB /* NftCollectionDetailView.swift */,
 				79484E3A2BD637560008896E /* NftCollectionDetailHeaderCell.swift */,
 				7972F6152BD58F430094B69E /* NftCollectionDetailNftCell.swift */,
-				7972F61D2BD5B8C70094B69E /* SceletonCell.swift */,
 			);
 			path = NftCollectionDetail;
 			sourceTree = "<group>";
