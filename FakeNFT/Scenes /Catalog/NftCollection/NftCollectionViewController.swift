@@ -4,7 +4,7 @@ protocol NftCollectionViewControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController?
 }
 
-final class NftCollectionViewController: StatLoggedUIViewController, SortableView, ErrorView {
+final class NftCollectionViewController: StatLoggedUIViewController {
     private let contentView: NftCollectionView
     private let presenter: NftCollectionPresenter
     private let depsFactory: NftCollectionViewControllerDepsFactory
@@ -45,6 +45,8 @@ final class NftCollectionViewController: StatLoggedUIViewController, SortableVie
         presenter.selectOrder()
     }
 }
+
+extension NftCollectionViewController: SortableView, ErrorView {}
 
 extension NftCollectionViewController: NftCollectionPresenterDelegate {
     func didSelectRow(rowData: NftCollection) {
