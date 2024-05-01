@@ -56,6 +56,9 @@ struct AsyncNetworkClientImpl: AsyncNetworkClient {
 
             return data
         } catch let error as URLError {
+            if error.code == URLError.cancelled {
+                throw CancellationError()
+            }
             throw NetworkError.connectingError(error: error)
         } catch {
             throw NetworkError.unknownError(error: error)

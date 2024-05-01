@@ -13,7 +13,7 @@ protocol NftCollectionPresenterDelegate: AnyObject, SortableView, ErrorView {
 
 enum NftViewState {
     case initial,
-         loading(more: Bool),
+         loading,
          failed(NetworkError),
          data(result: ListServiceResult),
          selectOrder,
@@ -26,7 +26,6 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
 
     private var listService: ListService<NftCollection>
     private var order: NftCollectionOrder = .name
-    private var loadingTask: Task<(), Never>?
 
     private var state = NftViewState.initial {
         didSet {
@@ -39,7 +38,7 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     }
 
     func viewDidLoad() {
-        state = .loading(more: false)
+        state = .loading
     }
 
     func selectOrder() {
@@ -50,9 +49,9 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
         switch state {
         case .initial:
             assertionFailure("can't move to initial state")
-        case .loading(let more):
+        case .loading:
             view?.showLoading()
-            loadCollections(cancelTask: !more)
+            loadCollections()
         case .data(let result):
             switch result {
             case .reload:
@@ -74,31 +73,22 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
             delegate.selectOrder(sortOptions: sortOptions)
         case .orderSelected(let order):
             self.order = order
-            self.state = .loading(more: false)
+            self.state = .loading
         case .failed(let error):
             view?.hideLoading()
             delegate?.showError(
                 ErrorModel(
                     message: error.description,
                     action: { [weak self] in
-                        self?.state = .loading(more: false)
+                        self?.state = .loading
                     }
                 )
             )
         }
     }
 
-    private func loadCollections(cancelTask: Bool) {
-        if loadingTask != nil {
-            if cancelTask {
-                loadingTask?.cancel()
-                loadingTask = nil
-            } else {
-                return
-            }
-        }
-
-        loadingTask = Task { [weak self] in
+    private func loadCollections() {
+        Task { [weak self] in
             guard let self else { return }
 
             do {
@@ -107,13 +97,13 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
                     self?.state = .data(result: result)
                 }
             } catch {
+                if (error as? CancellationError) != nil { return }
                 let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
 
                 await MainActor.run { [weak self] in
                     self?.state = .failed(error)
                 }
             }
-            self.loadingTask = nil
         }
     }
 }
@@ -133,6 +123,6 @@ extension NftCollectionPresenterImpl: NftCollectionViewDelegate {
     }
 
     func loadMoreRows() {
-        state = .loading(more: true)
+        state = .loading
     }
 }

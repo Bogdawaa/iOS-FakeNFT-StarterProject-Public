@@ -7,6 +7,7 @@ final class ListService<ItemModel: ApiDto> {
     private var items: [ItemModel] = []
     private var nextPage = 0
     private var needReload = false
+    private var loadingTask: Task<[ItemModel], Error>?
 
     var itemsCount: Int { items.count }
 
@@ -24,21 +25,30 @@ final class ListService<ItemModel: ApiDto> {
             reset()
         }
 
-        let request = ItemModel.listRequest(pathIds: pathIds, page: nextPage, sortBy: sortBy)
+        if let loadingTask, !loadingTask.isCancelled {
+            throw CancellationError()
+        }
 
-        let newItems = try await self.networkClient.fetch(from: request, as: [ItemModel].self)
-        return addPageData(data: newItems)
+        let request = ItemModel.listRequest(pathIds: pathIds, page: nextPage, sortBy: sortBy)
+        loadingTask = Task {
+            return try await self.networkClient.fetch(from: request, as: [ItemModel].self)
+        }
+        let newItems = try await loadingTask!.value
+        loadingTask = nil
+        return addNew(items: newItems)
     }
 
     private func reset() {
         nextPage = 0
         items = []
         needReload = true
+        loadingTask?.cancel()
+        loadingTask = nil
     }
 
-    private func addPageData(data: [ItemModel]) -> ListServiceResult {
+    private func addNew(items newItems: [ItemModel]) -> ListServiceResult {
         let oldCount = itemsCount
-        items.append(contentsOf: data)
+        items.append(contentsOf: newItems)
         let newCount = itemsCount
 
         if oldCount != newCount {
