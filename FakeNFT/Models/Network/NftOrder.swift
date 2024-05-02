@@ -1,16 +1,11 @@
 import Foundation
 
-struct Profile: Codable {
+struct NftOrder: Codable {
     let id: String
-    let name: String
-    let avatar: String
-    let description: String
-    let website: String
     let nfts: [String]
-    let likes: [String]
 }
 
-extension Profile: ApiDto {
+extension NftOrder: ApiDto {
     func pathIds() -> PathIds {
         .one(first: id)
     }
@@ -18,7 +13,7 @@ extension Profile: ApiDto {
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
-            return "profile"
+            return "collections"
         default:
             assertionFailure()
             return ""
@@ -36,26 +31,26 @@ extension Profile: ApiDto {
     }
 }
 
-struct ProfilePatch: ApiPatch {
+struct NftOrderPatch: ApiPatch {
     let object: any ApiDto
 
     let id: String
-    let likes: [String]
+    let nfts: [String]
 
-    init(profile: Profile, likes: [String]) {
-        self.object = profile
-        self.id = profile.id
-        self.likes = likes
+    init(order: NftOrder, nfts: [String]) {
+        self.object = order
+        self.id = order.id
+        self.nfts = nfts
     }
 
     func asData() -> Data {
         var components = URLComponents()
         var queryItems = [URLQueryItem]()
-        if likes.isEmpty {
-            queryItems.append(URLQueryItem(name: "likes", value: "null"))
+        if nfts.isEmpty {
+            queryItems.append(URLQueryItem(name: "nfts", value: "null"))
         } else {
-            likes.forEach { nft in
-                queryItems.append(URLQueryItem(name: "likes", value: nft))
+            nfts.forEach { nft in
+                queryItems.append(URLQueryItem(name: "nfts", value: nft))
             }
         }
         queryItems.append(URLQueryItem(name: "id", value: id))

@@ -10,5 +10,8 @@ enum RequestConstants {
     static let nftHeader = "X-Practicum-Mobile-Token"
     static let timeoutInterval = Double(60) // seconds
     static let baseApiPath = "/api/v1"
+
+    static let defaultOrderId = "1"
+    static let defaultProfileId = "1"
 }
 // TODO: разобраться с дубликатами

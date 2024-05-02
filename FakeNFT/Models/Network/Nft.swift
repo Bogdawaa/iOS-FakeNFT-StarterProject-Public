@@ -15,9 +15,11 @@ struct Nft: Codable {
     }
 }
 
-typealias NftList = [Nft]
-
 extension Nft: ApiDto {
+    func pathIds() -> PathIds {
+        .one(first: id)
+    }
+
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
