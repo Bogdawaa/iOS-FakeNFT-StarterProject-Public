@@ -14,13 +14,15 @@ struct NftCollection: Codable {
     }
 }
 
-typealias NftCollectionList = [NftCollection]
-
 enum NftCollectionOrder: String {
     case name, nfts
 }
 
 extension NftCollection: ApiDto {
+    func pathIds() -> PathIds {
+        .one(first: id)
+    }
+
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:

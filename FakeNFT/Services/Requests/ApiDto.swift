@@ -5,6 +5,7 @@ protocol ApiDto: Codable {
     static func entityPath(ids: PathIds) -> String
     static func listRequest(pathIds: PathIds, page: Int, sortBy: String?) -> URLRequest
     static func entityRequest(pathIds: PathIds) -> URLRequest
+    func pathIds() -> PathIds
 }
 
 extension ApiDto {

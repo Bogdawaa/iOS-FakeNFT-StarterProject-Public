@@ -72,16 +72,3 @@ enum ListServiceResult {
     case reload
     case update(newIndexes: Range<Int>)
 }
-
-final class EntityService<ItemModel: ApiDto> {
-    private let networkClient: AsyncNetworkClient
-
-    init(networkClient: AsyncNetworkClient) {
-        self.networkClient = networkClient
-    }
-
-    func fetch(pathIds: PathIds) async throws -> ItemModel {
-        let request = ItemModel.entityRequest(pathIds: pathIds)
-        return try await self.networkClient.fetch(from: request, as: ItemModel.self)
-    }
-}
