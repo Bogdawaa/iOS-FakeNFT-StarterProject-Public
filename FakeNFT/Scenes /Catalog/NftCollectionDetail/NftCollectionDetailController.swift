@@ -39,6 +39,8 @@ final class NftCollectionDetailController: StatLoggedUIViewController {
 
 }
 
+extension NftCollectionDetailController: ErrorView {}
+
 extension NftCollectionDetailController: NftCollectionDetailPresenterDelegate {
     func didSelectRow(rowData: Nft) {
         let nftCollectionViewController = depsFactory.nftCollectionViewController()

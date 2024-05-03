@@ -16,10 +16,6 @@ struct Nft: Codable {
 }
 
 extension Nft: ApiDto {
-    func pathIds() -> PathIds {
-        .one(first: id)
-    }
-
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
@@ -38,5 +34,9 @@ extension Nft: ApiDto {
             assertionFailure()
             return ""
         }
+    }
+
+    func pathIds() -> PathIds {
+        .one(first: id)
     }
 }

@@ -6,14 +6,10 @@ struct NftOrder: Codable {
 }
 
 extension NftOrder: ApiDto {
-    func pathIds() -> PathIds {
-        .one(first: id)
-    }
-
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
-            return "collections"
+            return "orders"
         default:
             assertionFailure()
             return ""
@@ -28,6 +24,10 @@ extension NftOrder: ApiDto {
             assertionFailure()
             return ""
         }
+    }
+
+    func pathIds() -> PathIds {
+        .one(first: id)
     }
 }
 

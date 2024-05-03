@@ -19,10 +19,6 @@ enum NftCollectionOrder: String {
 }
 
 extension NftCollection: ApiDto {
-    func pathIds() -> PathIds {
-        .one(first: id)
-    }
-
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
@@ -41,5 +37,9 @@ extension NftCollection: ApiDto {
             assertionFailure()
             return ""
         }
+    }
+
+    func pathIds() -> PathIds {
+        .one(first: id)
     }
 }
