@@ -4,7 +4,11 @@ protocol NftCollectionDetailControllerDepsFactory {
     func nftCollectionViewController() -> UIViewController?
 }
 
-final class NftCollectionDetailController: StatLoggedUIViewController {
+protocol NftCollectionDetailController: UIViewController {
+    func initData(nftCollection: NftCollection)
+}
+
+final class NftCollectionDetailControllerImpl: StatLoggedUIViewController {
     private let contentView: NftCollectionDetailView
     private var presenter: NftCollectionDetailPresenter
     private let depsFactory: NftCollectionDetailControllerDepsFactory
@@ -21,27 +25,21 @@ final class NftCollectionDetailController: StatLoggedUIViewController {
 
         super.init(statLog: statlog)
 
-        self.presenter.delegate = self
-        self.presenter.view = contentView
-        self.contentView.delegate = self.presenter
-
         navigationItem.title = ""
-
     }
 
     override func loadView() {
         view = contentView
     }
+}
 
+extension NftCollectionDetailControllerImpl: NftCollectionDetailController, ErrorView {
     func initData(nftCollection: NftCollection) {
         self.presenter.initData(nftCollection: nftCollection)
     }
-
 }
 
-extension NftCollectionDetailController: ErrorView {}
-
-extension NftCollectionDetailController: NftCollectionDetailPresenterDelegate {
+extension NftCollectionDetailControllerImpl: NftCollectionDetailPresenterDelegate {
     func didSelectRow(rowData: Nft) {
         let nftCollectionViewController = depsFactory.nftCollectionViewController()
         guard let nftCollectionViewController else { return }
