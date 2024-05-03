@@ -7,6 +7,7 @@ final class DIContainer {
     init() {
         registerFoundation()
         registerCatalog()
+        registerWebView()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
@@ -25,7 +26,8 @@ final class DIContainer {
             NftCollectionPresenterImpl(
                 listService: ListService<NftCollection>(
                     networkClient: diResolver.resolve(AsyncNetworkClient.self)!
-                )
+                ),
+                depsFactory: self
             )
         }
 
@@ -35,7 +37,6 @@ final class DIContainer {
             let controller = NftCollectionViewControllerImpl(
                 contentView: view,
                 presenter: presenter,
-                depsFactory: self,
                 statlog: diResolver.resolve(StatLog.self)!
             )
 
@@ -51,9 +52,11 @@ final class DIContainer {
             return NftCollectionDetailPresenterImpl(
                 nftService: EntityService<Nft>(networkClient: networkClient),
                 profileService: EntityService<Profile>(networkClient: networkClient),
-                orderService: EntityService<NftOrder>(networkClient: networkClient)
+                orderService: EntityService<NftOrder>(networkClient: networkClient),
+                depsFactory: self
             )
         }
+        .inObjectScope(.transient)
 
         container.register(NftCollectionDetailController.self) { diResolver in
             let presenter = diResolver.resolve(NftCollectionDetailPresenter.self)!
@@ -61,7 +64,6 @@ final class DIContainer {
             let controller = NftCollectionDetailControllerImpl(
                 contentView: view,
                 presenter: presenter,
-                depsFactory: self,
                 statlog: diResolver.resolve(StatLog.self)!
             )
 
@@ -71,6 +73,7 @@ final class DIContainer {
 
             return controller
         }
+        .inObjectScope(.transient)
     }
 
     private func registerFoundation() {
@@ -102,16 +105,33 @@ final class DIContainer {
         }
         .inObjectScope(.container)
     }
+
+    private func registerWebView() {
+        container.register(WebViewViewController.self) { _, url in
+            let presenter = WebViewViewPresenterImpl(url: url)
+            let view = WebViewViewImpl()
+
+            view.delegate = presenter
+            presenter.view = view
+
+            return WebViewViewController(presenter: presenter, contentView: view)
+        }
+        .inObjectScope(.transient)
+    }
 }
 
-extension DIContainer: NftCollectionViewControllerDepsFactory {
+extension DIContainer: NftCollectionViewDepsFactory {
     func nftCollectionDetailController() -> NftCollectionDetailController? {
         container.resolve(NftCollectionDetailController.self)
     }
 }
 
-extension DIContainer: NftCollectionDetailControllerDepsFactory {
-    func nftCollectionViewController() -> UIViewController? {
+extension DIContainer: NftCollectionDetailDepsFactory {
+    func nftDetailViewController() -> UIViewController? {
         UIViewController()
+    }
+
+    func webViewViewController(url: URL) -> WebViewViewController? {
+        container.resolve(WebViewViewController.self, argument: url)
     }
 }

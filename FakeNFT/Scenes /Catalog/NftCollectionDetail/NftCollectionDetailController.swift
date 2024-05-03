@@ -1,9 +1,5 @@
 import UIKit
 
-protocol NftCollectionDetailControllerDepsFactory {
-    func nftCollectionViewController() -> UIViewController?
-}
-
 protocol NftCollectionDetailController: UIViewController {
     func initData(nftCollection: NftCollection)
 }
@@ -11,17 +7,14 @@ protocol NftCollectionDetailController: UIViewController {
 final class NftCollectionDetailControllerImpl: StatLoggedUIViewController {
     private let contentView: NftCollectionDetailView
     private var presenter: NftCollectionDetailPresenter
-    private let depsFactory: NftCollectionDetailControllerDepsFactory
 
     init(
         contentView: NftCollectionDetailView,
         presenter: NftCollectionDetailPresenter,
-        depsFactory: NftCollectionDetailControllerDepsFactory,
         statlog: StatLog
     ) {
         self.contentView = contentView
         self.presenter = presenter
-        self.depsFactory = depsFactory
 
         super.init(statLog: statlog)
 
@@ -40,9 +33,7 @@ extension NftCollectionDetailControllerImpl: NftCollectionDetailController, Erro
 }
 
 extension NftCollectionDetailControllerImpl: NftCollectionDetailPresenterDelegate {
-    func didSelectRow(rowData: Nft) {
-        let nftCollectionViewController = depsFactory.nftCollectionViewController()
-        guard let nftCollectionViewController else { return }
-        navigationController?.pushViewController(nftCollectionViewController, animated: true)
+    func showViewController(viewController: UIViewController) {
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

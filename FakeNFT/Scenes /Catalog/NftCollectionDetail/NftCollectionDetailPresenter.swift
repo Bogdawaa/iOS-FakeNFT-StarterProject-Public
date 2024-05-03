@@ -6,8 +6,13 @@ protocol NftCollectionDetailPresenter: NftCollectionDetailViewDelegate {
     func initData(nftCollection: NftCollection)
 }
 
-protocol NftCollectionDetailPresenterDelegate: AnyObject, ErrorView {
-    func didSelectRow(rowData: Nft)
+protocol NftCollectionDetailPresenterDelegate: AnyObject, ErrorView, UIViewController {
+    func showViewController(viewController: UIViewController)
+}
+
+protocol NftCollectionDetailDepsFactory {
+    func nftDetailViewController() -> UIViewController?
+    func webViewViewController(url: URL) -> WebViewViewController?
 }
 
 enum NftCollectionDetailViewState {
@@ -31,6 +36,7 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     weak var delegate: NftCollectionDetailPresenterDelegate?
     weak var view: NftCollectionDetailView?
 
+    private let depsFactory: NftCollectionDetailDepsFactory
     private var nftService: EntityService<Nft>
     private var profileService: EntityService<Profile>
     private var orderService: EntityService<NftOrder>
@@ -49,11 +55,13 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     init(
         nftService: EntityService<Nft>,
         profileService: EntityService<Profile>,
-        orderService: EntityService<NftOrder>
+        orderService: EntityService<NftOrder>,
+        depsFactory: NftCollectionDetailDepsFactory
     ) {
         self.nftService = nftService
         self.profileService = profileService
         self.orderService = orderService
+        self.depsFactory = depsFactory
     }
 
     func initData(nftCollection: NftCollection) {
@@ -260,8 +268,9 @@ extension NftCollectionDetailPresenterImpl: NftCollectionDetailViewDelegate {
     }
 
     func didSelectRow(at indexPath: IndexPath) {
-        guard let nft = nft(at: indexPath) else { return }
-        delegate?.didSelectRow(rowData: nft)
+        let nftDetailViewController = depsFactory.nftDetailViewController()
+        guard let nftDetailViewController, let delegate else { return }
+        delegate.showViewController(viewController: nftDetailViewController)
     }
 
     func lileToggled(at indexPath: IndexPath) {
@@ -270,6 +279,14 @@ extension NftCollectionDetailPresenterImpl: NftCollectionDetailViewDelegate {
 
     func cartToggled(at indexPath: IndexPath) {
         state = .toggleCart(indexPath: indexPath)
+    }
+
+    func authorLinkTap() {
+        // Не понятно, где брать url, сделал заглушку
+        let linkUrl = URL(string: "https://ya.ru")!
+        let webViewViewController = depsFactory.webViewViewController(url: linkUrl)
+        guard let webViewViewController, let delegate else { return }
+        delegate.showViewController(viewController: webViewViewController)
     }
 }
 

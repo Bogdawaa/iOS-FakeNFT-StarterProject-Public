@@ -3,6 +3,8 @@ import UIKit
 final class NftCollectionDetailHeaderCell: UICollectionReusableView {
     static let reuseIdentifier = String(describing: NftCollectionDetailHeaderCell.self)
 
+    weak var delegate: NftCollectionDetailView?
+
     private lazy var headImage: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -27,6 +29,7 @@ final class NftCollectionDetailHeaderCell: UICollectionReusableView {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .caption1
+        view.textColor = .ypBlueUniversal
         return view
     }()
 
@@ -42,6 +45,10 @@ final class NftCollectionDetailHeaderCell: UICollectionReusableView {
         view.axis = .horizontal
         view.distribution = .fill
         view.spacing = 4
+
+        view.addGestureRecognizer(
+            UITapGestureRecognizer(target: self, action: #selector(authorLinkTap))
+        )
         return view
     }()
 
@@ -95,5 +102,10 @@ final class NftCollectionDetailHeaderCell: UICollectionReusableView {
         headerLable.text = nftCollection.name
         authonLink.text = nftCollection.author
         descriptionLable.text = nftCollection.description
+    }
+
+    @objc
+    func authorLinkTap() {
+        delegate?.authorLinkTap()
     }
 }
