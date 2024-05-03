@@ -274,11 +274,21 @@ extension NftCollectionDetailPresenterImpl: NftCollectionDetailViewDelegate {
     }
 
     func lileToggled(at indexPath: IndexPath) {
-        state = .toggleLike(indexPath: indexPath)
+        switch state {
+        case .initial, .data, .likeToggled, .cartToggled, .failed:
+            state = .toggleLike(indexPath: indexPath)
+        case .loading, .toggleLike, .toggleCart:
+            break
+        }
     }
 
     func cartToggled(at indexPath: IndexPath) {
-        state = .toggleCart(indexPath: indexPath)
+        switch state {
+        case .initial, .data, .likeToggled, .cartToggled, .failed:
+            state = .toggleCart(indexPath: indexPath)
+        case .loading, .toggleLike, .toggleCart:
+            break
+        }
     }
 
     func authorLinkTap() {
