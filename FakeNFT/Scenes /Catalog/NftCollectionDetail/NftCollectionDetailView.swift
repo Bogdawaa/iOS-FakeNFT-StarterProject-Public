@@ -7,6 +7,7 @@ protocol NftCollectionDetailViewDelegate: AnyObject {
     func didSelectRow(at indexPath: IndexPath)
     func lileToggled(at indexPath: IndexPath)
     func cartToggled(at indexPath: IndexPath)
+    func authorLinkTap()
 }
 
 final class NftCollectionDetailView: UIView, LoadingView {
@@ -120,6 +121,9 @@ final class NftCollectionDetailView: UIView, LoadingView {
         guard let indexPath = collectionView.indexPath(for: cell) else { return }
         delegate?.cartToggled(at: indexPath)
     }
+    func authorLinkTap() {
+        delegate?.authorLinkTap()
+    }
 }
 
 extension NftCollectionDetailView: UICollectionViewDataSource {
@@ -179,6 +183,7 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
         guard let view else { return UICollectionReusableView() }
 
         view.initData(nftCollection: nftCollection)
+        view.delegate = self
         return view
     }
 }

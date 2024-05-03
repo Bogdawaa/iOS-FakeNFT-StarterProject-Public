@@ -8,7 +8,11 @@ protocol NftCollectionPresenter: NftCollectionViewDelegate {
 }
 
 protocol NftCollectionPresenterDelegate: AnyObject, SortableView, ErrorView {
-    func didSelectRow(rowData: NftCollection)
+    func showViewController(viewController: UIViewController)
+}
+
+protocol NftCollectionViewDepsFactory {
+    func nftCollectionDetailController() -> NftCollectionDetailController?
 }
 
 enum NftCollectioViewState {
@@ -25,6 +29,8 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
     weak var view: NftCollectionView?
 
     private var listService: ListService<NftCollection>
+    private let depsFactory: NftCollectionViewDepsFactory
+
     private var order: NftCollectionOrder = .name
 
     private var state = NftCollectioViewState.initial {
@@ -33,8 +39,12 @@ final class NftCollectionPresenterImpl: NftCollectionPresenter {
         }
     }
 
-    init(listService: ListService<NftCollection>) {
+    init(
+        listService: ListService<NftCollection>,
+        depsFactory: NftCollectionViewDepsFactory
+    ) {
         self.listService = listService
+        self.depsFactory = depsFactory
     }
 
     func viewDidLoad() {
@@ -118,8 +128,14 @@ extension NftCollectionPresenterImpl: NftCollectionViewDelegate {
     }
 
     func didSelectRow(at indexPath: IndexPath) {
-        guard let rowData = rowData(at: indexPath) else { return }
-        delegate?.didSelectRow(rowData: rowData)
+        guard let rowData = rowData(at: indexPath), let delegate else { return }
+
+        let nftCollectionDetailController = depsFactory.nftCollectionDetailController()
+        guard let nftCollectionDetailController else { return }
+        nftCollectionDetailController.initData(nftCollection: rowData)
+        nftCollectionDetailController.hidesBottomBarWhenPushed = true
+
+        delegate.showViewController(viewController: nftCollectionDetailController)
     }
 
     func willDisplayCell(at indexPath: IndexPath) {
