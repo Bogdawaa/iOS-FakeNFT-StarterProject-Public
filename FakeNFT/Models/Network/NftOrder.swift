@@ -27,7 +27,8 @@ extension NftOrder: ApiDto {
     }
 
     func pathIds() -> PathIds {
-        .one(first: id)
+        // С id который приходит в ответе делать запросы не получается
+        .one(first: RequestConstants.defaultOrderId)
     }
 }
 

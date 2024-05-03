@@ -18,7 +18,13 @@ enum NftCollectionDetailViewState {
     case likeToggled(indexPath: IndexPath, profile: Profile)
     case toggleCart(indexPath: IndexPath)
     case cartToggled(indexPath: IndexPath, nftOrder: NftOrder)
-    case failed(NetworkError)
+    case failed(error: NetworkError, action: NftCollectionDetailViewAction)
+}
+
+enum NftCollectionDetailViewAction {
+    case loading
+    case toggleLike(indexPath: IndexPath)
+    case toggleCart(indexPath: IndexPath)
 }
 
 final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
@@ -56,7 +62,7 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     }
 
     private func stateDidChanged() {
-        guard let view, let delegate else {
+        guard let view else {
             assertionFailure()
             return
         }
@@ -67,7 +73,6 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
         case .loading:
             view.showLoading()
             loadData()
-
         case let .data(profile, nftOrder, nfts):
             guard let nftCollection else {
                 assertionFailure()
@@ -96,17 +101,32 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
             self.nftOrder = nftOrder
             view.reloadItem(at: indexPath)
             view.hideLoading()
-        case .failed(let error):
+        case let .failed(error, action):
             view.hideLoading()
-            delegate.showError(
-                ErrorModel(
-                    message: error.description,
-                    action: { [weak self] in
-                        self?.state = .loading
-                    }
-                )
-            )
+            showError(error: error, action: action)
         }
+    }
+
+    private func showError(error: NetworkError, action: NftCollectionDetailViewAction) {
+        guard let delegate else {
+            assertionFailure()
+            return
+        }
+        delegate.showError(
+            ErrorModel(
+                message: error.description,
+                action: { [weak self] in
+                    switch action {
+                    case .loading:
+                        self?.state = .loading
+                    case let .toggleLike(indexPath):
+                        self?.state = .toggleLike(indexPath: indexPath)
+                    case let .toggleCart(indexPath):
+                        self?.state = .toggleCart(indexPath: indexPath)
+                    }
+                }
+            )
+        )
     }
 
     private func loadData() {
@@ -129,7 +149,7 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
             } catch {
                 let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
                 await MainActor.run { [weak self] in
-                    self?.state = .failed(error)
+                    self?.state = .failed(error: error, action: .loading)
                 }
             }
         }
@@ -163,11 +183,59 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     }
 
     private func patchProfile(at indexPath: IndexPath) {
+        guard let profile, let nftId = nft(at: indexPath)?.id else { return }
+        var likes = profile.likes
 
+        if likes.contains(nftId) {
+            likes = likes.filter { $0 != nftId }
+        } else {
+            likes.append(nftId)
+        }
+        let patch = ProfilePatch(profile: profile, likes: likes)
+
+        let profileService = profileService
+        Task {
+            do {
+                try await profileService.patch(patch)
+                let profile = try await profileService.fetch(pathIds: profile.pathIds())
+                await MainActor.run { [weak self] in
+                    self?.state = .likeToggled(indexPath: indexPath, profile: profile)
+                }
+            } catch {
+                let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
+                await MainActor.run { [weak self] in
+                    self?.state = .failed(error: error, action: .toggleLike(indexPath: indexPath))
+                }
+            }
+        }
     }
 
     private func patchNftOrder(at indexPath: IndexPath) {
+        guard let nftOrder, let nftId = nft(at: indexPath)?.id else { return }
+        var nfts = nftOrder.nfts
 
+        if nfts.contains(nftId) {
+            nfts = nfts.filter { $0 != nftId }
+        } else {
+            nfts.append(nftId)
+        }
+        let patch = NftOrderPatch(order: nftOrder, nfts: nfts)
+
+        let service = orderService
+        Task {
+            do {
+                try await service.patch(patch)
+                let nftOrder = try await service.fetch(pathIds: nftOrder.pathIds())
+                await MainActor.run { [weak self] in
+                    self?.state = .cartToggled(indexPath: indexPath, nftOrder: nftOrder)
+                }
+            } catch {
+                let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
+                await MainActor.run { [weak self] in
+                    self?.state = .failed(error: error, action: .toggleCart(indexPath: indexPath))
+                }
+            }
+        }
     }
 
     private func nft(at indexPath: IndexPath) -> Nft? {

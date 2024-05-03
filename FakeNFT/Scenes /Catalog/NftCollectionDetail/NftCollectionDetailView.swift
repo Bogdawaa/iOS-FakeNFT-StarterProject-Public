@@ -140,6 +140,7 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
                 for: indexPath
             ) as? NftCollectionDetailNftCell {
                 cell.initData(nftModel: data)
+                cell.delegate = self
                 return cell
             }
         } else {
