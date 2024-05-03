@@ -11,6 +11,9 @@ enum RequestConstants {
     static let timeoutInterval = Double(60) // seconds
     static let baseApiPath = "/api/v1"
 
+    static let putContentTypeHeader = "Content-Type"
+    static let putContentType = "application/x-www-form-urlencoded"
+
     static let defaultOrderId = "1"
     static let defaultProfileId = "1"
 }

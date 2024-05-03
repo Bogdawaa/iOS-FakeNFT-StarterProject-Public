@@ -18,6 +18,7 @@ final class EntityService<ItemModel: ApiDto> {
 
         request.httpMethod = HttpMethod.put.rawValue
         request.httpBody = patch.asData()
+        request.setValue(RequestConstants.putContentType, forHTTPHeaderField: RequestConstants.putContentTypeHeader)
 
         _ = try await self.networkClient.fetch(from: request)
     }
