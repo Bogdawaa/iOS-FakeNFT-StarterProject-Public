@@ -1,6 +1,6 @@
 import UIKit
 
-class NftCollectionDetailHeaderCell: UICollectionReusableView {
+final class NftCollectionDetailHeaderCell: UICollectionReusableView {
     static let reuseIdentifier = String(describing: NftCollectionDetailHeaderCell.self)
 
     private lazy var headImage: UIImageView = {

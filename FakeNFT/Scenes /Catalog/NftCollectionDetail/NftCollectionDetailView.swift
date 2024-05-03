@@ -3,15 +3,23 @@ import UIKit
 protocol NftCollectionDetailViewDelegate: AnyObject {
     var numberOfRows: Int { get }
 
-    func rowData(at indexPath: IndexPath) -> Nft?
+    func rowData(at indexPath: IndexPath) -> NftModel?
     func didSelectRow(at indexPath: IndexPath)
-    func itemWillDisplay(at indexPath: IndexPath)
+    func lileToggled(at indexPath: IndexPath)
+    func cartToggled(at indexPath: IndexPath)
 }
 
-final class NftCollectionDetailView: UIView {
+final class NftCollectionDetailView: UIView, LoadingView {
     weak var delegate: NftCollectionDetailViewDelegate?
 
     private var nftCollection: NftCollection?
+
+    internal lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.color = .ypBlack
+        return view
+    }()
 
     internal lazy var collectionView: UICollectionView = {
         let view = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
@@ -35,7 +43,6 @@ final class NftCollectionDetailView: UIView {
         )
 
         view.dataSource = self
-        view.delegate = self
 
         return view
     }()
@@ -52,6 +59,9 @@ final class NftCollectionDetailView: UIView {
             collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
+
+        addSubview(activityIndicator)
+        activityIndicator.constraintCenters(to: self)
     }
 
     @available(*, unavailable)
@@ -96,6 +106,15 @@ final class NftCollectionDetailView: UIView {
 
         return layout
     }
+
+    func likeButtonClicked(_ cell: UICollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        delegate?.lileToggled(at: indexPath)
+    }
+    func cartButtonClicked(_ cell: UICollectionViewCell) {
+        guard let indexPath = collectionView.indexPath(for: cell) else { return }
+        delegate?.cartToggled(at: indexPath)
+    }
 }
 
 extension NftCollectionDetailView: UICollectionViewDataSource {
@@ -120,7 +139,7 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
                 withReuseIdentifier: NftCollectionDetailNftCell.reuseIdentifier,
                 for: indexPath
             ) as? NftCollectionDetailNftCell {
-                cell.initData(nft: data)
+                cell.initData(nftModel: data)
                 return cell
             }
         } else {
@@ -137,8 +156,6 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
-        guard let nftCollection else { return UICollectionReusableView() }
-
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: NftCollectionDetailHeaderCell.reuseIdentifier,
@@ -147,17 +164,9 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
 
         guard let view else { return UICollectionReusableView() }
 
-        view.initData(nftCollection: nftCollection)
+        if let nftCollection {
+            view.initData(nftCollection: nftCollection)
+        }
         return view
-    }
-}
-
-extension NftCollectionDetailView: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
-    ) {
-        delegate?.itemWillDisplay(at: indexPath)
     }
 }

@@ -32,7 +32,7 @@ struct AsyncNetworkClientImpl: AsyncNetworkClient {
     func fetch<T: Decodable>(from request: URLRequest, as dtoType: T.Type) async throws -> T {
         print("🕸️ℹ️ raw request= \(request.httpMethod ?? "GET") \(request)")
         let response = try await fetch(from: request)
-        print("🕸️ℹ️ raw response=\(String(decoding: response, as: UTF8.self))")
+        print("🕸️ℹ️ raw response= \(request.httpMethod ?? "GET") \(request) \(String(decoding: response, as: UTF8.self))")
 
         do {
             return try response.fromJson(to: T.self)

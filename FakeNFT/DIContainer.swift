@@ -47,10 +47,11 @@ final class DIContainer {
         }
 
         container.register(NftCollectionDetailPresenter.self) { diResolver in
-            NftCollectionDetailPresenterImpl(
-                entityService: EntityService<Nft>(
-                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!
-                )
+            let networkClient = diResolver.resolve(AsyncNetworkClient.self)!
+            return NftCollectionDetailPresenterImpl(
+                nftService: EntityService<Nft>(networkClient: networkClient),
+                profileService: EntityService<Profile>(networkClient: networkClient),
+                orderService: EntityService<NftOrder>(networkClient: networkClient)
             )
         }
 

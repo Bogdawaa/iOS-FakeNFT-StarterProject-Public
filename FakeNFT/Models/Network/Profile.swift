@@ -8,15 +8,9 @@ struct Profile: Codable {
     let website: String
     let nfts: [String]
     let likes: [String]
-    let rating: Int
-    let createdAt: String
 }
 
 extension Profile: ApiDto {
-    func pathIds() -> PathIds {
-        .one(first: id)
-    }
-
     static func listPath(ids: PathIds) -> String {
         switch ids {
         case .empty:
@@ -35,6 +29,10 @@ extension Profile: ApiDto {
             assertionFailure()
             return ""
         }
+    }
+
+    func pathIds() -> PathIds {
+        .one(first: id)
     }
 }
 
