@@ -39,7 +39,6 @@ struct AsyncNetworkClientImpl: AsyncNetworkClient {
     }
 
     func fetch(from request: URLRequest) async throws -> Data {
-        defer { }
         print("🕸️ℹ️ raw request= \(request.httpMethod ?? "GET") \(request)")
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
