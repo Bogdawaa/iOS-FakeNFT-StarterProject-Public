@@ -34,6 +34,11 @@ final class NftCollectionDetailView: UIView, LoadingView {
             withReuseIdentifier: NftCollectionDetailHeaderCell.reuseIdentifier
         )
         view.register(
+            SceletonHeaderCell.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SceletonHeaderCell.reuseIdentifier
+        )
+        view.register(
             NftCollectionDetailNftCell.self,
             forCellWithReuseIdentifier: NftCollectionDetailNftCell.reuseIdentifier
         )
@@ -93,7 +98,7 @@ final class NftCollectionDetailView: UIView, LoadingView {
 
         let headerFooterSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(0)
+            heightDimension: .estimated(462)
         )
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerFooterSize,
@@ -157,6 +162,14 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
     ) -> UICollectionReusableView {
+        guard let nftCollection else {
+            return collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SceletonHeaderCell.reuseIdentifier,
+                for: indexPath
+            )
+        }
+
         let view = collectionView.dequeueReusableSupplementaryView(
             ofKind: kind,
             withReuseIdentifier: NftCollectionDetailHeaderCell.reuseIdentifier,
@@ -165,9 +178,7 @@ extension NftCollectionDetailView: UICollectionViewDataSource {
 
         guard let view else { return UICollectionReusableView() }
 
-        if let nftCollection {
-            view.initData(nftCollection: nftCollection)
-        }
+        view.initData(nftCollection: nftCollection)
         return view
     }
 }
