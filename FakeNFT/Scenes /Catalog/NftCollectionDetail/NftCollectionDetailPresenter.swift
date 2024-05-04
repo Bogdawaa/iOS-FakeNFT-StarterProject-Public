@@ -3,6 +3,7 @@ import UIKit
 protocol NftCollectionDetailPresenter: NftCollectionDetailViewDelegate {
     var delegate: NftCollectionDetailPresenterDelegate? { get set }
     var view: NftCollectionDetailView? { get set }
+    func viewDidDisappear()
     func initData(nftCollection: NftCollection)
 }
 
@@ -15,36 +16,20 @@ protocol NftCollectionDetailDepsFactory {
     func webViewViewController(url: URL) -> WebViewViewController?
 }
 
-enum NftCollectionDetailViewState {
-    case initial
-    case loading
-    case data(profile: Profile, nftOrder: NftOrder, nfts: [String: Nft])
-    case toggleLike(indexPath: IndexPath)
-    case likeToggled(indexPath: IndexPath, profile: Profile)
-    case toggleCart(indexPath: IndexPath)
-    case cartToggled(indexPath: IndexPath, nftOrder: NftOrder)
-    case failed(error: NetworkError, action: NftCollectionDetailViewAction)
-}
-
-enum NftCollectionDetailViewAction {
-    case loading
-    case toggleLike(indexPath: IndexPath)
-    case toggleCart(indexPath: IndexPath)
-}
-
 final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     weak var delegate: NftCollectionDetailPresenterDelegate?
     weak var view: NftCollectionDetailView?
 
     private let depsFactory: NftCollectionDetailDepsFactory
-    private var nftService: EntityService<Nft>
-    private var profileService: EntityService<Profile>
-    private var orderService: EntityService<NftOrder>
+    private let nftService: EntityService<Nft>
+    private let profileService: EntityService<Profile>
+    private let orderService: EntityService<NftOrder>
 
     private var profile: Profile?
     private var nftOrder: NftOrder?
     private var nftCollection: NftCollection?
     private var nfts: [String: Nft] = [:]
+    private var loadTask: Task<(), Never>?
 
     private var state = NftCollectionDetailViewState.initial {
         didSet {
@@ -62,6 +47,12 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
         self.profileService = profileService
         self.orderService = orderService
         self.depsFactory = depsFactory
+    }
+
+    internal func viewDidDisappear() {
+        if let loadTask, !loadTask.isCancelled {
+            loadTask.cancel()
+        }
     }
 
     func initData(nftCollection: NftCollection) {
@@ -138,7 +129,7 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
     }
 
     private func loadData() {
-        Task { [weak self] in
+        loadTask = Task { [weak self] in
             guard let self else { return }
 
             async let profile = self.loadProfile()
@@ -155,6 +146,7 @@ final class NftCollectionDetailPresenterImpl: NftCollectionDetailPresenter {
                     self.state = .data(profile: profile, nftOrder: nftOrder, nfts: nfts)
                 }
             } catch {
+                if (error as? CancellationError) != nil { return }
                 let error = error as? NetworkError ?? NetworkError.unknownError(error: error)
                 await MainActor.run { [weak self] in
                     self?.state = .failed(error: error, action: .loading)
@@ -298,10 +290,4 @@ extension NftCollectionDetailPresenterImpl: NftCollectionDetailViewDelegate {
         guard let webViewViewController, let delegate else { return }
         delegate.showViewController(viewController: webViewViewController)
     }
-}
-
-struct NftModel {
-    let nft: Nft
-    let isLiked: Bool
-    let isInCart: Bool
 }

@@ -60,7 +60,7 @@ final class DIContainer {
 
         container.register(NftCollectionDetailController.self) { diResolver in
             let presenter = diResolver.resolve(NftCollectionDetailPresenter.self)!
-            let view = NftCollectionDetailView()
+            let view = NftCollectionDetailViewImpl()
             let controller = NftCollectionDetailControllerImpl(
                 contentView: view,
                 presenter: presenter,
