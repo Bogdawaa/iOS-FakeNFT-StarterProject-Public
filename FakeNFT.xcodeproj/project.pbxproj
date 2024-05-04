@@ -94,6 +94,8 @@
 		79F2E7DA2BE4FD3700354BD7 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7D72BE4FD3700354BD7 /* WebViewViewController.swift */; };
 		79F2E7DB2BE4FD3700354BD7 /* WebViewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7D82BE4FD3700354BD7 /* WebViewView.swift */; };
 		79F2E7DD2BE4FE0C00354BD7 /* Progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7DC2BE4FE0C00354BD7 /* Progress.swift */; };
+		79F2E7DF2BE6678A00354BD7 /* NftModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7DE2BE6678A00354BD7 /* NftModel.swift */; };
+		79F2E7E32BE6685100354BD7 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F2E7E22BE6685100354BD7 /* Enums.swift */; };
 		A7029C3449B8B0F60C9EDD9B /* Pods_FakeNFT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09FCE6E24A52E1534343A3D1 /* Pods_FakeNFT.framework */; };
 		E19CD5AB2A98B56600CA39A5 /* NftImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19CD5AA2A98B56600CA39A5 /* NftImageCollectionViewCell.swift */; };
 		E1A1B9DA2AA01CE400C3AFBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A1B9D92AA01CE400C3AFBC /* TabBarController.swift */; };
@@ -228,6 +230,8 @@
 		79F2E7D72BE4FD3700354BD7 /* WebViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
 		79F2E7D82BE4FD3700354BD7 /* WebViewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewView.swift; sourceTree = "<group>"; };
 		79F2E7DC2BE4FE0C00354BD7 /* Progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Progress.swift; sourceTree = "<group>"; };
+		79F2E7DE2BE6678A00354BD7 /* NftModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NftModel.swift; sourceTree = "<group>"; };
+		79F2E7E22BE6685100354BD7 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		7BB5CA1EE6C806649EDD875B /* Pods-FakeNFT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeNFT.release.xcconfig"; path = "Target Support Files/Pods-FakeNFT/Pods-FakeNFT.release.xcconfig"; sourceTree = "<group>"; };
 		90FAC42DA72245C005D5FEE5 /* Pods_FakeNFTTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeNFTTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91013CC62BC7D26800105D5E /* FavoritesNFTPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesNFTPresenter.swift; sourceTree = "<group>"; };
@@ -513,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				3F6806D829CC979D00B4F915 /* Network */,
+				79F2E7DE2BE6678A00354BD7 /* NftModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -594,6 +599,7 @@
 				79143C782BB95281007E2AAB /* NftCollectionDetailView.swift */,
 				79484E3A2BD637560008896E /* NftCollectionDetailHeaderCell.swift */,
 				7972F6152BD58F430094B69E /* NftCollectionDetailNftCell.swift */,
+				79F2E7E22BE6685100354BD7 /* Enums.swift */,
 			);
 			path = NftCollectionDetail;
 			sourceTree = "<group>";
@@ -1167,6 +1173,7 @@
 				79143C6F2BB88A19007E2AAB /* NftCollectionView.swift in Sources */,
 				79143C6F2BB88A19007E2AAB /* NftCollectionView.swift in Sources */,
 				79484E3B2BD637560008896E /* NftCollectionDetailHeaderCell.swift in Sources */,
+				79F2E7DF2BE6678A00354BD7 /* NftModel.swift in Sources */,
 				79143C7D2BB9D2B4007E2AAB /* Currency.swift in Sources */,
 				79F2E7D92BE4FD3700354BD7 /* WebViewViewPresenter.swift in Sources */,
 				0CFCB7422A78013E0009A829 /* Nft.swift in Sources */,
@@ -1178,6 +1185,7 @@
 				0C79EE682A76DE0900EE90EA /* NftDetailPresenter.swift in Sources */,
 				91995DE12BB80A11007F51C7 /* ProfileTableCell.swift in Sources */,
 				F0CAACAD2BDAD7BC0042C2C4 /* UserCardPresenterProtocol.swift in Sources */,
+				79F2E7E32BE6685100354BD7 /* Enums.swift in Sources */,
 				7958A73B2BE02A0400B421C4 /* PathIds.swift in Sources */,
 				3F68069B29CBBAF100B4F915 /* ProductDetailsTableViewController.swift in Sources */,
 				91995DEE2BBE74AB007F51C7 /* EditProfileViewController.swift in Sources */,

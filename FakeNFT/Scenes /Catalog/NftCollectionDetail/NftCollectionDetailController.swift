@@ -6,7 +6,7 @@ protocol NftCollectionDetailController: UIViewController {
 
 final class NftCollectionDetailControllerImpl: StatLoggedUIViewController {
     private let contentView: NftCollectionDetailView
-    private var presenter: NftCollectionDetailPresenter
+    private let presenter: NftCollectionDetailPresenter
 
     init(
         contentView: NftCollectionDetailView,
@@ -23,6 +23,11 @@ final class NftCollectionDetailControllerImpl: StatLoggedUIViewController {
 
     override func loadView() {
         view = contentView
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        presenter.viewDidDisappear()
+        super.viewDidDisappear(animated)
     }
 }
 

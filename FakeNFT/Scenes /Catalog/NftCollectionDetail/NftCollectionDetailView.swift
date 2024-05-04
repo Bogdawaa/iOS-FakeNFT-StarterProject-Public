@@ -10,7 +10,15 @@ protocol NftCollectionDetailViewDelegate: AnyObject {
     func authorLinkTap()
 }
 
-final class NftCollectionDetailView: UIView, LoadingView {
+protocol NftCollectionDetailView: UIView, LoadingView {
+    func initData(nftCollection: NftCollection)
+    func reloadItem(at indexPath: IndexPath)
+    func likeButtonClicked(_ cell: UICollectionViewCell)
+    func cartButtonClicked(_ cell: UICollectionViewCell)
+    func authorLinkTap()
+}
+
+final class NftCollectionDetailViewImpl: UIView, NftCollectionDetailView {
     weak var delegate: NftCollectionDetailViewDelegate?
 
     private var nftCollection: NftCollection?
@@ -85,12 +93,17 @@ final class NftCollectionDetailView: UIView, LoadingView {
     }
 
     private func makeLayout() -> UICollectionViewCompositionalLayout {
-        let size = NSCollectionLayoutSize(
+        let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(172)
+            heightDimension: .fractionalHeight(1)
         )
-        let item = NSCollectionLayoutItem(layoutSize: size)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: size, subitem: item, count: 3)
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(172)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         group.interItemSpacing = .flexible(8)
 
         let section = NSCollectionLayoutSection(group: group)
@@ -126,7 +139,7 @@ final class NftCollectionDetailView: UIView, LoadingView {
     }
 }
 
-extension NftCollectionDetailView: UICollectionViewDataSource {
+extension NftCollectionDetailViewImpl: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }

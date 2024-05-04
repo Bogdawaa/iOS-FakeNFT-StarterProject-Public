@@ -124,7 +124,7 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
 
             hStack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             hStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            hStack.topAnchor.constraint(equalTo: image.bottomAnchor),
+            hStack.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 8),
             hStack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
