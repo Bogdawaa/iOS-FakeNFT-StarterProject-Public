@@ -22,8 +22,6 @@ extension UIImage {
     static let ypSortButton = UIImage(named: "sortButton") ?? UIImage()
     static let ypClose = UIImage(named: "close") ?? UIImage()
 
-    // TODO: Разобраться с ypSort
-    //    static let ypSort = UIImage(named: "sortButton") ?? UIImage()
     static let ypUserPlaceholder = UIImage(named: "userPlaceholder") ?? UIImage()
     static let ypFavouriteButtonActive = UIImage(named: "favouriteButtonActive") ?? UIImage()
     static let ypFavouriteButtonInactive = UIImage(named: "favouriteButtonInactive") ?? UIImage()

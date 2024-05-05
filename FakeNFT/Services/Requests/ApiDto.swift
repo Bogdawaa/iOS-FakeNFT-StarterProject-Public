@@ -35,7 +35,7 @@ extension ApiDto {
         components.path = path
         components.queryItems = queryItems
         var request = URLRequest(url: components.url!)
-        request.setValue(RequestConstants.nftToken, forHTTPHeaderField: RequestConstants.nftHeader)
+        request.setValue(RequestConstants.authToken, forHTTPHeaderField: RequestConstants.authTokenHeader)
         request.timeoutInterval = RequestConstants.timeoutInterval
         request.httpMethod = method.rawValue
         return request
