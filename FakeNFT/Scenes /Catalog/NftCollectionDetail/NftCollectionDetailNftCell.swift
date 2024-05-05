@@ -91,7 +91,7 @@ final class NftCollectionDetailNftCell: UICollectionViewCell {
 
         view.axis = .vertical
         view.alignment = .leading
-        view.spacing = 4
+        view.spacing = 5
 
         return view
     }()

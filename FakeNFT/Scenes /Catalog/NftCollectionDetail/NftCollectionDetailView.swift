@@ -101,7 +101,14 @@ final class NftCollectionDetailViewImpl: UIView, NftCollectionDetailView {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .estimated(172)
+            heightDimension: .absolute(
+                // Не смог найти решения лучше;
+                // 16 * 2 - два отступа по бокам
+                // 8 * 2 - два промежутка
+                // /3 - ширина и она же высота картинки
+                // 64 - высота блока со звёздами и ценой
+                (UIScreen.main.bounds.width - 16 * 2 - 8 * 2) / 3 + 64
+            )
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
         group.interItemSpacing = .flexible(8)
