@@ -12,7 +12,6 @@
 "Tab.basket" = "Корзина";
 "Tab.statistics" = "Статистика";
 
-
 // Profile
 "Profile.myNFT" = "Мои NFT";
 "Profile.favoritesNFT" = "Избранные NFT";
@@ -38,6 +37,7 @@
 "Profile.Edit.ChangeImageAlert.ok" = "Ок";
 "Profile.Edit.ChangeImageAlert.Error" = "Ошибка";
 "Profile.Edit.ChangeImageAlert.Error.Message" = "Ссылка введена неверно";
+
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
 "Catalog.SortByName" = "По названию";
