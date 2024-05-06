@@ -131,7 +131,7 @@ extension FavoritesNFTViewController: UICollectionViewDataSource {
         else {return UICollectionViewCell()}
         guard let nftSetting = presenter.getFavoriteNft()?[indexPath.row] else { return cell}
         cell.configureFavNftCell(
-            favNftImageUrl: nftSetting.images.first,
+            favNftImageUrl: nftSetting.imagesURL.first,
             favNftTitle: nftSetting.name,
             favNftRaiting: nftSetting.rating,
             favNftPrice: nftSetting.price,
@@ -159,7 +159,11 @@ extension FavoritesNFTViewController: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 8
     }
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
            return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         }
 }

@@ -27,8 +27,7 @@ final class EditProfileServiceImpl: EditProfileService {
 
     func updateProfile(editProfileModel: EditProfile, completion: @escaping EditProfileCompletion) {
         var request = ProfileByRequest(httpMethod: .put, id: "1")
-        let profileData = "name=\(editProfileModel.name)&description=\(editProfileModel.description)&website=\(editProfileModel.website)&avatar=\(editProfileModel.avatar)"
-        request.httpBody = profileData
+        request.httpBody = makeBody(editProfileModel)
         networkClient.send(request: request, type: EditProfile.self) {result in
             switch result {
             case .success(let profile):
@@ -39,4 +38,14 @@ final class EditProfileServiceImpl: EditProfileService {
         }
     }
 
+    func makeBody(_ editProfileModel: EditProfile) -> String {
+        var components = URLComponents()
+        var queryItems = [URLQueryItem]()
+        queryItems.append(URLQueryItem(name: "name", value: editProfileModel.name))
+        queryItems.append(URLQueryItem(name: "description", value: editProfileModel.description))
+        queryItems.append(URLQueryItem(name: "website", value: editProfileModel.website))
+        queryItems.append(URLQueryItem(name: "avatar", value: editProfileModel.avatar))
+        components.queryItems = queryItems
+        return components.query ?? ""
+    }
 }

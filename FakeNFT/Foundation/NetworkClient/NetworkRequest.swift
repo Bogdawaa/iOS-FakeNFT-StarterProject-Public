@@ -21,6 +21,6 @@ extension NetworkRequest {
     var httpMethod: HttpMethod { .get }
     var dto: Encodable? { nil }
     var authToken: String? { RequestConstants.authToken }
-    var application: String? { RequestConstants.application }
+    var application: String? { RequestConstants.putContentType }
     var parametrs: [String: String]? { nil }
 }

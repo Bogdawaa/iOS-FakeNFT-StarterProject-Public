@@ -1,14 +1,14 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    private let catalogViewController: CatalogViewController
+    private let catalogViewController: NftCollectionViewController
     private let servicesAssembly: ServicesAssembly
     private let profileViewController: UINavigationController
     private let statisticsController: StatisticsViewController
 
     init(
         servicesAssembly: ServicesAssembly,
-        catalogViewController: CatalogViewController,
+        catalogViewController: NftCollectionViewController,
         profileViewController: UINavigationController,
         statisticsController: StatisticsViewController
     ) {
@@ -21,7 +21,7 @@ final class TabBarController: UITabBarController {
 
         viewControllers = [
             self.profileViewController,
-            self.catalogViewController,
+            UINavigationController(rootViewController: self.catalogViewController),
             UIViewController(),
             UINavigationController(rootViewController: statisticsController)
         ]
@@ -56,6 +56,10 @@ final class TabBarController: UITabBarController {
         let tabBarAppearance = UITabBarAppearance()
         tabBarAppearance.configureWithDefaultBackground()
         tabBarAppearance.backgroundColor = .ypWhite
+        setTabBarItemColors(tabBarAppearance.stackedLayoutAppearance)
+        setTabBarItemColors(tabBarAppearance.inlineLayoutAppearance)
+        setTabBarItemColors(tabBarAppearance.compactInlineLayoutAppearance)
+
         UITabBar.appearance().standardAppearance = tabBarAppearance
 
         if #available(iOS 15.0, *) {
@@ -66,5 +70,10 @@ final class TabBarController: UITabBarController {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setTabBarItemColors(_ itemAppearance: UITabBarItemAppearance) {
+        itemAppearance.normal.iconColor = .ypBlack
+        itemAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.ypBlack]
     }
 }

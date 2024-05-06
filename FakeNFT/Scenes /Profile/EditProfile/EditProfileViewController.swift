@@ -393,7 +393,7 @@ extension EditProfileViewController {
     private func validateURLFormat(urlString: String?) -> Bool {
         guard
             let urlString,
-            let url = NSURL(string: urlString) else { return false }
+            let url = URL(string: urlString) else { return false }
         return UIApplication.shared.canOpenURL(url as URL)
     }
 

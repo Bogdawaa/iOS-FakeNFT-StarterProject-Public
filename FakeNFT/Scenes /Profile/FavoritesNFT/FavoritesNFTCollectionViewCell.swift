@@ -79,7 +79,7 @@ final class FavoritesNFTCollectionViewCell: UICollectionViewCell {
         favNftImageUrl: URL?,
         favNftTitle: String,
         favNftRaiting: Int,
-        favNftPrice: Float,
+        favNftPrice: Double,
         favnftId: String
     ) {
         if let url = favNftImageUrl {

@@ -21,4 +21,6 @@ extension UIFont {
     // Fav Nft Fonts
     static var favNftTitle = UIFont.boldSystemFont(ofSize: 15)
     static var favNftCaption = UIFont.systemFont(ofSize: 14)
+
+    static var medium10 = UIFont.systemFont(ofSize: 10, weight: .medium)
 }

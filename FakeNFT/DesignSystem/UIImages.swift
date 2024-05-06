@@ -22,7 +22,6 @@ extension UIImage {
     static let ypSortButton = UIImage(named: "sortButton") ?? UIImage()
     static let ypClose = UIImage(named: "close") ?? UIImage()
 
-    static let ypSort = UIImage(named: "sortButton") ?? UIImage()
     static let ypUserPlaceholder = UIImage(named: "userPlaceholder") ?? UIImage()
     static let ypFavouriteButtonActive = UIImage(named: "favouriteButtonActive") ?? UIImage()
     static let ypFavouriteButtonInactive = UIImage(named: "favouriteButtonInactive") ?? UIImage()
@@ -34,5 +33,22 @@ extension UIImage {
     static let ypRatingThree = UIImage(named: "ratingThree") ?? UIImage()
     static let ypRatingFour = UIImage(named: "ratingFour") ?? UIImage()
     static let ypRatingFive = UIImage(named: "ratingFive") ?? UIImage()
+
+    static let ypStar = UIImage(named: "star") ?? UIImage()
+    static let ypCartAdd = (UIImage(named: "cartAdd") ?? UIImage())
+        .withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+    static let ypCartRemove = (UIImage(named: "cartRemove") ?? UIImage())
+        .withTintColor(.ypBlack, renderingMode: .alwaysOriginal)
+    static let ypSort = UIImage(named: "sort") ?? UIImage()
+
+    static let ypStarYellow = (UIImage(named: "star") ?? UIImage())
+        .withTintColor(.ypYellowUniversal, renderingMode: .alwaysOriginal)
+    static let ypStarGray = (UIImage(named: "star") ?? UIImage())
+        .withTintColor(.ypLightGray, renderingMode: .alwaysOriginal)
+
+    static let ypLikeRed = (UIImage(named: "like") ?? UIImage())
+        .withTintColor(.ypRedUniversal, renderingMode: .alwaysOriginal)
+    static let ypLikeWhire = (UIImage(named: "like") ?? UIImage())
+        .withTintColor(.ypWhiteUniversal, renderingMode: .alwaysOriginal)
 }
 // swiftlint:enable object_literal

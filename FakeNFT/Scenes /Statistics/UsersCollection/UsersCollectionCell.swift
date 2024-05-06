@@ -111,7 +111,7 @@ final class UsersCollectionCell: UICollectionViewCell, ReuseIdentifying {
         self.nftNameLabel.text = nft.name
         self.nftPriceLabel.text = String(nft.price) + " ETH"
 
-        let url = nft.images.first
+        let url = nft.imagesURL.first
         nftImageView.kf.setImage(with: url)
 
         switch nft.rating {

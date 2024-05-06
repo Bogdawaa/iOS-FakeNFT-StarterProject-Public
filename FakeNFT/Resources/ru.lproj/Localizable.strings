@@ -1,14 +1,16 @@
+// Common
 "Error.network" = "Произошла ошибка сети";
 "Error.unknown" = "Произошла неизвестная ошибка";
 "Error.repeat" = "Повторить";
 "Error.title" = "Ошибка";
+"SortableView.Sort" = "Сортировка";
+"SortableView.Close" = "Закрыть";
 
 // Tabs
 "Tab.profile" = "Профиль";
 "Tab.catalog" = "Каталог";
 "Tab.basket" = "Корзина";
 "Tab.statistics" = "Статистика";
-
 
 // Profile
 "Profile.myNFT" = "Мои NFT";
@@ -35,9 +37,12 @@
 "Profile.Edit.ChangeImageAlert.ok" = "Ок";
 "Profile.Edit.ChangeImageAlert.Error" = "Ошибка";
 "Profile.Edit.ChangeImageAlert.Error.Message" = "Ссылка введена неверно";
+
 // Catalog
 "Catalog.openNft" = "Открыть Nft";
-
+"Catalog.SortByName" = "По названию";
+"Catalog.SortByCount" = "По количеству NFT";
+"Catalog.CollectionDetail.AuthorLable" = "Автор коллекции:";
 
 // Basket
 

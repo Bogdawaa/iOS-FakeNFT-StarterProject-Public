@@ -80,7 +80,7 @@ extension UsersCollectionViewController: UsersCollectionViewProtocol {
     }
 }
 
-extension UsersCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension UsersCollectionViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.nftsCount()
     }

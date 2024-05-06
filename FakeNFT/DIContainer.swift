@@ -2,7 +2,7 @@ import Swinject
 import UIKit
 
 final class DIContainer {
-    private var container = Container()
+    private let container = Container()
 
     init() {
         registerFoundation()
@@ -11,11 +11,12 @@ final class DIContainer {
         registerStatistics()
         registerUserCard()
         registerUsersCollectionNft()
+        registerWebView()
 
         container.register(TabBarController.self) { diResolver in
             TabBarController(
                 servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
-                catalogViewController: diResolver.resolve(CatalogViewController.self)!,
+                catalogViewController: diResolver.resolve(NftCollectionViewController.self)!,
                 profileViewController: UINavigationController(
                     rootViewController: diResolver.resolve(ProfileViewController.self)!
                 ),
@@ -59,12 +60,58 @@ final class DIContainer {
     }
 
     private func registerCatalog() {
-        container.register(CatalogViewController.self) { diResolver in
-            TestCatalogViewController(
-                servicesAssembly: diResolver.resolve(ServicesAssembly.self)!,
-                statLog: diResolver.resolve(StatLog.self)!
+        container.register(NftCollectionPresenter.self) { diResolver in
+            NftCollectionPresenterImpl(
+                listService: ListService<NftCollection>(
+                    networkClient: diResolver.resolve(AsyncNetworkClient.self)!
+                ),
+                depsFactory: self
             )
         }
+
+        container.register(NftCollectionViewController.self) { diResolver in
+            let presenter = diResolver.resolve(NftCollectionPresenter.self)!
+            let view = NftCollectionView()
+            let controller = NftCollectionViewControllerImpl(
+                contentView: view,
+                presenter: presenter,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+
+            presenter.delegate = controller
+            presenter.view = view
+            view.delegate = presenter
+
+            return controller
+        }
+
+        container.register(NftCollectionDetailPresenter.self) { diResolver in
+            let networkClient = diResolver.resolve(AsyncNetworkClient.self)!
+            return NftCollectionDetailPresenterImpl(
+                nftService: EntityService<Nft>(networkClient: networkClient),
+                profileService: EntityService<Profile>(networkClient: networkClient),
+                orderService: EntityService<NftOrder>(networkClient: networkClient),
+                depsFactory: self
+            )
+        }
+        .inObjectScope(.transient)
+
+        container.register(NftCollectionDetailController.self) { diResolver in
+            let presenter = diResolver.resolve(NftCollectionDetailPresenter.self)!
+            let view = NftCollectionDetailViewImpl()
+            let controller = NftCollectionDetailControllerImpl(
+                contentView: view,
+                presenter: presenter,
+                statlog: diResolver.resolve(StatLog.self)!
+            )
+
+            presenter.delegate = controller
+            presenter.view = view
+            view.delegate = presenter
+
+            return controller
+        }
+        .inObjectScope(.transient)
     }
 
     private func registerProfile() {
@@ -151,6 +198,11 @@ final class DIContainer {
         }
         .inObjectScope(.container)
 
+        container.register(AsyncNetworkClient.self) { _ in
+            AsyncNetworkClientImpl()
+        }
+        .inObjectScope(.container)
+
         container.register(NftStorage.self) { _ in
             NftStorageImpl()
         }
@@ -204,5 +256,34 @@ final class DIContainer {
             )
         }
         .inObjectScope(.container)
+    }
+
+    private func registerWebView() {
+        container.register(WebViewViewController.self) { _, url in
+            let presenter = WebViewViewPresenterImpl(url: url)
+            let view = WebViewViewImpl()
+
+            view.delegate = presenter
+            presenter.view = view
+
+            return WebViewViewController(presenter: presenter, contentView: view)
+        }
+        .inObjectScope(.transient)
+    }
+}
+
+extension DIContainer: NftCollectionViewDepsFactory {
+    func nftCollectionDetailController() -> NftCollectionDetailController? {
+        container.resolve(NftCollectionDetailController.self)
+    }
+}
+
+extension DIContainer: NftCollectionDetailDepsFactory {
+    func nftDetailViewController() -> UIViewController? {
+        UIViewController()
+    }
+
+    func webViewViewController(url: URL) -> WebViewViewController? {
+        container.resolve(WebViewViewController.self, argument: url)
     }
 }

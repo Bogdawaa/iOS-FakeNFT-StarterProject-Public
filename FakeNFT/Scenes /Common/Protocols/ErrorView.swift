@@ -4,6 +4,12 @@ struct ErrorModel {
     let message: String
     let actionText: String
     let action: () -> Void
+
+    init(message: String, actionText: String = "Error.repeat"~, action: @escaping () -> Void) {
+        self.message = message
+        self.actionText = actionText
+        self.action = action
+    }
 }
 
 protocol ErrorView {
